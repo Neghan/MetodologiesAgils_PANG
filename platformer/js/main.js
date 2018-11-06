@@ -1,10 +1,10 @@
 var platformer = platformer || {};
 
 var gameOptions={
-    gameWidth:960,
-    gameHeight:540,
-    level1Width:1280,
-    level1Height:800,
+    gameWidth:384,
+    gameHeight:208,
+    level1Width:384,
+    level1Height:208,
     heroGravity:1000,
     heroSpeed:200,
     heroJump:450
