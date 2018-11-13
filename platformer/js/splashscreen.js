@@ -13,14 +13,16 @@ platformer.splashscreen ={
     },
     preload:function(){ 
         this.load.spritesheet('splash','assets/menus/SplashScreen(31x1).png',384,308);
-        //this.load.image('moss','assets/img/tileset_edge_lv1.png');
+        this.load.audio('MusicOpening', 'assets/audio/music/Opening.mp3');
         
     },
 
     create:function(){
       this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
 
-        
+        this.music = this.add.audio('MusicOpening',1,true);
+
+        this.music.play();
 
     this.splash=this.game.add.sprite(0,0,'splash');
     //FIRST ANIMATION
@@ -50,6 +52,7 @@ platformer.splashscreen ={
        this.splash.animations.play('coin');
         if (this.space.isDown){
            //SALTAR AL MENU WORLD
+            this.music.stop();
             this.state.start('worldmap');
         }
     }

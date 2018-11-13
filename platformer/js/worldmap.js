@@ -6,19 +6,24 @@ platformer.worldmap ={
         //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.setGameSize(gameOptions.gameWidth,gameOptions.gameHeight);
         this.game.load.bitmapFont()
-        
-        //this.game.physics.startSystem(Phaser.Physics.ARCADE);
-        //this.game.physics.arcade.gravity.y=gameOptions.heroGravity;
-        //this.game.world.setBounds(0,0,gameOptions.level1Width,gameOptions.level1Height);
+
     },
     preload:function(){ 
         
         this.load.image('worldmap','assets/menus/WorldMap (384-308).png');
         this.load.spritesheet('selector','assets/menus/MapSelectorIcon(40-24).png',20,24);
-        
+        this.load.audio('MusicWorldMap', 'assets/audio/music/Title.mp3');
+        this.load.audio('SoundEffectButton', 'assets/audio/soundeffects/button.wav');
+
     },
 
     create:function(){
+        
+        this.music = this.add.audio('MusicWorldMap',1,true);
+        this.soundEffect = this.add.audio('SoundEffectButton');
+        this.music.play();
+        
+        
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
         this.background=this.game.add.tileSprite(0,0,384,308,'worldmap');
         
@@ -35,6 +40,7 @@ platformer.worldmap ={
         this.currentLevel = 1;
         this.selectedLevel = false;
         this.canChangeLevel = true;
+        this.boolSoundButton = false;
         
         //this.cursors=this.game.input.keyboard.createCursorKeys();    
         //this.space=this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);   
@@ -124,12 +130,17 @@ platformer.worldmap ={
         }
         //CUANDO SELECCIONAMOS EL NIVEL EMPIEZA A PARPADEAR EL SELECTOR Y AL CABO DE X TIEMPO ENTRAMOS EN EL MAPA
         if ( this.selectedLevel == true){
+            if (this.boolSoundButton == false){
+                this.soundEffect.play();
+                this.boolSoundButton = true;
+                }
             this.selector.animations.play('selected');
             if(this.timeflow >= 0){
                 this.timeflow -= 0.25;
             }
             //OBRIM MAPA
             else{
+                this.music.pause();
                 if( this.currentLevel == 1){
                 this.state.start('level1');   //NIVEL1
                 }
