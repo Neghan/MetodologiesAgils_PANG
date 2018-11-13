@@ -85,7 +85,8 @@ platformer.worldmap ={
                 this.delayLevelSelector = 0;
                 this.currentLevel +=1
                 if(this.currentLevel >= 5){
-                    this.currentLevel = 1;
+                //if(this.currentLevel >= 18){
+                    this.currentLevel = 4;
                 }
             }
             else if(this.cursors.right.isDown){
@@ -93,7 +94,8 @@ platformer.worldmap ={
                 this.delayLevelSelector = 0;
                 this.currentLevel -=1
                 if(this.currentLevel <= 0){
-                    this.currentLevel = 4;
+                    this.currentLevel = 1;
+                    //this.currentLevel = 17
                 }
             }
         }
