@@ -39,6 +39,20 @@ platformer.worldmap ={
         //this.cursors=this.game.input.keyboard.createCursorKeys();    
         //this.space=this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);   
         
+        //HUD TEXT
+        this.MapName = this.game.add.text(this.game.world.centerX+140, this.game.world.centerY+115, "Barcelona", {
+        font: "15px Pixel",
+        fill: "#ffffff",
+        align: "center"
+        });
+        this.MapName.anchor.setTo(0.5, 0.5);
+        this.Stage = this.game.add.text(this.game.world.centerX+145, this.game.world.centerY+140, "1-1 Stage", {
+        font: "15px Pixel",
+        fill: "#ffffff",
+        align: "center"
+        });
+        this.Stage.anchor.setTo(0.5, 0.5);
+    
         
     },
     update:function(){
@@ -46,6 +60,8 @@ platformer.worldmap ={
         //Al principio el selector esta estatico
         if(this.timeflow == 20){
         this.selector.animations.play('move');
+        this.MapName.setText("BARCELONA");
+        this.Stage.setText("1-1 STAGE");
         }
         
         //DELAY DEL SELECTOR
@@ -77,20 +93,28 @@ platformer.worldmap ={
         }
         //MOVEM EL SELECTOR
         if( this.currentLevel == 1){    //JAPAN
-        this.selector.position.x = 345;
+        this.selector.position.x = 347;
         this.selector.position.y = 90;
+        this.MapName.setText("BARCELONA");
+        this.Stage.setText("1-1 STAGE");    
         }
         else if( this.currentLevel == 2){ //COUNTRY 2
-        this.selector.position.x = 305;
+        this.selector.position.x = 307;
         this.selector.position.y = 90;
+        this.MapName.setText("NIVEL 2");
+        this.Stage.setText("2-1 STAGE")
         }
         else if( this.currentLevel == 3){ //COUNTRY 3
         this.selector.position.x = 290;
         this.selector.position.y = 130;
+        this.MapName.setText("NIVEL 3");
+        this.Stage.setText("3-1 STAGE")
         }
         else if( this.currentLevel == 4){ //COUNTRY 4
-        this.selector.position.x = 310;
+        this.selector.position.x = 307;
         this.selector.position.y = 130;
+        this.MapName.setText("MULTIPLAYER");
+        this.Stage.setText("4-1 STAGE")
         }
         
         //Si Pulsamos Pause seleccionamos ese nivel en concreto
