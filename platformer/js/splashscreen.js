@@ -50,7 +50,7 @@ platformer.splashscreen ={
        this.splash.animations.play('coin');
         if (this.space.isDown){
            //SALTAR AL MENU WORLD
-            this.state.start('level1');
+            this.state.start('worldmap');
         }
     }
     
