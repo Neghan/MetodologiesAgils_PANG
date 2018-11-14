@@ -67,7 +67,8 @@ platformer.level1 ={
         this.hero=this.game.add.sprite(65,140,'hero',0);
         this.hero.animations.add('right',[0,1,2,3,4],10,true);
         this.hero.animations.add('left',[0,1,2,3,4],10,true);
-        this.hero.animations.add('idleShoot',[5],10,false);
+        this.hero.animations.add('idleShoot',[5,6],10,false);
+        this.hero.animations.add('idle',[5],10,true);
         this.hero.anchor.setTo(.5);
         
         this.game.physics.arcade.enable(this.hero);
@@ -100,6 +101,9 @@ platformer.level1 ={
         this.timer.setText("TIME: "+0+Math.trunc(this.timeLeft));
         this.timeLeft -= 0.012;//this.game.time.now;
         
+        
+        
+        
         if(this.cursors.left.isDown){
             this.hero.body.velocity.x=-gameOptions.heroSpeed;
             this.hero.animations.play('left');
@@ -108,15 +112,14 @@ platformer.level1 ={
             this.hero.body.velocity.x=gameOptions.heroSpeed;
             this.hero.scale.setTo(1,1);
             this.hero.animations.play('right');
-        }
-        else{
+        }else if (this.space.isDown){
             this.hero.animations.play('idleShoot');
-               this.hero.body.velocity.x=0;
+            this.hero.body.velocity.x=0;
+        }else{
+            this.hero.animations.play('idle');
+            this.hero.body.velocity.x=0;
         }
-        
-        if (this.space.isDown){
-           //DISPARAR
-        }
+       
         
         
     }
