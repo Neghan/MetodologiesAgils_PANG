@@ -14,16 +14,16 @@ platformer.level1 ={
     preload:function(){ 
         this.load.image('bg','assets/img/barcelona.png');
         this.load.tilemap('level1','assets/tilemaps/barcelona.json',null,Phaser.Tilemap.TILED_JSON);
-        this.load.spritesheet('walls','assets/img/walls_barcelona.png');
+        this.load.spritesheet('walls','assets/img/walls_barcelona_floor.png');
+        this.load.spritesheet('walls1','assets/img/walls_barcelona.png');
         //this.load.image('moss','assets/img/tileset_edge_lv1.png');
         this.load.spritesheet('hero','assets/img/player_1_locomotion.png',32,32);
-        //this.load.spritesheet('shoot','assets/img/player_1_shoot.png',32,32);
-        //this.load.spritesheet('door','assets/img/door.png',32,40);
+        this.load.spritesheet('shoot','assets/img/hook.png',9,189);
         
     },
     create:function(){
       this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
-        
+    
         //HUD TEXT
         this.text = this.game.add.text(this.game.world.centerX, this.game.world.centerY+115, "Barcelona", {
         font: "10px Pixel",
@@ -80,18 +80,43 @@ platformer.level1 ={
         
         
         //COLISIONES MUROS
-        for(var i =0;i<50;++i){
-        this.muro = this.game.add.sprite(i*8,260,'walls',0);
+        //SUELO
+        this.muro = this.game.add.sprite(0,200,'walls',0);
         this.game.physics.arcade.enable(this.muro);
         this.muro.body.allowGravity = false;
         this.muro.body.immovable = true;
-        }
+        this.game.physics.arcade.collide(this.hero,this.muro);
+        //TECHO
+        this.muro2 = this.game.add.sprite(0,0,'walls',0);
+        this.game.physics.arcade.enable(this.muro2);
+        this.muro2.body.allowGravity = false;
+        this.muro2.body.immovable = true;
+        this.game.physics.arcade.collide(this.hero,this.muro2);
+        //LEFT
+        this.muroLados1 = this.game.add.sprite(0,8,'walls1',0);
+        this.game.physics.arcade.enable(this.muroLados1);
+        this.muroLados1.body.allowGravity = false;
+        this.muroLados1.body.immovable = true;
+        this.game.physics.arcade.collide(this.hero,this.muroLados1);
+        //RIGHT
+        this.muroLados2 = this.game.add.sprite(376,8,'walls1',0);
+        this.game.physics.arcade.enable(this.muroLados2);
+        this.muroLados2.body.allowGravity = false;
+        this.muroLados2.body.immovable = true;
+        this.game.physics.arcade.collide(this.hero,this.muroLados2);
         
+        //DISPAROS
+        this.oneTime = true;
+        //this.bullet = this.game.add.sprite('shoot');
     },
     update:function(){
-      //this.entry.animations.play('open');
+       
+        //COLISIONES
         this.game.physics.arcade.collide(this.hero,this.muro);
-        //this.game.physics.arcade.collide(this.hero,this.walls);
+        this.game.physics.arcade.collide(this.bullet,this.muro2);
+        this.game.physics.arcade.collide(this.hero,this.muroLados1);
+        this.game.physics.arcade.collide(this.hero,this.muroLados2);
+        
         this.text.setText("BARCELONA");
         this.text2.setText("1-1 STAGE");
         this.text5.setText("HI: 10000");
@@ -115,12 +140,23 @@ platformer.level1 ={
         }else if (this.space.isDown){
             this.hero.animations.play('idleShoot');
             this.hero.body.velocity.x=0;
+            
+            if(this.oneTime){
+            this.bullet = new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this);
+            this.game.add.existing(this.bullet);
+            this.game.world.swap(this.hero,this.bullet);
+            this.oneTime = false;
+                
+            //ORDEN DE DIBUJO 
+            this.game.world.swap(this.timer,this.bullet);
+            }
         }else{
+             this.oneTime = true;
             this.hero.animations.play('idle');
             this.hero.body.velocity.x=0;
         }
        
-        
+         
         
     }
 };
