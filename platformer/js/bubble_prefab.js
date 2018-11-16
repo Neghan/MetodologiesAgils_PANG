@@ -50,7 +50,7 @@ platformer.bubble_prefab.prototype.hitHero = function(_bubble,_hero){
         this.animations.play('explode');
         this.speedX = 0;
         this.speedY = 0;
-        this.level.hitHero();
+        //this.level.hitHero();
         //delay o quan acabi la animació --> destroy.
     }
 };

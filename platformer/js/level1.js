@@ -115,13 +115,15 @@ platformer.level1 ={
         this.bubble = new platformer.bubble_prefab(this.game,100,100,this);
         this.game.add.existing(this.bubble);
     },
-    
         //HIT HERO
-    
         hitHero:function(){
         this.camera.shake(0.025,100);
         this.hero.body.velocity.x =0;
         console.log('pupa');
+    },
+    OnHitAny:function(){
+        this.hitHero();
+        this.bubble.animations.play('explode');
     },
     update:function(){
        
@@ -156,7 +158,7 @@ platformer.level1 ={
             this.hero.body.velocity.x=0;
             
             if(this.oneTime){
-            this.bullet = new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this);
+            this.bullet = new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this,this.bubble);
             this.game.add.existing(this.bullet);
             this.game.world.swap(this.hero,this.bullet);
             this.oneTime = false;
