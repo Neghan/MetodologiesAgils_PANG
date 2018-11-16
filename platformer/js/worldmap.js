@@ -40,6 +40,7 @@ platformer.worldmap ={
         this.currentLevel = 1;
         this.selectedLevel = false;
         this.canChangeLevel = true;
+        this.canChangeLevel2 = true;
         this.boolSoundButton = false;
         
         //this.cursors=this.game.input.keyboard.createCursorKeys();    
@@ -79,7 +80,7 @@ platformer.worldmap ={
         }
         
         //MOURE EL SELECTOR MES DELAY
-        if(this.canChangeLevel == true){
+        if(this.canChangeLevel == true && this.canChangeLevel2 == true){
             if(this.cursors.left.isDown){
                 this.canChangeLevel = false;
                 this.delayLevelSelector = 0;
@@ -205,6 +206,7 @@ platformer.worldmap ={
         if (this.space.isDown){
             //SALTAR AL NIVEL LEVEL1 POR AHORA
             this.selectedLevel = true;
+            this.canChangeLevel2 = false;
         }
         //CUANDO SELECCIONAMOS EL NIVEL EMPIEZA A PARPADEAR EL SELECTOR Y AL CABO DE X TIEMPO ENTRAMOS EN EL MAPA
         if ( this.selectedLevel == true){

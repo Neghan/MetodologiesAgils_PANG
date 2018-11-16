@@ -20,6 +20,8 @@ platformer.level1 ={
         this.load.spritesheet('hero','assets/img/player_1_locomotion.png',32,32);
         this.load.spritesheet('shoot','assets/img/hook.png',9,189);
         
+        this.load.spritesheet('bubble','assets/img/bubble.png',48,46);
+        
     },
     create:function(){
       this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
@@ -108,6 +110,18 @@ platformer.level1 ={
         //DISPAROS
         this.oneTime = true;
         //this.bullet = this.game.add.sprite('shoot');
+        
+        //BUBBLE
+        this.bubble = new platformer.bubble_prefab(this.game,100,100,this);
+        this.game.add.existing(this.bubble);
+    },
+    
+        //HIT HERO
+    
+        hitHero:function(){
+        this.camera.shake(0.025,100);
+        this.hero.body.velocity.x =0;
+        console.log('pupa');
     },
     update:function(){
        
