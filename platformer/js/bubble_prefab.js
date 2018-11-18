@@ -32,7 +32,16 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
 //    this.directionY = 1;
     //this.game.physics.arcade.enable(this);
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
-    this.body.setCircle(23,1);
+    
+    if(size == 3){
+        this.body.setCircle(3);
+    } else if (size == 2){
+        this.body.setCircle(7);
+    } else if (size == 1){
+        this.body.setCircle(15);
+    } else{
+        this.body.setCircle(23);
+    }
     this.destroyDelay = 10;
     this.destroy = false;
     this.body.bounce.y = 1;
@@ -54,6 +63,7 @@ platformer.bubble_prefab.prototype.update = function(){
     this.game.physics.arcade.collide(this,this.level.muro);
     this.game.physics.arcade.collide(this,this.level.muro2);
     this.game.physics.arcade.collide(this,this.level.hero,this.hitHero,null,this);
+    this.game.physics.arcade.collide(this,this.level.shoot,this.hitShoot,null,this);
     
     this.body.velocity.x = this.speedX*this.directionX;
     //this.body.velocity.y = this.speedY*this.directionY;
@@ -75,12 +85,9 @@ platformer.bubble_prefab.prototype.update = function(){
     }
 };
 
-
-platformer.bubble_prefab.prototype.hitHero = function(_bubble,_hero){
-    if(_bubble.body.touching && _hero.body.touching){
+platformer.bubble_prefab.prototype.hitShoot = function(){
         
         this.animations.play('explode');
-        this.level.hitHero();
         this.body.enable = false;
         if (this.size < 3){
             this.bubble1 = new platformer.bubble_prefab(this.game,this.body.x,this.body.y,this.level,this.size+1,this.color,this.directionX);
@@ -89,6 +96,18 @@ platformer.bubble_prefab.prototype.hitHero = function(_bubble,_hero){
             this.bubble2 = new platformer.bubble_prefab(this.game,this.body.x,this.body.y,this.level,this.size+1,this.color,-this.directionX);
             this.game.add.existing(this.bubble2);  
         }
+        this.destroy = true;
+        //delay o quan acabi la animació --> destroy.
+
+};
+
+
+platformer.bubble_prefab.prototype.hitHero = function(_bubble,_hero){
+    if(_bubble.body.touching && _hero.body.touching){
+        
+        this.animations.play('explode');
+        this.level.hitHero();
+        this.body.enable = false;
         this.destroy = true;
         //delay o quan acabi la animació --> destroy.
     }

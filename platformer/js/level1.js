@@ -10,6 +10,7 @@ platformer.level1 ={
         this.game.physics.arcade.gravity.y=gameOptions.heroGravity;
         
         this.game.world.setBounds(0,0,gameOptions.level1Width,gameOptions.level1Height);
+        this.goToWorldmap = false;
     },
     preload:function(){ 
         
@@ -138,18 +139,25 @@ platformer.level1 ={
         
     },
         //HIT HERO
-        hitHero:function(){
+    hitHero:function(){
         this.camera.shake(0.025,100);
         this.hero.body.velocity.x =0;
         this.hero.lives--;
-        console.log('pupa');
+        console.log(this.hero.lives);
     },
-    OnHitAny:function(){
-        this.hitHero();
-        this.bubble.animations.play('explode');
+    
+    hitShoot:function(){
+        
     },
+    
+
+    
     update:function(){
-       
+        
+        if (this.goToWorldmap == true){
+            this.state.start('worldmap');
+            this.goToWorldmap = false;
+        }
         //COLISIONES
         this.game.physics.arcade.collide(this.hero,this.muro);
         this.game.physics.arcade.collide(this.bullet,this.muro2);
@@ -168,11 +176,13 @@ platformer.level1 ={
         //VIDAS
         if(this.hero.lives<=2){
             this.lifes3.destroy();
-        }else if(this.hero.lives<=1){
+        }
+        if(this.hero.lives<=1){
             this.lifes2.destroy();
-        }else if(this.hero.lives==0){
+        }
+        if(this.hero.lives<=0){
             this.lifes.destroy();
-            this.state.start('worldmap');
+            this.goToWorldmap = true;
         }
         
         
@@ -190,7 +200,7 @@ platformer.level1 ={
             this.hero.body.velocity.x=0;
             
             if(this.oneTime){
-            this.bullet = new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this,this.bubble);
+            this.bullet = new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this);
             this.game.add.existing(this.bullet);
             this.game.world.swap(this.hero,this.bullet);
             this.oneTime = false;
