@@ -16,6 +16,7 @@ platformer.shoot = function(game,x,y,pointA,pointB,speed,direction,level,bubble)
     this.body.immovable = true;
     this.body.allowGravity = false;
     this.oneTimeShoot = true;
+    this.lifespan = 1700;
 };
 
 platformer.shoot.prototype = Object.create(Phaser.Sprite.prototype);
@@ -30,9 +31,15 @@ platformer.shoot.prototype.update = function(){
          this.oneTimeShoot = false;
     }
    
+    
 };
 platformer.shoot.prototype.OnHitAny  = function(_shot,_bubble){
-    if(_shot.body.touching.left && _bubble.body.touching.right || _shot.body.touching.right &&  _bubble.body.touching.left || _shot.body.touching.up &&  _bubble.body.touching.down){
+    if(_shot.body.touching.left && _bubble.body.touching.right){
         this.kill();
+        console.log("touched");
+    }
+    if(_shot.body.touching.right &&  _bubble.body.touching.left || _shot.body.touching.up &&  _bubble.body.touching.down){
+        this.kill();
+        console.log("touched");
     }
 };

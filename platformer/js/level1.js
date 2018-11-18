@@ -21,6 +21,7 @@ platformer.level1 ={
         this.load.spritesheet('walls1','assets/img/walls_barcelona.png');
         //this.load.image('moss','assets/img/tileset_edge_lv1.png');
         this.load.spritesheet('hero','assets/img/player_1_locomotion.png',32,32);
+        this.load.spritesheet('life','assets/img/player_1_life.png',16,16);
         this.load.spritesheet('shoot','assets/img/hook.png',9,189);
         
         this.load.spritesheet('bubble','assets/img/bubble.png',48,46);
@@ -67,14 +68,21 @@ platformer.level1 ={
         align: "left"
         });
         this.timer.anchor.setTo(0.5, 0.5);
+        //LIVES
+        this.lifes = this.game.add.sprite(15,230,'life',0);
+        this.lifes2 = this.game.add.sprite(35,230,'life',0);
+        this.lifes3 = this.game.add.sprite(55,230,'life',0);
+        //this.interfaz = new platformer.HUD(this.game,this);
+        
         this.timeLeft = 100;
         
         //HERO FUNCTIONS
-        this.hero=this.game.add.sprite(65,140,'hero',0);
+        this.hero=this.game.add.sprite(65,40,'hero',0);
         this.hero.animations.add('right',[0,1,2,3,4],10,true);
         this.hero.animations.add('left',[0,1,2,3,4],10,true);
         this.hero.animations.add('idleShoot',[5,6],10,false);
         this.hero.animations.add('idle',[5],10,true);
+        this.hero.lives = 3;
         this.hero.anchor.setTo(.5);
         
         this.game.physics.arcade.enable(this.hero);
@@ -110,6 +118,8 @@ platformer.level1 ={
         this.muroLados2.body.allowGravity = false;
         this.muroLados2.body.immovable = true;
         this.game.physics.arcade.collide(this.hero,this.muroLados2);
+  
+        
         
         //DISPAROS
         this.oneTime = true;
@@ -128,6 +138,7 @@ platformer.level1 ={
         hitHero:function(){
         this.camera.shake(0.025,100);
         this.hero.body.velocity.x =0;
+        this.hero.lives--;
         console.log('pupa');
     },
     OnHitAny:function(){
@@ -151,6 +162,15 @@ platformer.level1 ={
         this.timer.setText("TIME: "+0+Math.trunc(this.timeLeft));
         this.timeLeft -= 0.012;//this.game.time.now;
         
+        //VIDAS
+        if(this.hero.lives<=2){
+            this.lifes3.destroy();
+        }else if(this.hero.lives<=1){
+            this.lifes2.destroy();
+        }else if(this.hero.lives==0){
+            this.lifes.destroy();
+            this.state.start('worldmap');
+        }
         
         
         
