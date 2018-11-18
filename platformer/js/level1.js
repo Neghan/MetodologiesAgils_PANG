@@ -12,6 +12,9 @@ platformer.level1 ={
         this.game.world.setBounds(0,0,gameOptions.level1Width,gameOptions.level1Height);
     },
     preload:function(){ 
+        
+        this.load.audio('MusicBarcelona', 'assets/audio/music/10 - Barcelona.mp3');
+        
         this.load.image('bg','assets/img/barcelona.png');
         this.load.tilemap('level1','assets/tilemaps/barcelona.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.spritesheet('walls','assets/img/walls_barcelona_floor.png');
@@ -24,6 +27,7 @@ platformer.level1 ={
         
     },
     create:function(){
+        
       this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
     
         //HUD TEXT
@@ -114,6 +118,11 @@ platformer.level1 ={
         //BUBBLE
         this.bubble = new platformer.bubble_prefab(this.game,100,100,this);
         this.game.add.existing(this.bubble);
+        
+        //MUSICA
+        this.music = this.add.audio('MusicBarcelona',1,true);
+        this.music.play();
+        
     },
         //HIT HERO
         hitHero:function(){

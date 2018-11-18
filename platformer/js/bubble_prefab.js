@@ -8,7 +8,7 @@ platformer.bubble_prefab = function(game,x,y,level){
     this.animations.add('explode',[1,2,3,4],10,false);
     this.animations.play('normal');
     this.level = level;
-    this.speedX = 30;
+    this.speedX = 50;
 //    this.speedY = 30;
     this.directionX = 1;
 //    this.directionY = 1;
