@@ -22,8 +22,6 @@ platformer.shoot.prototype = Object.create(Phaser.Sprite.prototype);
 platformer.shoot.prototype.constructor = platformer.shoot;
 
 platformer.shoot.prototype.update = function(){
-    this.game.physics.arcade.collide(this,this.level.bubble);
-    this.game.physics.arcade.collide(this,this.level.bubble,this.OnHitAny,null,this);
 
     this.body.velocity.y= 0.01;
     if(this.oneTimeShoot){
@@ -32,15 +30,4 @@ platformer.shoot.prototype.update = function(){
     }
    
     
-};
-platformer.shoot.prototype.OnHitAny  = function(_shot,_bubble){
-    if(_shot.body.touching && _bubble.body.touching){
-        _bubble.hitShoot();
-        
-        this.kill();
-    }
-    /*if(_shot.body.touching.right &&  _bubble.body.touching.left || _shot.body.touching.up &&  _bubble.body.touching.down){
-        this.kill();
-        console.log("touched");
-    }*/
 };

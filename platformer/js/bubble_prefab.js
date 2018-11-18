@@ -65,6 +65,8 @@ platformer.bubble_prefab.prototype.update = function(){
     this.game.physics.arcade.collide(this,this.level.hero,this.hitHero,null,this);
     this.game.physics.arcade.collide(this,this.level.shoot,this.hitShoot,null,this);
     
+    this.game.physics.arcade.collide(this,this.level.bullet,this.hitShoot,null,this);
+    
     this.body.velocity.x = this.speedX*this.directionX;
     //this.body.velocity.y = this.speedY*this.directionY;
 
@@ -85,7 +87,7 @@ platformer.bubble_prefab.prototype.update = function(){
     }
 };
 
-platformer.bubble_prefab.prototype.hitShoot = function(){
+platformer.bubble_prefab.prototype.hitShoot = function(_bubble, _shot){
         
         this.animations.play('explode');
         this.body.enable = false;
@@ -96,6 +98,7 @@ platformer.bubble_prefab.prototype.hitShoot = function(){
             this.bubble2 = new platformer.bubble_prefab(this.game,this.body.x,this.body.y,this.level,this.size+1,this.color,-this.directionX);
             this.game.add.existing(this.bubble2);  
         }
+        _shot.kill();
         this.destroy = true;
         //delay o quan acabi la animació --> destroy.
 
@@ -105,10 +108,8 @@ platformer.bubble_prefab.prototype.hitShoot = function(){
 platformer.bubble_prefab.prototype.hitHero = function(_bubble,_hero){
     if(_bubble.body.touching && _hero.body.touching){
         
-        this.animations.play('explode');
         this.level.hitHero();
         this.body.enable = false;
-        this.destroy = true;
         //delay o quan acabi la animació --> destroy.
     }
 };
