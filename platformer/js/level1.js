@@ -20,11 +20,14 @@ platformer.level1 ={
         this.load.spritesheet('walls','assets/img/walls_barcelona_floor.png');
         this.load.spritesheet('walls1','assets/img/walls_barcelona.png');
         //this.load.image('moss','assets/img/tileset_edge_lv1.png');
-        this.load.spritesheet('hero','assets/img/player_1_locomotion.png',32,32);
+        this.load.spritesheet('hero','assets/img/player_1.png',41,32);
         this.load.spritesheet('life','assets/img/player_1_life.png',16,16);
         this.load.spritesheet('shoot','assets/img/hook.png',9,189);
         
-        this.load.spritesheet('bubble','assets/img/bubble.png',48,46);
+        this.load.spritesheet('bubble_xl','assets/img/bubble_xl.png',48,46);
+        this.load.spritesheet('bubble_l','assets/img/bubble_l.png',32,30);
+        this.load.spritesheet('bubble_m','assets/img/bubble_m.png',16,16);
+        this.load.spritesheet('bubble_s','assets/img/bubble_s.png',10,8);
         
     },
     create:function(){
@@ -78,10 +81,10 @@ platformer.level1 ={
         
         //HERO FUNCTIONS
         this.hero=this.game.add.sprite(65,40,'hero',0);
-        this.hero.animations.add('right',[0,1,2,3,4],10,true);
-        this.hero.animations.add('left',[0,1,2,3,4],10,true);
-        this.hero.animations.add('idleShoot',[5,6],10,false);
-        this.hero.animations.add('idle',[5],10,true);
+        this.hero.animations.add('walk',[0,1,2,3,4],10,true);
+        //this.hero.animations.add('left',[0,1,2,3,4],10,true);
+        this.hero.animations.add('idleShoot',[10,11],10,false);
+        this.hero.animations.add('idle',[10],10,true);
         this.hero.lives = 3;
         this.hero.anchor.setTo(.5);
         
@@ -126,7 +129,7 @@ platformer.level1 ={
         //this.bullet = this.game.add.sprite('shoot');
         
         //BUBBLE
-        this.bubble = new platformer.bubble_prefab(this.game,100,100,this);
+        this.bubble = new platformer.bubble_prefab(this.game,100,100,this,3,0);
         this.game.add.existing(this.bubble);
         
         //MUSICA
@@ -176,12 +179,12 @@ platformer.level1 ={
         
         if(this.cursors.left.isDown){
             this.hero.body.velocity.x=-gameOptions.heroSpeed;
-            this.hero.animations.play('left');
+            this.hero.animations.play('walk');
             this.hero.scale.setTo(-1,1);
         }else if(this.cursors.right.isDown){
             this.hero.body.velocity.x=gameOptions.heroSpeed;
             this.hero.scale.setTo(1,1);
-            this.hero.animations.play('right');
+            this.hero.animations.play('walk');
         }else if (this.space.isDown){
             this.hero.animations.play('idleShoot');
             this.hero.body.velocity.x=0;

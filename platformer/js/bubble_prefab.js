@@ -1,11 +1,29 @@
 var platformer = platformer || {};
 
-platformer.bubble_prefab = function(game,x,y,level){
-    Phaser.Sprite.call(this,game,x,y,'bubble');
+platformer.bubble_prefab = function(game,x,y,level,size,color){
+    //SIZE: 0 == XL, 1 == L, 2 == M, 3 == S
+    //COLOR: 0 == RED, 1 == GREEN, 2 == BLUE
+    if(size == 3){
+        Phaser.Sprite.call(this,game,x,y,'bubble_s');
+    } else if (size == 2){
+        Phaser.Sprite.call(this,game,x,y,'bubble_m');
+    } else if (size == 1){
+        Phaser.Sprite.call(this,game,x,y,'bubble_l');
+    } else{
+        Phaser.Sprite.call(this,game,x,y,'bubble_xl');
+    }
+    this.size = size;
+    this.color = color;
     this.anchor.setTo(.5);
     this.scale.setTo(.75);
-    this.animations.add('normal',[0],0,true);
-    this.animations.add('explode',[1,2,3,4],10,false);
+    if(size == 3){
+        this.animations.add('normal',[0 + 4*this.color],0,true);
+        this.animations.add('explode',[1 + 4*this.color,2 + 4*this.color,3 + 4*this.color],10,false);
+    } else {
+        this.animations.add('normal',[0 + 5*this.color],0,true);
+        this.animations.add('explode',[1 + 5*this.color,2 + 5*this.color,3 + 5*this.color,4 + 5*this.color],10,false);
+    }
+
     this.animations.play('normal');
     this.level = level;
     this.speedX = 50;
