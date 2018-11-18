@@ -1,6 +1,6 @@
 var platformer = platformer || {};
 
-platformer.bubble_prefab = function(game,x,y,level,size,color){
+platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     //SIZE: 0 == XL, 1 == L, 2 == M, 3 == S
     //COLOR: 0 == RED, 1 == GREEN, 2 == BLUE
     if(size == 3){
@@ -28,7 +28,7 @@ platformer.bubble_prefab = function(game,x,y,level,size,color){
     this.level = level;
     this.speedX = 50;
 //    this.speedY = 30;
-    this.directionX = 1;
+    this.directionX = direction;
 //    this.directionY = 1;
     //this.game.physics.arcade.enable(this);
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
@@ -80,8 +80,15 @@ platformer.bubble_prefab.prototype.hitHero = function(_bubble,_hero){
     if(_bubble.body.touching && _hero.body.touching){
         
         this.animations.play('explode');
-        this.body.enable = false;
         this.level.hitHero();
+        this.body.enable = false;
+        if (this.size < 3){
+            this.bubble1 = new platformer.bubble_prefab(this.game,this.body.x,this.body.y,this.level,this.size+1,this.color,this.directionX);
+            this.game.add.existing(this.bubble1);
+            
+            this.bubble2 = new platformer.bubble_prefab(this.game,this.body.x,this.body.y,this.level,this.size+1,this.color,-this.directionX);
+            this.game.add.existing(this.bubble2);  
+        }
         this.destroy = true;
         //delay o quan acabi la animació --> destroy.
     }

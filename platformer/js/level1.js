@@ -129,7 +129,7 @@ platformer.level1 ={
         //this.bullet = this.game.add.sprite('shoot');
         
         //BUBBLE
-        this.bubble = new platformer.bubble_prefab(this.game,100,100,this,3,0);
+        this.bubble = new platformer.bubble_prefab(this.game,100,100,this,0,0,1);
         this.game.add.existing(this.bubble);
         
         //MUSICA
