@@ -93,6 +93,9 @@ platformer.level1 ={
         //this.hero.animations.add('left',[0,1,2,3,4],10,true);
         this.hero.animations.add('idleShoot',[10,11],10,false);
         this.hero.animations.add('idle',[10],10,true);
+        this.hero.animations.add('deathR',[17],10,true);
+        this.hero.animations.add('deathL',[16],10,true);
+        this.hero.dead=false;
         this.hero.lives = 3;
         this.hero.score = 0;
         this.hero.anchor.setTo(.5);
@@ -150,6 +153,7 @@ platformer.level1 ={
     hitHero:function(){
         this.camera.shake(0.025,100);
         this.hero.body.velocity.x =0;
+        this.hero.dead=true;
         this.hero.lives--;
     },
     hitShoot:function(){
@@ -162,10 +166,15 @@ platformer.level1 ={
             this.goToWorldmap = false;
         }
         //COLISIONES
+        if(!this.hero.dead){
         this.game.physics.arcade.collide(this.hero,this.muro);
+        this.game.physics.arcade.collide(this.hero,this.muro2);
         this.game.physics.arcade.collide(this.bullet,this.muro2);
         this.game.physics.arcade.collide(this.hero,this.muroLados1);
         this.game.physics.arcade.collide(this.hero,this.muroLados2);
+        }
+        
+        
         
         this.text.setText("BARCELONA");
         this.text2.setText("1-1 STAGE");
@@ -190,32 +199,41 @@ platformer.level1 ={
             this.lifes.destroy();
             this.goToWorldmap = true;
         }
+        //ANIMACION DE MUERTE
+        if(this.hero.dead){
+            this.hero.animations.play('deathR');
+            //this.hero.setBounce(1);
+            this.hero.body.velocity.x=30;
+            this.hero.body.velocity.y=30;
+            this.hero.body.collideWorldBounds = false;
+            //this.state.start('level1');
+        }
         
         
-        
-        if(this.cursors.left.isDown){
+        //MOVIMIENTO HEROE 
+        if(this.cursors.left.isDown&&!this.hero.dead){
             this.hero.body.velocity.x=-gameOptions.heroSpeed;
             this.hero.animations.play('walk');
             this.hero.scale.setTo(-1,1);
-        }else if(this.cursors.right.isDown){
+        }else if(this.cursors.right.isDown&&!this.hero.dead){
             this.hero.body.velocity.x=gameOptions.heroSpeed;
             this.hero.scale.setTo(1,1);
             this.hero.animations.play('walk');
-        }else if (this.space.isDown){
+        }else if (this.space.isDown&&!this.hero.dead&&this.space.downDuration(10000)){
             this.hero.animations.play('idleShoot');
             this.hero.body.velocity.x=0;
             
-            if(this.oneTime){
-            this.bullet = new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this);
-            this.game.add.existing(this.bullet);
-            this.game.world.swap(this.hero,this.bullet);
-            this.oneTime = false;
-                
-            //ORDEN DE DIBUJO 
-            this.game.world.swap(this.timer,this.bullet);
-            }
-        }else{
-             this.oneTime = true;
+                if(this.oneTime){
+                this.bullet = new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this);
+                this.game.add.existing(this.bullet);
+                this.game.world.swap(this.hero,this.bullet);
+                this.oneTime = false;
+                //ORDEN DE DIBUJO 
+                this.game.world.swap(this.timer,this.bullet);
+                }
+            
+        }else if(!this.hero.dead){
+            this.oneTime = true;
             this.hero.animations.play('idle');
             this.hero.body.velocity.x=0;
         }
