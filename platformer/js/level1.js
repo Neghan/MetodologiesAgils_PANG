@@ -66,12 +66,19 @@ platformer.level1 ={
         align: "center"
         });
         this.text5.anchor.setTo(0.5, 0.5);
+        this.text6 = this.game.add.text(this.game.world.centerX-115, this.game.world.centerY+125, "", {
+        font: "10px Pixel",
+        fill: "#ffffff",
+        align: "center"
+        });
+        this.text6.anchor.setTo(0.5, 0.5);
         this.timer = this.game.add.text(this.game.world.centerX+130, this.game.world.centerY-80, "TIME:", {
         font: "20px Arial",
         fill: "#ffffff",
         align: "left"
         });
         this.timer.anchor.setTo(0.5, 0.5);
+        
         //LIVES
         this.lifes = this.game.add.sprite(15,230,'life',0);
         this.lifes2 = this.game.add.sprite(35,230,'life',0);
@@ -87,6 +94,7 @@ platformer.level1 ={
         this.hero.animations.add('idleShoot',[10,11],10,false);
         this.hero.animations.add('idle',[10],10,true);
         this.hero.lives = 3;
+        this.hero.score = 0;
         this.hero.anchor.setTo(.5);
         
         this.game.physics.arcade.enable(this.hero);
@@ -143,15 +151,10 @@ platformer.level1 ={
         this.camera.shake(0.025,100);
         this.hero.body.velocity.x =0;
         this.hero.lives--;
-        console.log(this.hero.lives);
     },
-    
     hitShoot:function(){
-        
+        this.hero.score+=100;
     },
-    
-
-    
     update:function(){
         
         if (this.goToWorldmap == true){
@@ -169,6 +172,7 @@ platformer.level1 ={
         this.text5.setText("HI: 10000");
         this.text3.setText("PLAYER - 1");
         this.text4.setText("PLAYER - 2");
+        this.text6.setText(""+this.hero.score);
         
         this.timer.setText("TIME: "+0+Math.trunc(this.timeLeft));
         this.timeLeft -= 0.012;//this.game.time.now;
@@ -176,9 +180,11 @@ platformer.level1 ={
         //VIDAS
         if(this.hero.lives<=2){
             this.lifes3.destroy();
+            //this.state.start('level1');
         }
         if(this.hero.lives<=1){
             this.lifes2.destroy();
+            //this.state.start('level1');
         }
         if(this.hero.lives<=0){
             this.lifes.destroy();

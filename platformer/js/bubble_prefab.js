@@ -98,6 +98,7 @@ platformer.bubble_prefab.prototype.hitShoot = function(_bubble, _shot){
             this.bubble2 = new platformer.bubble_prefab(this.game,this.body.x,this.body.y,this.level,this.size+1,this.color,-this.directionX);
             this.game.add.existing(this.bubble2);  
         }
+        this.level.hitShoot();
         _shot.kill();
         this.destroy = true;
         //delay o quan acabi la animació --> destroy.
