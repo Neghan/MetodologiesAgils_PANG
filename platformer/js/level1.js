@@ -36,6 +36,12 @@ platformer.level1 ={
       this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
     
         //HUD TEXT
+        this.ready = this.game.add.text(this.game.world.centerX, this.game.world.centerY-20, "READY", {
+        font: "15px Pixel",
+        fill: "#00FFFF",
+        align: "center"
+        });
+        this.ready.anchor.setTo(0.5, 0.5);
         this.text = this.game.add.text(this.game.world.centerX, this.game.world.centerY+115, "Barcelona", {
         font: "10px Pixel",
         fill: "#ffffff",
@@ -185,6 +191,10 @@ platformer.level1 ={
         
         this.timer.setText("TIME: "+0+Math.trunc(this.timeLeft));
         this.timeLeft -= 0.012;//this.game.time.now;
+        
+        if(this.timeLeft<=99){
+            this.ready.destroy();
+        }
         
         //VIDAS
         if(this.hero.lives<=2){
