@@ -3,7 +3,10 @@ var platformer = platformer || {};
 
 platformer.worldmap ={
     init:function(){
-        //this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+        this.scale.pageAlignHorizontally = true;
+        this.scale.pageAlignVertically = true;
+        this.scale.parentIsWindow = true;
         this.scale.setGameSize(gameOptions.gameWidth,gameOptions.gameHeight);
         this.game.load.bitmapFont()
 
