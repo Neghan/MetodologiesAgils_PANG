@@ -2,7 +2,7 @@ var platformer = platformer || {};
 
 var gameOptions={
     gameWidth:384,
-    gameHeight:258,
+    gameHeight:308,
     level1Width:384,
     level1Height:208,
     heroGravity:1000,

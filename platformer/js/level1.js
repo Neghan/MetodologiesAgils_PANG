@@ -6,7 +6,7 @@ platformer.level1 ={
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
         this.scale.parentIsWindow = true;
-        this.scale.setGameSize(gameOptions.gameWidth,gameOptions.gameHeight);
+        this.scale.setGameSize(gameOptions.gameWidth,gameOptions.gameHeight-50);
         this.game.load.bitmapFont()
         
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
@@ -35,15 +35,16 @@ platformer.level1 ={
         
     },
     create:function(){
+
+        this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
         
-      this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
-    
         //HUD TEXT
         this.ready = this.game.add.text(this.game.world.centerX, this.game.world.centerY-20, "READY", {
         font: "15px Pixel",
         fill: "#00FFFF",
         align: "center"
         });
+        this.ready.setShadow(-1, 1, 'rgba(0,0,0,255)',0);
         this.ready.anchor.setTo(0.5, 0.5);
         this.text = this.game.add.text(this.game.world.centerX, this.game.world.centerY+115, "Barcelona", {
         font: "10px Pixel",
@@ -195,8 +196,17 @@ platformer.level1 ={
         this.timer.setText("TIME: "+0+Math.trunc(this.timeLeft));
         this.timeLeft -= 0.012;//this.game.time.now;
         
+        //Flickering Effect Ready
+        if(this.timeLeft<=100&&this.timeLeft>=99){
+            //this.ready.alpha = 255;
+        }
+        if(this.timeLeft<100&&this.timeLeft>99){
+             //this.ready.alpha =0;
+        }
         if(this.timeLeft<=99){
+            //this.game.paused = true;
             this.ready.destroy();
+            this.game.paused = false;
         }
         
         //VIDAS
