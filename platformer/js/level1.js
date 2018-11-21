@@ -27,6 +27,7 @@ platformer.level1 ={
         this.load.spritesheet('hero','assets/img/player_1.png',41,32);
         this.load.spritesheet('life','assets/img/player_1_life.png',16,16);
         this.load.spritesheet('shoot','assets/img/hook.png',9,189);
+        this.load.spritesheet('fruta','assets/img/Fruit.png',16,16);
         
         this.load.spritesheet('bubble_xl','assets/img/bubble_xl.png',48,46);
         this.load.spritesheet('bubble_l','assets/img/bubble_l.png',32,30);
@@ -96,6 +97,7 @@ platformer.level1 ={
         //this.interfaz = new platformer.HUD(this.game,this);
         
         this.timeLeft = 100;
+        this.timeSpawnFruit = 15;
         
         //HERO FUNCTIONS
         this.hero=this.game.add.sprite(65,40,'hero',0);
@@ -144,8 +146,6 @@ platformer.level1 ={
         this.muroLados2.body.immovable = true;
         this.game.physics.arcade.collide(this.hero,this.muroLados2);
   
-        
-        
         //DISPAROS
         this.oneTime = true;
         //this.bullet = this.game.add.sprite('shoot');
@@ -166,9 +166,21 @@ platformer.level1 ={
         this.hero.dead=true;
         this.hero.lives--;
     },
+    
     hitShoot:function(){
         this.hero.score+=100;
     },
+    
+    hitFruit:function(){
+        this.hero.score+=250;
+    },
+    
+    spawnFruit:function(){
+        this.comida = new platformer.fruits(this.game,this.game.world.centerX,25,this);
+        this.game.add.existing(this.comida);
+    },
+    
+    
     update:function(){
         
         if (this.goToWorldmap == true){
@@ -182,6 +194,7 @@ platformer.level1 ={
         this.game.physics.arcade.collide(this.bullet,this.muro2);
         this.game.physics.arcade.collide(this.hero,this.muroLados1);
         this.game.physics.arcade.collide(this.hero,this.muroLados2);
+        this.game.physics.arcade.collide(this.comida,this.muro);
         }
         
         
@@ -249,6 +262,10 @@ platformer.level1 ={
                 if(this.oneTime){
                 this.bullet = new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this);
                 this.game.add.existing(this.bullet);
+                    
+
+                //this.spawnFruit();
+                    
                 this.game.world.swap(this.hero,this.bullet);
                 this.oneTime = false;
                 //ORDEN DE DIBUJO 
@@ -259,6 +276,15 @@ platformer.level1 ={
             this.oneTime = true;
             this.hero.animations.play('idle');
             this.hero.body.velocity.x=0;
+        }
+        
+        //SPAWN FRUIT
+        if (this.timeSpawnFruit <= 0){
+            this.spawnFruit();
+            this.timeSpawnFruit = 15;
+        }
+        else{
+            this.timeSpawnFruit -= 0.012;
         }
        
          
