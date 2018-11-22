@@ -150,7 +150,11 @@ platformer.level1 ={
         this.oneTime = true;
         //this.bullet = this.game.add.sprite('shoot');
         
-        //BUBBLE
+        //BUBBLES
+        this.bubbles = this.game.add.group();
+        this.bubbles.enableBody = true;
+        this.bubbles.physicsBodyType = Phaser.Physics.ARCADE;
+        
         this.bubble = new platformer.bubble_prefab(this.game,100,100,this,0,0,1);
         this.game.add.existing(this.bubble);
         

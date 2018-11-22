@@ -48,7 +48,7 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     this.body.bounce.y = 1;
     this.body.gravity.y = 1; //Parece que a partir de cierto número no baja mas
     
-
+    this.level.bubbles.add(this);
 };
 
 
