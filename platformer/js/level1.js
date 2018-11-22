@@ -39,50 +39,8 @@ platformer.level1 ={
 
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
         
-        //HUD TEXT
-        this.ready = this.game.add.text(this.game.world.centerX, this.game.world.centerY-20, "READY", {
-        font: "15px Pixel",
-        fill: "#00FFFF",
-        align: "center"
-        });
-        this.ready.setShadow(-1, 1, 'rgba(0,0,0,255)',0);
-        this.ready.anchor.setTo(0.5, 0.5);
-        this.text = this.game.add.text(this.game.world.centerX, this.game.world.centerY+115, "Barcelona", {
-        font: "10px Pixel",
-        fill: "#ffffff",
-        align: "center"
-        });
-        this.text.anchor.setTo(0.5, 0.5);
-        this.text2 = this.game.add.text(this.game.world.centerX, this.game.world.centerY+140, "1-1 Stage", {
-        font: "10px Pixel",
-        fill: "#ffffff",
-        align: "center"
-        });
-        this.text2.anchor.setTo(0.5, 0.5);
-        this.text3 = this.game.add.text(this.game.world.centerX-150, this.game.world.centerY+115, "PLAYER - 1", {
-        font: "10px Pixel",
-        fill: "#ffffff",
-        align: "center"
-        });
-        this.text3.anchor.setTo(0.5, 0.5);
-        this.text4 = this.game.add.text(this.game.world.centerX+150, this.game.world.centerY+115, "PLAYER - 2", {
-        font: "10px Pixel",
-        fill: "#ffffff",
-        align: "center"
-        });
-        this.text4.anchor.setTo(0.5, 0.5);
-        this.text5 = this.game.add.text(this.game.world.centerX, this.game.world.centerY+150, "HI: 10000", {
-        font: "10px Pixel",
-        fill: "#ffffff",
-        align: "center"
-        });
-        this.text5.anchor.setTo(0.5, 0.5);
-        this.text6 = this.game.add.text(this.game.world.centerX-115, this.game.world.centerY+125, "", {
-        font: "10px Pixel",
-        fill: "#ffffff",
-        align: "center"
-        });
-        this.text6.anchor.setTo(0.5, 0.5);
+        this.hud = new platformer.HUD(this.game,this);
+        
         this.timer = this.game.add.text(this.game.world.centerX+130, this.game.world.centerY-80, "TIME:", {
         font: "20px Arial",
         fill: "#ffffff",
@@ -203,26 +161,26 @@ platformer.level1 ={
         
         
         
-        this.text.setText("BARCELONA");
-        this.text2.setText("1-1 STAGE");
-        this.text5.setText("HI: 10000");
-        this.text3.setText("PLAYER - 1");
-        this.text4.setText("PLAYER - 2");
-        this.text6.setText(""+this.hero.score);
+        //this.text.setText("BARCELONA");
+        //this.text2.setText("1-1 STAGE");
+        //this.text5.setText("HI: 10000");
+        //this.text3.setText("PLAYER - 1");
+        //this.text4.setText("PLAYER - 2");
+        //this.text6.setText(""+this.hero.score);
         
         this.timer.setText("TIME: "+0+Math.trunc(this.timeLeft));
         this.timeLeft -= 0.012;//this.game.time.now;
         
         //Flickering Effect Ready
         if(this.timeLeft<=100&&this.timeLeft>=99){
-            //this.ready.alpha = 255;
+            //this.hud.ready.alpha = 255;
         }
         if(this.timeLeft<100&&this.timeLeft>99){
-             //this.ready.alpha =0;
+             //this.hud.ready.alpha =0;
         }
         if(this.timeLeft<=99){
             //this.game.paused = true;
-            this.ready.destroy();
+            this.hud.ready.destroy();
             this.game.paused = false;
         }
         
@@ -259,7 +217,7 @@ platformer.level1 ={
             this.hero.body.velocity.x=gameOptions.heroSpeed;
             this.hero.scale.setTo(1,1);
             this.hero.animations.play('walk');
-        }else if (this.space.isDown&&!this.hero.dead&&this.space.downDuration(10000)){
+        }else if (this.space.isDown&&!this.hero.dead&&this.space.downDuration(2500)){
             this.hero.animations.play('idleShoot');
             this.hero.body.velocity.x=0;
             
