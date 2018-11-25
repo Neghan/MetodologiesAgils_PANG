@@ -13,6 +13,7 @@ var gameOptions={
 platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,Phaser.AUTO,'gameFrame',this,false,false);
 
 platformer.game.state.add('level1',platformer.level1);
+platformer.game.state.add('level2',platformer.level2);
 platformer.game.state.add('splashscreen',platformer.splashscreen);
 platformer.game.state.add('worldmap',platformer.worldmap);
 platformer.game.state.start('splashscreen');
