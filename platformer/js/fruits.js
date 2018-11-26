@@ -31,8 +31,9 @@ platformer.fruits = function(game,x,y,level){
     this.animations.add("24",[24,29,24],5,true);
     this.animations.add("25",[25,29,25],5,true);
     this.animations.add("26",[26,29,26],5,true);
+    
     this.level = level;
-    this.game.physics.arcade.enable(this);
+    this.game.physics.enable(this, Phaser.Physics.ARCADE);
     this.body.immovable = false;
     this.body.allowGravity = true;
     this.oneTimeFruit = true;

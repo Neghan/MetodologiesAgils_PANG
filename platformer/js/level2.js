@@ -253,4 +253,3 @@ platformer.level2 ={
         
     }
 };
-};

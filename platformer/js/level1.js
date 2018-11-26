@@ -23,10 +23,12 @@ platformer.level1 ={
         this.load.tilemap('level1','assets/tilemaps/barcelona.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.spritesheet('walls','assets/img/walls_barcelona_floor.png');
         this.load.spritesheet('walls1','assets/img/walls_barcelona.png');
-        //this.load.image('moss','assets/img/tileset_edge_lv1.png');
+        
         this.load.spritesheet('hero','assets/img/player_1.png',41,32);
         this.load.spritesheet('life','assets/img/player_1_life.png',16,16);
+        
         this.load.spritesheet('shoot','assets/img/hook.png',9,189);
+        
         this.load.spritesheet('fruta','assets/img/Fruit.png',16,16);
         this.load.spritesheet('loot','assets/img/loot.png',16,16);
         
@@ -139,16 +141,14 @@ platformer.level1 ={
         this.hero.score+=250;
     },
     
+    collHero:function(){
+        console.log("Adri implementa el Power Up");
+    },
+    
     spawnFruit:function(){
         this.comida = new platformer.fruits(this.game,this.game.world.centerX,25,this);
         this.game.add.existing(this.comida);
     },
-    
-    spawnLoot:function(){
-        this.looteo = new platformer.lootPowerup(this.game,this.game.world.centerX,25,this);
-        this.game.add.existing(this.looteo);
-    },
-    
     
     update:function(){
         
@@ -164,7 +164,7 @@ platformer.level1 ={
         this.game.physics.arcade.collide(this.hero,this.muroLados1);
         this.game.physics.arcade.collide(this.hero,this.muroLados2);
         this.game.physics.arcade.collide(this.comida,this.muro);
-        this.game.physics.arcade.collide(this.looteo,this.muro);
+        
         }
         
 
@@ -226,8 +226,6 @@ platformer.level1 ={
                 this.bullet = new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this);
                 this.game.add.existing(this.bullet);
                     
-
-                //this.spawnFruit();
                     
                 this.game.world.swap(this.hero,this.bullet);
                 this.oneTime = false;
@@ -249,17 +247,6 @@ platformer.level1 ={
         else{
             this.timeSpawnFruit -= 0.012;
         }
-        
-        //SPAWN LOOT
-        if (this.timeSpawnLoot <= 0){
-            this.spawnLoot();
-            this.timeSpawnLoot = 10;
-        }
-        else{
-            this.timeSpawnLoot -= 0.012;
-        }
-       
          
-        
     }
 };
