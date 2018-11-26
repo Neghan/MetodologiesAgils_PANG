@@ -28,6 +28,7 @@ platformer.level1 ={
         this.load.spritesheet('life','assets/img/player_1_life.png',16,16);
         this.load.spritesheet('shoot','assets/img/hook.png',9,189);
         this.load.spritesheet('fruta','assets/img/Fruit.png',16,16);
+        this.load.spritesheet('loot','assets/img/loot.png',16,16);
         
         this.load.spritesheet('bubble_xl','assets/img/bubble_xl.png',48,46);
         this.load.spritesheet('bubble_l','assets/img/bubble_l.png',32,30);
@@ -52,10 +53,11 @@ platformer.level1 ={
         this.lifes = this.game.add.sprite(15,230,'life',0);
         this.lifes2 = this.game.add.sprite(35,230,'life',0);
         this.lifes3 = this.game.add.sprite(55,230,'life',0);
-        //this.interfaz = new platformer.HUD(this.game,this);
+
         
         this.timeLeft = 100;
         this.timeSpawnFruit = 15;
+        this.timeSpawnLoot = 10;
         
         //HERO FUNCTIONS
         this.hero=this.game.add.sprite(65,40,'hero',0);
@@ -142,6 +144,11 @@ platformer.level1 ={
         this.game.add.existing(this.comida);
     },
     
+    spawnLoot:function(){
+        this.looteo = new platformer.lootPowerup(this.game,this.game.world.centerX,25,this);
+        this.game.add.existing(this.looteo);
+    },
+    
     
     update:function(){
         
@@ -157,16 +164,10 @@ platformer.level1 ={
         this.game.physics.arcade.collide(this.hero,this.muroLados1);
         this.game.physics.arcade.collide(this.hero,this.muroLados2);
         this.game.physics.arcade.collide(this.comida,this.muro);
+        this.game.physics.arcade.collide(this.looteo,this.muro);
         }
         
-        
-        
-        //this.text.setText("BARCELONA");
-        //this.text2.setText("1-1 STAGE");
-        //this.text5.setText("HI: 10000");
-        //this.text3.setText("PLAYER - 1");
-        //this.text4.setText("PLAYER - 2");
-        //this.text6.setText(""+this.hero.score);
+
         
         this.timer.setText("TIME: "+0+Math.trunc(this.timeLeft));
         this.timeLeft -= 0.012;//this.game.time.now;
@@ -247,6 +248,15 @@ platformer.level1 ={
         }
         else{
             this.timeSpawnFruit -= 0.012;
+        }
+        
+        //SPAWN LOOT
+        if (this.timeSpawnLoot <= 0){
+            this.spawnLoot();
+            this.timeSpawnLoot = 10;
+        }
+        else{
+            this.timeSpawnLoot -= 0.012;
         }
        
          
