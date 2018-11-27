@@ -43,7 +43,7 @@ platformer.level1 ={
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
         
         //HUD
-        this.hud = new platformer.HUD(this.game,this);
+        this.hud = new platformer.HUD(this.game,this,"Barcelona","1-1 Stage");
         this.timer = this.game.add.text(this.game.world.centerX+130, this.game.world.centerY-80, "TIME:", {
         font: "20px Arial",
         fill: "#ffffff",

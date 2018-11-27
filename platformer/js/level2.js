@@ -28,6 +28,7 @@ platformer.level2 ={
         this.load.spritesheet('life','assets/img/player_1_life.png',16,16);
         this.load.spritesheet('shoot','assets/img/hook.png',9,189);
         this.load.spritesheet('fruta','assets/img/Fruit.png',16,16);
+        this.load.spritesheet('loot','assets/img/loot.png',16,16);
         
         this.load.spritesheet('bubble_xl','assets/img/bubble_xl.png',48,46);
         this.load.spritesheet('bubble_l','assets/img/bubble_l.png',32,30);
@@ -40,7 +41,7 @@ platformer.level2 ={
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
         
         //HUD
-        this.hud = new platformer.HUD(this.game,this);
+        this.hud = new platformer.HUD(this.game,this,"New York","14-1 Stage");
         this.timer = this.game.add.text(this.game.world.centerX+130, this.game.world.centerY-80, "TIME:", {
         font: "20px Arial",
         fill: "#ffffff",

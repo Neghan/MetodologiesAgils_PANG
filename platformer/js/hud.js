@@ -1,6 +1,8 @@
 var platformer = platformer || {};
 
-platformer.HUD=function(game,   level){
+platformer.HUD=function(game,   level, name,stage){
+    this.name = name;
+    this.stage = stage;
        //HUD TEXT
         this.ready = game.add.text(game.world.centerX, game.world.centerY-20, "READY", {
         font: "15px Pixel",
@@ -9,13 +11,13 @@ platformer.HUD=function(game,   level){
         });
         this.ready.setShadow(-1, 1, 'rgba(0,0,0,255)',0);
         this.ready.anchor.setTo(0.5, 0.5);
-        this.text = game.add.text(game.world.centerX, game.world.centerY+115, "Barcelona", {
+        this.text = game.add.text(game.world.centerX, game.world.centerY+115, this.name, {
         font: "10px Pixel",
         fill: "#ffffff",
         align: "center"
         });
         this.text.anchor.setTo(0.5, 0.5);
-        this.text2 = game.add.text(game.world.centerX, game.world.centerY+140, "1-1 Stage", {
+        this.text2 = game.add.text(game.world.centerX, game.world.centerY+140, this.stage, {
         font: "10px Pixel",
         fill: "#ffffff",
         align: "center"
