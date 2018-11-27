@@ -150,6 +150,11 @@ platformer.level1 ={
         this.game.add.existing(this.comida);
     },
     
+    spawnLoot:function(){
+        this.POWUP = new platformer.loot_powerup(this.game,this.bubble.body.position.x, this.bubble.body.position.y,this);
+        this.game.add.existing(this.POWUP);
+    },
+    
     update:function(){
         
         if (this.goToWorldmap == true){
@@ -164,7 +169,7 @@ platformer.level1 ={
         this.game.physics.arcade.collide(this.hero,this.muroLados1);
         this.game.physics.arcade.collide(this.hero,this.muroLados2);
         this.game.physics.arcade.collide(this.comida,this.muro);
-        
+        this.game.physics.arcade.collide(this.POWUP,this.muro);
         }
         
 

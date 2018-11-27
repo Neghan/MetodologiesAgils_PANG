@@ -89,10 +89,10 @@ platformer.bubble_prefab.prototype.update = function(){
         this.destroyDelay -= 0.3;
         if(this.destroyDelay <= 0){
             if (this.spawnedLoot == false){
-                this.POWUP = new platformer.loot_powerup(this.game,this.body.position.x, this.body.position.y,this);
-                this.game.add.existing(this.POWUP);
+                this.level.spawnLoot();
                 this.spawnedLoot = true;
             }
+            
             this.bubbleScore.setText("");
             this.kill();
         }
