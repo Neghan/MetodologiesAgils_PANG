@@ -188,11 +188,11 @@ platformer.level2 ={
         //VIDAS
         if(this.hero.lives<=2){
             this.lifes3.destroy();
-            //this.state.start('level1');
+            this.state.start('level1');
         }
         if(this.hero.lives<=1){
             this.lifes2.destroy();
-            //this.state.start('level1');
+            this.state.start('level1');
         }
         if(this.hero.lives<=0){
             this.lifes.destroy();

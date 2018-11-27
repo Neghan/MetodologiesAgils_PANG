@@ -118,7 +118,6 @@ platformer.level1 ={
         this.bubbles.physicsBodyType = Phaser.Physics.ARCADE;
         
         this.bubble = new platformer.bubble_prefab(this.game,100,100,this,0,0,1);
-        this.game.add.existing(this.bubble);
         
         //MUSICA
         this.music = this.add.audio('MusicBarcelona',1,true);
@@ -193,11 +192,11 @@ platformer.level1 ={
         //VIDAS
         if(this.hero.lives<=2){
             this.lifes3.destroy();
-            //this.state.start('level1');
+            this.state.start('level1');
         }
         if(this.hero.lives<=1){
             this.lifes2.destroy();
-            //this.state.start('level1');
+            this.state.start('level1');
         }
         if(this.hero.lives<=0){
             this.lifes.destroy();

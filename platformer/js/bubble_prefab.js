@@ -43,7 +43,7 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
         this.body.setCircle(23);
     }
     this.destroyDelay = 10;
-    this.destroy = false;
+    this.exploded = false;
     this.setText = false;
     this.body.bounce.y = 1;
     this.body.gravity.y = 1; //Parece que a partir de cierto número no baja mas
@@ -84,7 +84,7 @@ platformer.bubble_prefab.prototype.update = function(){
 //       this.directionY *=-1;
 //       this.body.velocity.y = this.speedY*this.directionY;
 //   }
-    if (this.destroy == true){
+    if (this.exploded == true){
         
         this.destroyDelay -= 0.3;
         if(this.destroyDelay <= 0){
@@ -121,7 +121,7 @@ platformer.bubble_prefab.prototype.hitShoot = function(_bubble, _shot){
         }
         this.level.hitShoot();
         _shot.kill();
-        this.destroy = true;
+        this.exploded = true;
         //delay o quan acabi la animació --> destroy.
 
 };
