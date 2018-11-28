@@ -50,8 +50,7 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     
     this.spawnRateLoot = 3;
     this.spawnedLoot = false;
-    
-    this.level.bubbles.add(this);
+    this.game.add.existing(this);
 };
 
 
@@ -62,7 +61,7 @@ platformer.bubble_prefab.prototype.constructor = platformer.bubble_prefab;
 
 platformer.bubble_prefab.prototype.update = function(){
     
-    //this.game.debug.body(this);    
+    this.game.debug.body(this);
     this.game.physics.arcade.collide(this,this.level.muroLados1);
     this.game.physics.arcade.collide(this,this.level.muroLados2);
     this.game.physics.arcade.collide(this,this.level.muro);
@@ -89,12 +88,12 @@ platformer.bubble_prefab.prototype.update = function(){
         this.destroyDelay -= 0.3;
         if(this.destroyDelay <= 0){
             if (this.spawnedLoot == false){
-                this.level.spawnLoot();
+                this.level.spawnLoot(this.body.position.x, this.body.position.y);
                 this.spawnedLoot = true;
             }
             
-            this.bubbleScore.setText("");
-            this.kill();
+            //this.bubbleScore.setText("");*/
+            this.destroy();
         }
     }
 };
@@ -103,24 +102,20 @@ platformer.bubble_prefab.prototype.hitShoot = function(_bubble, _shot){
         
         this.animations.play('explode');
         
-        if (this.setText == false){
+        /* (this.setText == false){
             this.bubbleScore = this.game.add.text( this.body.position.x+5, this.body.position.y-5, "100", {
             font: "10px Pixel",
             fill: "#ffffff",
             align: "left"
             });
             this.setText = true;
-        }
+        }*/
         this.body.enable = false;
         if (this.size < 3){
-            this.bubble1 = new platformer.bubble_prefab(this.game,this.body.x,this.body.y,this.level,this.size+1,this.color,this.directionX);
-            this.game.add.existing(this.bubble1);
-            
-            this.bubble2 = new platformer.bubble_prefab(this.game,this.body.x,this.body.y,this.level,this.size+1,this.color,-this.directionX);
-            this.game.add.existing(this.bubble2);  
+            this.level.spawnBubbles(this.body.x, this.body.y, this.size + 1, this.color, this.directionX);
         }
         this.level.hitShoot();
-        _shot.kill();
+        _shot.destroy();
         this.exploded = true;
         //delay o quan acabi la animació --> destroy.
 

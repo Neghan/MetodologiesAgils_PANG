@@ -113,11 +113,12 @@ platformer.level1 ={
         //this.bullet = this.game.add.sprite('shoot');
         
         //BUBBLES
-        this.bubbles = this.game.add.group();
-        this.bubbles.enableBody = true;
-        this.bubbles.physicsBodyType = Phaser.Physics.ARCADE;
+        this.bubbleCollisionGroup = this.game.add.group();
+        this.bubbleCollisionGroup.enableBody = true;
+        this.bubbleCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
         
-        this.bubble = new platformer.bubble_prefab(this.game,100,100,this,0,0,1);
+        this.bubbleArray = [];
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,0,1));
         
         //MUSICA
         this.music = this.add.audio('MusicBarcelona',1,true);
@@ -149,13 +150,17 @@ platformer.level1 ={
         this.game.add.existing(this.comida);
     },
     
-    spawnLoot:function(){
-        this.POWUP = new platformer.loot_powerup(this.game,this.bubble.body.position.x, this.bubble.body.position.y,this);
-        this.game.add.existing(this.POWUP);
+    spawnLoot:function(x, y){
+        //this.POWUP = new platformer.loot_powerup(this.game, x, y,this);
+        //this.game.add.existing(this.POWUP);
+    },
+    spawnBubbles:function(x, y, size, color, direction){
+            this.bubbleArray.push(new platformer.bubble_prefab(this.game,x,y,this,size,color,direction));
+            this.bubbleArray.push(new platformer.bubble_prefab(this.game,x,y,this,size,color,-direction));
     },
     
     update:function(){
-        
+        //console.log(this.bubbleArray.length);
         if (this.goToWorldmap == true){
             this.state.start('worldmap');
             this.goToWorldmap = false;
