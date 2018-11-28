@@ -35,6 +35,8 @@ platformer.level2 ={
         this.load.spritesheet('bubble_m','assets/img/bubble_m.png',16,16);
         this.load.spritesheet('bubble_s','assets/img/bubble_s.png',10,8);
         
+        this.load.spritesheet('destructibles2','assets/img/destructibles2.png',10,42);
+        
     },
     create:function(){
 
@@ -116,6 +118,11 @@ platformer.level2 ={
         
         this.bubble = new platformer.bubble_prefab(this.game,100,100,this,0,0,1);
         this.game.add.existing(this.bubble);
+        
+        
+        //COLLISIONES
+        this.destructiblesInst = new platformer.destructibles(this.game,150,100,this);
+        this.game.add.existing(this.destructibles);
         
         //MUSICA
         this.music = this.add.audio('MusicBarcelona',1,true);

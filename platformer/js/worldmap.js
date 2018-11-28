@@ -228,7 +228,7 @@ platformer.worldmap ={
                 this.state.start('level1');   //NIVEL1
                 }
                 else if( this.currentLevel == 2){ 
-                this.state.start('level1');   //NIVEL2
+                this.state.start('level2');   //NIVEL2
                 }
                 else if( this.currentLevel == 3){
                 this.state.start('level1');   //NIVEL3
