@@ -51,6 +51,7 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     this.spawnRateLoot = 3;
     this.spawnedLoot = false;
     this.game.add.existing(this);
+    this.level.bubbleCollisionGroup.add(this);
 };
 
 

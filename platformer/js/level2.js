@@ -35,7 +35,7 @@ platformer.level2 ={
         this.load.spritesheet('bubble_m','assets/img/bubble_m.png',16,16);
         this.load.spritesheet('bubble_s','assets/img/bubble_s.png',10,8);
         
-        this.load.spritesheet('destructibles2','assets/img/destructibles2.png',10,42);
+        this.load.spritesheet('destructibles2','assets/img/destructibles2.png',8,31);
         
     },
     create:function(){
@@ -112,17 +112,20 @@ platformer.level2 ={
         //this.bullet = this.game.add.sprite('shoot');
         
         //BUBBLES
-        this.bubbles = this.game.add.group();
-        this.bubbles.enableBody = true;
-        this.bubbles.physicsBodyType = Phaser.Physics.ARCADE;
+        this.bubbleCollisionGroup = this.game.add.group();
+        this.bubbleCollisionGroup.enableBody = true;
+        this.bubbleCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
         
-        this.bubble = new platformer.bubble_prefab(this.game,100,100,this,0,0,1);
-        this.game.add.existing(this.bubble);
+        this.bubbleArray = [];
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,0,1));
         
         
         //COLLISIONES
         this.destructiblesInst = new platformer.destructibles(this.game,150,100,this);
-        this.game.add.existing(this.destructibles);
+        this.game.add.existing(this.destructiblesInst);
+        
+        this.collisionwallInst = new platformer.collsionwall(this.game,180,100,this);
+        this.game.add.existing(this.collisionwallInst);
         
         //MUSICA
         this.music = this.add.audio('MusicBarcelona',1,true);
@@ -195,11 +198,11 @@ platformer.level2 ={
         //VIDAS
         if(this.hero.lives<=2){
             this.lifes3.destroy();
-            this.state.start('level1');
+            this.state.start('level2');
         }
         if(this.hero.lives<=1){
             this.lifes2.destroy();
-            this.state.start('level1');
+            this.state.start('level2');
         }
         if(this.hero.lives<=0){
             this.lifes.destroy();

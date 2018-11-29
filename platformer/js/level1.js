@@ -120,6 +120,8 @@ platformer.level1 ={
         this.bubbleArray = [];
         this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,0,1));
         
+        
+        
         //MUSICA
         this.music = this.add.audio('MusicBarcelona',1,true);
         this.music.play();
