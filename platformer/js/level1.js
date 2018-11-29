@@ -120,6 +120,13 @@ platformer.level1 ={
         this.bubbleArray = [];
         this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,0,1));
         
+        //POWERUP PICK UP
+        this.powerupCollisionGroup = this.game.add.group();
+        this.powerupCollisionGroup.enableBody = true;
+        this.powerupCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        this.powerupArray = [];
+        
         
         
         //MUSICA
@@ -153,8 +160,10 @@ platformer.level1 ={
     },
     
     spawnLoot:function(x, y){
-        this.POWUP = new platformer.loot_powerup(this.game, x, y,this);
-        this.game.add.existing(this.POWUP);
+        this.powerupArray.push(new platformer.loot_powerup(this.game, x, y,this));
+        //this.POWUP = new platformer.loot_powerup(this.game, x, y,this);
+        //this.game.add.existing(this.POWUP);
+        console.log("Spawn Power Up");
     },
     
     spawnBubbles:function(x, y, size, color, direction){
@@ -217,6 +226,7 @@ platformer.level1 ={
             this.hero.body.velocity.x=30;
             this.hero.body.velocity.y=30;
             this.hero.body.collideWorldBounds = false;
+            this.music.stop();
             //this.state.start('level1');
         }
         

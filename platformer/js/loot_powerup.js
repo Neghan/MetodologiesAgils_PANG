@@ -25,6 +25,8 @@ platformer.loot_powerup = function(game,x,y,level){
     
     this.delayDestroy = false;
     this.lootDestroyDelay = 1;
+    this.game.add.existing(this);
+    this.level.powerupCollisionGroup.add(this);
 
 };
 
@@ -33,9 +35,8 @@ platformer.loot_powerup.prototype.constructor = platformer.loot_powerup;
 
 platformer.loot_powerup.prototype.update = function(){
     
-    //this.game.physics.arcade.collide(this,this.muro);
+    this.game.physics.arcade.collide(this,this.level.muro);
     
-
     this.game.physics.arcade.collide(this,this.level.hero,this.collHero,null,this);
     
     this.body.velocity.y= 50;
