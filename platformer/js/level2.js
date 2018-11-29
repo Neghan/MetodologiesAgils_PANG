@@ -148,13 +148,17 @@ platformer.level2 ={
         this.hero.score+=250;
     },
     
+    collHero:function(){
+    console.log("Adri implementa el Power Up");
+    },
+    
     spawnFruit:function(){
         this.comida = new platformer.fruits(this.game,this.game.world.centerX,25,this);
         this.game.add.existing(this.comida);
     },
     spawnLoot:function(x, y){
-        //this.POWUP = new platformer.loot_powerup(this.game, x, y,this);
-        //this.game.add.existing(this.POWUP);
+        this.POWUP = new platformer.loot_powerup(this.game, x, y,this);
+        this.game.add.existing(this.POWUP);
     },
     spawnBubbles:function(x, y, size, color, direction){
             this.bubbleArray.push(new platformer.bubble_prefab(this.game,x,y,this,size,color,direction));
@@ -175,6 +179,7 @@ platformer.level2 ={
         this.game.physics.arcade.collide(this.hero,this.muroLados1);
         this.game.physics.arcade.collide(this.hero,this.muroLados2);
         this.game.physics.arcade.collide(this.comida,this.muro);
+        this.game.physics.arcade.collide(this.POWUP,this.muro);
         }
         
         

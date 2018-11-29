@@ -153,9 +153,10 @@ platformer.level1 ={
     },
     
     spawnLoot:function(x, y){
-        //this.POWUP = new platformer.loot_powerup(this.game, x, y,this);
-        //this.game.add.existing(this.POWUP);
+        this.POWUP = new platformer.loot_powerup(this.game, x, y,this);
+        this.game.add.existing(this.POWUP);
     },
+    
     spawnBubbles:function(x, y, size, color, direction){
             this.bubbleArray.push(new platformer.bubble_prefab(this.game,x,y,this,size,color,direction));
             this.bubbleArray.push(new platformer.bubble_prefab(this.game,x,y,this,size,color,-direction));

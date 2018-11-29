@@ -23,7 +23,7 @@ platformer.loot_powerup = function(game,x,y,level){
     this.lootlife = 14;
     this.value = 0;
     
-    this.destroy = false;
+    this.delayDestroy = false;
     this.lootDestroyDelay = 1;
 
 };
@@ -35,21 +35,6 @@ platformer.loot_powerup.prototype.update = function(){
     
     //this.game.physics.arcade.collide(this,this.muro);
     
-    if (this.destroy == true){
-        if (this.value == 1 ){
-        this.animations.play(1.5);    
-        }
-        else if (this.value == 2){
-        this.animations.play(2.5);    
-        }
-        else{
-        this.animations.play(this.value);
-        }
-        this.lootDestroyDelay -= 0.012;
-        if(this.lootDestroyDelay <= 0){
-        this.kill();
-        }
-    }
 
     this.game.physics.arcade.collide(this,this.level.hero,this.collHero,null,this);
     
@@ -67,15 +52,31 @@ platformer.loot_powerup.prototype.update = function(){
         this.animations.stop(null, true);
         }
         this.oneTimeLoot = false;
-        
     }
     
     
     if (this.lootlife <= 0){
-        this.kill();
+        this.destroy();
     }
     else{
         this.lootlife -= 0.012;
+    }
+    
+    
+    if (this.delayDestroy == true){
+        if (this.value == 1 ){
+            this.animations.play(1.5);    
+        }
+        else if (this.value == 2){
+            this.animations.play(2.5);    
+        }
+        else{
+            this.animations.play(this.value);
+        }
+        this.lootDestroyDelay -= 0.012;
+        if(this.lootDestroyDelay <= 0){
+        this.destroy();
+        }
     }
    
     
@@ -85,7 +86,7 @@ platformer.loot_powerup.prototype.collHero = function(_loot,_hero){
     if(_loot.body.touching && _hero.body.touching){
         this.level.collHero();
         this.body.enable = false;
-        this.destroy = true;
+        this.delayDestroy = true;
     }
 
 };
