@@ -152,7 +152,14 @@ platformer.level2 ={
         this.comida = new platformer.fruits(this.game,this.game.world.centerX,25,this);
         this.game.add.existing(this.comida);
     },
-    
+    spawnLoot:function(x, y){
+        //this.POWUP = new platformer.loot_powerup(this.game, x, y,this);
+        //this.game.add.existing(this.POWUP);
+    },
+    spawnBubbles:function(x, y, size, color, direction){
+            this.bubbleArray.push(new platformer.bubble_prefab(this.game,x,y,this,size,color,direction));
+            this.bubbleArray.push(new platformer.bubble_prefab(this.game,x,y,this,size,color,-direction));
+    },
     
     update:function(){
         
