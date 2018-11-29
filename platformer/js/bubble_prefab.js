@@ -48,6 +48,8 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     this.body.bounce.y = 1;
     this.body.gravity.y = 1; //Parece que a partir de cierto número no baja mas
     
+    this.bubbleScore;
+    
     this.spawnRateLoot = 3;
     this.spawnedLoot = false;
     this.game.add.existing(this);
@@ -79,20 +81,27 @@ platformer.bubble_prefab.prototype.update = function(){
         this.body.velocity.x = this.speedX*this.directionX;
    }
        
-//   if(this.body.touching.up || this.body.touching.down){
-//       this.directionY *=-1;
-//       this.body.velocity.y = this.speedY*this.directionY;
-//   }
     if (this.exploded == true){
-        
+        if(this.setText == false){
+            if (this.size == 3){
+                this.bubbleScore = this.game.add.text( this.body.position.x+5, this.body.position.y-5, "100", 
+                {
+                font: "10px Pixel",
+                fill: "#ffffff",
+                align: "left"
+                });
+                this.setText = true;
+            }
+        }
         this.destroyDelay -= 0.3;
         if(this.destroyDelay <= 0){
             if (this.spawnedLoot == false){
                 this.level.spawnLoot(this.body.position.x, this.body.position.y);
                 this.spawnedLoot = true;
             }
-            
-            //this.bubbleScore.setText("");*/
+            if (this.size == 3){
+                this.bubbleScore.setText("");
+            }
             this.destroy();
         }
     }
@@ -101,15 +110,6 @@ platformer.bubble_prefab.prototype.update = function(){
 platformer.bubble_prefab.prototype.hitShoot = function(_bubble, _shot){
         
         this.animations.play('explode');
-        
-        /* (this.setText == false){
-            this.bubbleScore = this.game.add.text( this.body.position.x+5, this.body.position.y-5, "100", {
-            font: "10px Pixel",
-            fill: "#ffffff",
-            align: "left"
-            });
-            this.setText = true;
-        }*/
         this.body.enable = false;
         if (this.size < 3){
             this.level.spawnBubbles(this.body.x, this.body.y, this.size + 1, this.color, this.directionX);
