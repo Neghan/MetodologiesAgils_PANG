@@ -16,6 +16,10 @@ platformer.game.state.add('level1',platformer.level1);
 platformer.game.state.add('level2',platformer.level2);
 platformer.game.state.add('splashscreen',platformer.splashscreen);
 platformer.game.state.add('worldmap',platformer.worldmap);
+platformer.game.state.add('solvedlevel',platformer.solvedlevel);
+
 platformer.game.state.start('splashscreen');
+
+//platformer.game.state.start('solvedlevel');
 
 
