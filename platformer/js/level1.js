@@ -14,6 +14,8 @@ platformer.level1 ={
         
         this.game.world.setBounds(0,0,gameOptions.level1Width,gameOptions.level1Height);
         this.goToWorldmap = false;
+        
+       
     },
     preload:function(){ 
         
@@ -139,7 +141,7 @@ platformer.level1 ={
         this.camera.shake(0.025,100);
         this.hero.body.velocity.x =0;
         this.hero.dead=true;
-        this.hero.lives--;
+        gameOptions.heroHP-=1;
     },
     
     hitShoot:function(){
@@ -206,18 +208,22 @@ platformer.level1 ={
             this.game.paused = false;
         }
         
+        
         //VIDAS
-        if(this.hero.lives<=2){
+        if(gameOptions.heroHP<=2 &&gameOptions.onceLevel1){
             this.lifes3.destroy();
-            this.state.start('level1');
+            //this.state.start('level1');
+            gameOptions.onceLevel1  = false;
         }
-        if(this.hero.lives<=1){
+        if(gameOptions.heroHP<=1&&gameOptions.onceLevel1){
             this.lifes2.destroy();
             this.state.start('level1');
+            gameOptions.onceLevel1  = false;
         }
-        if(this.hero.lives<=0){
+        if(gameOptions.heroHP<=0&&gameOptions.onceLevel1){
             this.lifes.destroy();
             this.goToWorldmap = true;
+            gameOptions.onceLevel1  = false;
         }
         //ANIMACION DE MUERTE
         if(this.hero.dead){

@@ -16,14 +16,20 @@ platformer.level2 ={
         this.goToWorldmap = false;
     },
     preload:function(){ 
+        this.load.image('bg','assets/img/nueva_york.png');
+        //CARGA DEL MAPA
+       //this.load.tilemap('TilemapNY','assets/tilemaps/TilemapNY.json',null,Phaser.Tilemap.TILED_JSON);
+        
+        this.load.image('stairs','assets/UtilsLevel/stairs.png');
+        this.load.image('collisionsWalls','assets/UtilsLevel/border.png');
+        this.load.image('normalCollisions','assets/UtilsLevel/unbreakable_platform.png');
         
         this.load.audio('MusicBarcelona', 'assets/audio/music/10 - Barcelona.mp3');
         
-        this.load.image('bg','assets/img/nueva_york.png');
-        this.load.tilemap('level1','assets/tilemaps/barcelona.json',null,Phaser.Tilemap.TILED_JSON);
+        
         this.load.spritesheet('walls','assets/img/walls_barcelona_floor.png');
         this.load.spritesheet('walls1','assets/img/walls_barcelona.png');
-        //this.load.image('moss','assets/img/tileset_edge_lv1.png');
+
         this.load.spritesheet('hero','assets/img/player_1.png',41,32);
         this.load.spritesheet('life','assets/img/player_1_life.png',16,16);
         this.load.spritesheet('shoot','assets/img/hook.png',9,189);
@@ -41,6 +47,16 @@ platformer.level2 ={
     create:function(){
 
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
+        
+        //CREACION DEL TILEMAP
+        //this.map=this.game.add.tilemap('TilemapNY');
+        //this.map.addTilesetImage('stairs');
+        //this.map.addTilesetImage('collisionWalls');
+        //this.map.addTilesetImage('normalCollisions');
+        //this.Hcoll = this.map.createLayer('walls');
+        //this.Ndestruct = this.map.createLayer('rigid_collision');
+        //this.map.setCollisionBetween(1,1,true,'walls');
+        //this.map.setCollisionBetween(1,4,true,'rigid_collision');
         
         //HUD
         this.hud = new platformer.HUD(this.game,this,"New York","14-1 Stage");
@@ -172,7 +188,7 @@ platformer.level2 ={
             this.goToWorldmap = false;
         }
         //COLISIONES
-        if(!this.hero.dead){
+       if(!this.hero.dead){
         this.game.physics.arcade.collide(this.hero,this.muro);
         this.game.physics.arcade.collide(this.hero,this.muro2);
         this.game.physics.arcade.collide(this.bullet,this.muro2);

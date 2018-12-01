@@ -7,7 +7,11 @@ var gameOptions={
     level1Height:208,
     heroGravity:1000,
     heroSpeed:200,
-    heroJump:450
+    heroJump:450,
+    heroHP:3,
+    onceLevel1:true,
+    onceLevel2:true,
+    onceLevel3:true
 };
 
 platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,Phaser.AUTO,'gameFrame',this,false,false);
