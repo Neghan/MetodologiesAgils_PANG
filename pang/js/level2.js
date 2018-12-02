@@ -143,10 +143,13 @@ platformer.level2 ={
         this.powerupArray = [];
         
         //COLLISIONES
-        this.destructiblesInst = new platformer.destructibles(this.game,150,100,this);
+        this.destructiblesInst = new platformer.destructibles(this.game,80,100,this);
         this.game.add.existing(this.destructiblesInst);
+
+        this.destructiblesInst1 = new platformer.destructibles(this.game,300,100,this);
+        this.game.add.existing(this.destructiblesInst1);
         
-        this.collisionwallInst = new platformer.collsionwall(this.game,180,100,this);
+        this.collisionwallInst = new platformer.collsionwall(this.game,200,100,this);
         this.game.add.existing(this.collisionwallInst);
         
         //MUSICA

@@ -20,6 +20,6 @@ platformer.destructibles.prototype.constructor = platformer.destructible;
 
 platformer.destructibles.prototype.update = function(){
    //this.game.physics.arcade.collide(this,this.level.bubbleCollisionGroup);
-    //this.body.collides(this.level.bubbleCollisionGroup);
+    //this.body.collides(this.level.bubbleArray);
     
 }
