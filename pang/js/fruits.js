@@ -40,7 +40,7 @@ platformer.fruits = function(game,x,y,level){
     this.fruitlife = 14;
     this.value = 0;
     
-    this.destroy = false;
+    this.theDestroy = false;
     this.fruitDestroyDelay = 1;
     this.fruitSetText = false;
 };
@@ -50,7 +50,7 @@ platformer.fruits.prototype.constructor = platformer.fruits;
 
 platformer.fruits.prototype.update = function(){
     
-    if (this.destroy == true){
+    if (this.theDestroy == true){
         this.animations.play(this.value);
         this.fruitDestroyDelay -= 0.012;
         if(this.fruitDestroyDelay <= 0){
@@ -94,6 +94,6 @@ platformer.fruits.prototype.hitFruit = function(_fruit,_hero){
             });
             this.setText = true;
         }
-        this.destroy = true;
+        this.theDestroy = true;
     }
 };
