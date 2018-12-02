@@ -69,7 +69,7 @@ platformer.bubble_prefab.prototype.update = function(){
     this.game.physics.arcade.collide(this,this.level.muroLados2);
     this.game.physics.arcade.collide(this,this.level.muro);
     this.game.physics.arcade.collide(this,this.level.muro2);
-    this.game.physics.arcade.collide(this,this.level.hero,this.hitHero,null,this);
+    this.game.physics.arcade.overlap(this,this.level.hero,this.hitHero,null,this);
     this.game.physics.arcade.collide(this,this.level.shoot,this.hitShoot,null,this);
     
     this.game.physics.arcade.collide(this,this.level.bullet,this.hitShoot,null,this);
@@ -127,7 +127,7 @@ platformer.bubble_prefab.prototype.hitHero = function(_bubble,_hero){
     if(_bubble.body.touching && _hero.body.touching){
         
         this.level.hitHero();
-        this.body.enable = false;
+        //this.body.enable = false;
         //delay o quan acabi la animació --> destroy.
     }
 };

@@ -85,7 +85,7 @@ platformer.loot_powerup.prototype.update = function(){
 
 platformer.loot_powerup.prototype.collHero = function(_loot,_hero){
     if(_loot.body.touching && _hero.body.touching){
-        this.level.collHero();
+        this.level.collHero(this.value);
         this.body.enable = false;
         this.delayDestroy = true;
     }

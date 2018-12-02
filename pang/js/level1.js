@@ -39,6 +39,8 @@ platformer.level1 ={
         this.load.spritesheet('bubble_m','assets/img/bubble_m.png',16,16);
         this.load.spritesheet('bubble_s','assets/img/bubble_s.png',10,8);
         
+        this.load.spritesheet('shield','assets/img/shield.png',32,39);
+        
     },
     create:function(){
 
@@ -63,6 +65,13 @@ platformer.level1 ={
         this.timeSpawnFruit = 15;
         this.timeSpawnLoot = 10;
         
+        //SHIELD
+        this.shield = this.game.add.sprite(0,0, 'shield', 0);
+        this.shield.animations.add('shield', [0,1],10, true);
+        this.shield.animations.play('shield');
+        this.shield.visible = false;
+        this.shield.anchor.setTo(0.5);
+        
         //HERO FUNCTIONS
         this.hero=this.game.add.sprite(65,40,'hero',0);
         this.hero.animations.add('walk',[0,1,2,3,4],10,true);
@@ -74,6 +83,8 @@ platformer.level1 ={
         this.hero.dead=false;
         this.hero.lives = 3;
         this.hero.score = 0;
+        this.hero.shield = false;
+        this.hero.invincibilityFrames = 0;
         this.hero.anchor.setTo(.5);
         
         this.game.physics.arcade.enable(this.hero);
@@ -138,10 +149,16 @@ platformer.level1 ={
     },
         //HIT HERO
     hitHero:function(){
-        this.camera.shake(0.025,100);
-        this.hero.body.velocity.x =0;
-        this.hero.dead=true;
-        gameOptions.heroHP-=1;
+        if(!this.hero.shield && this.hero.invincibilityFrames <= 0){
+            this.camera.shake(0.025,100);
+            this.hero.body.velocity.x =0;
+            this.hero.dead=true;
+            gameOptions.heroHP-=1;
+        } else if (this.hero.invincibilityFrames <= 0){
+            this.hero.shield = false;
+            this.shield.visible = false;
+            this.hero.invincibilityFrames = 2;
+        }
     },
     
     hitShoot:function(){
@@ -152,8 +169,25 @@ platformer.level1 ={
         this.hero.score+=250;
     },
     
-    collHero:function(){
+    collHero:function(powerUpType){
         console.log("Adri implementa el Power Up");
+        console.log("Estoy en ello danielom");
+        if(powerUpType == 0){//UZI
+            //TODO
+        } else if(powerUpType == 1){//SHIELD
+            this.hero.shield = true;
+            this.shield.visible = true;
+        } else if(powerUpType == 2){//  DYNAMITE
+            //TODO
+        }else if(powerUpType == 3){//EXTRA TIME
+            //TODO
+        }else if(powerUpType == 4){//STOP TIME
+            //TODO
+        }else if(powerUpType == 5){//DOUBLE HOOK
+            //TODO
+        }else if(powerUpType == 6){//POWER WIRE
+            //TODO
+        }
     },
     
     spawnFruit:function(){
@@ -179,6 +213,13 @@ platformer.level1 ={
             this.state.start('worldmap');
             this.goToWorldmap = false;
         }
+        
+        this.shield.x = this.hero.x;
+        this.shield.y = this.hero.y;
+        if(this.hero.invincibilityFrames > 0){
+            this.hero.invincibilityFrames -= 0.012;
+        }
+        
         //COLISIONES
         if(!this.hero.dead){
         this.game.physics.arcade.collide(this.hero,this.muro);
@@ -246,7 +287,7 @@ platformer.level1 ={
             this.hero.body.velocity.x=gameOptions.heroSpeed;
             this.hero.scale.setTo(1,1);
             this.hero.animations.play('walk');
-        }else if (this.space.isDown&&!this.hero.dead&&this.space.downDuration(2500)){
+        }else if (this.space.isDown&& !this.hero.dead && this.bullet != {}){
             this.hero.animations.play('idleShoot');
             this.hero.body.velocity.x=0;
             
