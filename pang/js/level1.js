@@ -231,6 +231,17 @@ platformer.level1 ={
         this.game.physics.arcade.collide(this.POWUP,this.muro);
         }
         
+        console.log(this.bubbleCollisionGroup.length);
+        //CONDICION DE VICTORIA --> MATAS TODAS LAS BURBUJAS
+        if (this.bubbleCollisionGroup.length == 0) {
+            
+            gameOptions.heroScore = this.hero.score;
+            gameOptions.timeBonus = Math.trunc(this.timeLeft);
+            gameOptions.currentLevel = "Level 1";
+            this.music.stop();
+            this.state.start('solvedlevel'); 
+        }
+        
 
         
         this.timer.setText("TIME: "+0+Math.trunc(this.timeLeft));

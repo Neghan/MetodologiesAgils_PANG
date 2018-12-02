@@ -9,6 +9,9 @@ var gameOptions={
     heroSpeed:200,
     heroJump:450,
     heroHP:3,
+    heroScore:0,
+    currentLevel:'undefined',
+    timeBonus:0,
     onceLevel1:true,
     onceLevel2:true,
     onceLevel3:true
