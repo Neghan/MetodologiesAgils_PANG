@@ -135,6 +135,12 @@ platformer.level2 ={
         this.bubbleArray = [];
         this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,0,1));
         
+        //POWERUP PICK UP
+        this.powerupCollisionGroup = this.game.add.group();
+        this.powerupCollisionGroup.enableBody = true;
+        this.powerupCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        this.powerupArray = [];
         
         //COLLISIONES
         this.destructiblesInst = new platformer.destructibles(this.game,150,100,this);
@@ -164,18 +170,39 @@ platformer.level2 ={
         this.hero.score+=250;
     },
     
-    collHero:function(){
-    console.log("Adri implementa el Power Up");
+        collHero:function(powerUpType){
+        console.log("Adri implementa el Power Up");
+        console.log("Estoy en ello danielom");
+        if(powerUpType == 0){//UZI
+            //TODO
+        } else if(powerUpType == 1){//SHIELD
+            this.hero.shield = true;
+            this.shield.visible = true;
+        } else if(powerUpType == 2){//  DYNAMITE
+            //TODO
+        }else if(powerUpType == 3){//EXTRA TIME
+            //TODO
+        }else if(powerUpType == 4){//STOP TIME
+            //TODO
+        }else if(powerUpType == 5){//DOUBLE HOOK
+            //TODO
+        }else if(powerUpType == 6){//POWER WIRE
+            //TODO
+        }
     },
     
     spawnFruit:function(){
         this.comida = new platformer.fruits(this.game,this.game.world.centerX,25,this);
         this.game.add.existing(this.comida);
     },
+    
     spawnLoot:function(x, y){
-        this.POWUP = new platformer.loot_powerup(this.game, x, y,this);
-        this.game.add.existing(this.POWUP);
+    this.powerupArray.push(new platformer.loot_powerup(this.game, x, y,this));
+        //this.POWUP = new platformer.loot_powerup(this.game, x, y,this);
+        //this.game.add.existing(this.POWUP);
+        console.log("Spawn Power Up");
     },
+    
     spawnBubbles:function(x, y, size, color, direction){
             this.bubbleArray.push(new platformer.bubble_prefab(this.game,x,y,this,size,color,direction));
             this.bubbleArray.push(new platformer.bubble_prefab(this.game,x,y,this,size,color,-direction));
@@ -198,14 +225,16 @@ platformer.level2 ={
         this.game.physics.arcade.collide(this.POWUP,this.muro);
         }
         
-        
-        
-        //this.text.setText("BARCELONA");
-        //this.text2.setText("1-1 STAGE");
-        //this.text5.setText("HI: 10000");
-        //this.text3.setText("PLAYER - 1");
-        //this.text4.setText("PLAYER - 2");
-        //this.text6.setText(""+this.hero.score);
+        console.log(this.bubbleCollisionGroup.length);
+        //CONDICION DE VICTORIA --> MATAS TODAS LAS BURBUJAS
+        if (this.bubbleCollisionGroup.length == 0) {
+            
+            gameOptions.heroScore = this.hero.score;
+            gameOptions.timeBonus = Math.trunc(this.timeLeft);
+            gameOptions.currentLevel = "Level 2";
+            this.music.stop();
+            this.state.start('solvedlevel'); 
+        }
         
         this.timer.setText("TIME: "+0+Math.trunc(this.timeLeft));
         this.timeLeft -= 0.012;//this.game.time.now;
