@@ -41,7 +41,7 @@ platformer.loot_powerup.prototype.update = function(){
     
     this.body.velocity.y= 50;
     if(this.oneTimeLoot){ 
-        this.value = this.game.rnd.integerInRange(0,6); // 0-6
+        this.value = this.game.rnd.integerInRange(2,2); // 0-6
         if (this.value == 1 ){
         this.animations.play(this.value);    
         }

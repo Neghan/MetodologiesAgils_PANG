@@ -133,6 +133,8 @@ platformer.level1 ={
         this.bubbleArray = [];
         this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,0,1));
         
+        this.delayWinCondition = 2;
+        
         //POWERUP PICK UP
         this.powerupCollisionGroup = this.game.add.group();
         this.powerupCollisionGroup.enableBody = true;
@@ -178,7 +180,15 @@ platformer.level1 ={
             this.hero.shield = true;
             this.shield.visible = true;
         } else if(powerUpType == 2){//  DYNAMITE
-            //TODO
+            for(i = 0; i < this.bubbleArray.length; i++){
+                if(this.bubbleArray[i].size < 3){
+                    this.bubbleArray[i].animations.play('explode');
+                    if (this.bubbleArray[i].size < 3){
+                        this.spawnBubbles(this.bubbleArray[i].x, this.bubbleArray[i].y, this.bubbleArray[i].size + 1, this.bubbleArray[i].color, this.bubbleArray[i].directionX);
+                    }
+                    this.bubbleArray[i].exploded = true;
+                }
+            }
         }else if(powerUpType == 3){//EXTRA TIME
             //TODO
         }else if(powerUpType == 4){//STOP TIME
@@ -234,12 +244,16 @@ platformer.level1 ={
         console.log(this.bubbleCollisionGroup.length);
         //CONDICION DE VICTORIA --> MATAS TODAS LAS BURBUJAS
         if (this.bubbleCollisionGroup.length == 0) {
-            
-            gameOptions.heroScore = this.hero.score;
-            gameOptions.timeBonus = Math.trunc(this.timeLeft);
-            gameOptions.currentLevel = "Level 1";
-            this.music.stop();
-            this.state.start('solvedlevel'); 
+            this.delayWinCondition -= 0.012;
+            if(this.delayWinCondition <=0){
+                gameOptions.heroScore = this.hero.score;
+                gameOptions.timeBonus = Math.trunc(this.timeLeft);
+                gameOptions.currentLevel = "Level 1";
+                this.music.stop();
+                this.state.start('solvedlevel'); 
+            }
+        } else {
+            this.delayWinCondition = 2;
         }
         
 

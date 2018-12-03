@@ -83,6 +83,7 @@ platformer.bubble_prefab.prototype.update = function(){
    }
        
     if (this.exploded == true){
+        this.body.enable = false;
         if(this.setText == false){
             if (this.size == 3){
                 this.bubbleScore = this.game.add.text( this.body.position.x+5, this.body.position.y-5, "100", 
@@ -111,7 +112,6 @@ platformer.bubble_prefab.prototype.update = function(){
 platformer.bubble_prefab.prototype.hitShoot = function(_bubble, _shot){
         
         this.animations.play('explode');
-        this.body.enable = false;
         if (this.size < 3){
             this.level.spawnBubbles(this.body.x, this.body.y, this.size + 1, this.color, this.directionX);
         }
