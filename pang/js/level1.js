@@ -30,6 +30,8 @@ platformer.level1 ={
         this.load.spritesheet('life','assets/img/player_1_life.png',16,16);
         
         this.load.spritesheet('shoot','assets/img/hook.png',9,189);
+        this.load.spritesheet('powerWire','assets/img/power_wire.png',9,191);
+        this.load.spritesheet('uzi','assets/img/vulcan_missile.png',16,9);
         
         this.load.spritesheet('fruta','assets/img/Fruit.png',16,16);
         this.load.spritesheet('loot','assets/img/loot.png',16,16);
@@ -54,6 +56,14 @@ platformer.level1 ={
         align: "left"
         });
         this.timer.anchor.setTo(0.5, 0.5);
+        
+        //DISPAROS
+        this.oneTime = true;
+        this.bulletCollisionGroup = this.game.add.group();
+        this.bulletCollisionGroup.enableBody = true;
+        this.bulletCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        this.bulletArray = [];
         
         //LIVES
         this.lifes = this.game.add.sprite(15,230,'life',0);
@@ -84,6 +94,9 @@ platformer.level1 ={
         this.hero.lives = 3;
         this.hero.score = 0;
         this.hero.shield = false;
+        this.hero.doubleHook = false;
+        this.hero.powerWire = false;
+        this.hero.uzi = false;
         this.hero.invincibilityFrames = 0;
         this.hero.anchor.setTo(.5);
         
@@ -120,10 +133,6 @@ platformer.level1 ={
         this.muroLados2.body.allowGravity = false;
         this.muroLados2.body.immovable = true;
         this.game.physics.arcade.collide(this.hero,this.muroLados2);
-  
-        //DISPAROS
-        this.oneTime = true;
-        //this.bullet = this.game.add.sprite('shoot');
         
         //BUBBLES
         this.bubbleCollisionGroup = this.game.add.group();
@@ -175,7 +184,7 @@ platformer.level1 ={
         console.log("Adri implementa el Power Up");
         console.log("Estoy en ello danielom");
         if(powerUpType == 0){//UZI
-            //TODO
+            this.hero.uzi = true;
         } else if(powerUpType == 1){//SHIELD
             this.hero.shield = true;
             this.shield.visible = true;
@@ -194,9 +203,9 @@ platformer.level1 ={
         }else if(powerUpType == 4){//STOP TIME
             //TODO
         }else if(powerUpType == 5){//DOUBLE HOOK
-            //TODO
+            this.hero.doubleHook = true;
         }else if(powerUpType == 6){//POWER WIRE
-            //TODO
+            this.hero.powerWire = true;
         }
     },
     
@@ -234,14 +243,14 @@ platformer.level1 ={
         if(!this.hero.dead){
         this.game.physics.arcade.collide(this.hero,this.muro);
         this.game.physics.arcade.collide(this.hero,this.muro2);
-        this.game.physics.arcade.collide(this.bullet,this.muro2);
+        this.game.physics.arcade.collide(this.bulletArray,this.muro2);
         this.game.physics.arcade.collide(this.hero,this.muroLados1);
         this.game.physics.arcade.collide(this.hero,this.muroLados2);
         this.game.physics.arcade.collide(this.comida,this.muro);
         this.game.physics.arcade.collide(this.POWUP,this.muro);
         }
         
-        console.log(this.bubbleCollisionGroup.length);
+        console.log(this.bulletCollisionGroup.length);
         //CONDICION DE VICTORIA --> MATAS TODAS LAS BURBUJAS
         if (this.bubbleCollisionGroup.length == 0) {
             this.delayWinCondition -= 0.012;
@@ -312,19 +321,25 @@ platformer.level1 ={
             this.hero.body.velocity.x=gameOptions.heroSpeed;
             this.hero.scale.setTo(1,1);
             this.hero.animations.play('walk');
-        }else if (this.space.isDown&& !this.hero.dead && this.bullet != {}){
+        }else if (this.space.isDown&& !this.hero.dead){
             this.hero.animations.play('idleShoot');
             this.hero.body.velocity.x=0;
-            
                 if(this.oneTime){
-                this.bullet = new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this);
-                this.game.add.existing(this.bullet);
+                    if(this.hero.uzi){
+                        this.bulletArray.push(new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this,2));
                     
-                    
-                this.game.world.swap(this.hero,this.bullet);
-                this.oneTime = false;
-                //ORDEN DE DIBUJO 
-                this.game.world.swap(this.timer,this.bullet);
+                        //this.game.world.swap(this.hero,this.bulletArray);
+                        this.oneTime = false;
+                        //ORDEN DE DIBUJO 
+                        //this.game.world.swap(this.timer,this.bulletArray);
+                    } else if (this.bulletCollisionGroup.length < 1 || (this.bulletCollisionGroup.length < 2 && this.hero.doubleHook)){
+                        if(this.hero.powerWire){
+                            this.bulletArray.push(new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this,1));
+                        } else {
+                            this.bulletArray.push(new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this,0));
+                        }
+                        this.oneTime = false;
+                    }
                 }
             
         }else if(!this.hero.dead){
