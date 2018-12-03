@@ -29,6 +29,12 @@ platformer.HUD=function(game,   level, name,stage){
         align: "center"
         });
         this.text3.anchor.setTo(0.5, 0.5);
+        this.scoretext = game.add.text(game.world.centerX-100, game.world.centerY+115, "0", {
+        font: "10px Pixel",
+        fill: "#ffffff",
+        align: "center"
+        });
+        this.scoretext.anchor.setTo(0.5, 0.5);
         this.text4 = game.add.text(game.world.centerX+150, game.world.centerY+115, "PLAYER - 2", {
         font: "10px Pixel",
         fill: "#ffffff",
