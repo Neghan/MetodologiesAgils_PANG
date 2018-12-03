@@ -67,11 +67,25 @@ platformer.level2 ={
         });
         this.timer.anchor.setTo(0.5, 0.5);
         
+        //DISPAROS
+        this.oneTime = true;
+        this.bulletCollisionGroup = this.game.add.group();
+        this.bulletCollisionGroup.enableBody = true;
+        this.bulletCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        this.bulletArray = [];
+        
         //LIVES
-        this.lifes = this.game.add.sprite(15,230,'life',0);
-        this.lifes2 = this.game.add.sprite(35,230,'life',0);
-        this.lifes3 = this.game.add.sprite(55,230,'life',0);
-        //this.interfaz = new platformer.HUD(this.game,this);
+        if(gameOptions.heroHP==3){
+            this.lifes = this.game.add.sprite(15,230,'life',0);
+            this.lifes2 = this.game.add.sprite(35,230,'life',0);
+            this.lifes3 = this.game.add.sprite(55,230,'life',0);
+        }else if(gameOptions.heroHP==1){
+            this.lifes = this.game.add.sprite(15,230,'life',0);
+            this.lifes2 = this.game.add.sprite(35,230,'life',0);
+        }else if(gameOptions.heroHP==1){
+            this.lifes = this.game.add.sprite(15,230,'life',0);
+        }
         
         this.timeLeft = 100;
         this.timeSpawnFruit = 15;
@@ -123,9 +137,7 @@ platformer.level2 ={
         this.muroLados2.body.immovable = true;
         this.game.physics.arcade.collide(this.hero,this.muroLados2);
   
-        //DISPAROS
-        this.oneTime = true;
-        //this.bullet = this.game.add.sprite('shoot');
+        
         
         //BUBBLES
         this.bubbleCollisionGroup = this.game.add.group();
@@ -163,6 +175,7 @@ platformer.level2 ={
         this.hero.body.velocity.x =0;
         this.hero.dead=true;
         this.hero.lives--;
+        gameOptions.heroHP-=1;
     },
     
     hitShoot:function(){
@@ -256,16 +269,21 @@ platformer.level2 ={
         }
         
         //VIDAS
-        if(this.hero.lives<=2){
-            this.lifes3.destroy();
+        if(gameOptions.heroHP==2 &&gameOptions.onceLevel1){
+           //this.lifes3.destroy();
+            console.log('died1');
             this.state.start('level2');
-        }
-        if(this.hero.lives<=1){
-            this.lifes2.destroy();
+            gameOptions.onceLevel1 = false;
+        }else if(gameOptions.heroHP==1&&gameOptions.onceLevel2){
+            //this.lifes2.destroy();
+            console.log('died2');
+            gameOptions.onceLevel2= false;
             this.state.start('level2');
-        }
-        if(this.hero.lives<=0){
-            this.lifes.destroy();
+        }else if(gameOptions.heroHP==0&&gameOptions.onceLevel3){
+            //this.lifes.destroy();
+            console.log('died3');
+            gameOptions.onceLevel3 = false;
+            gameOptions.heroHP = 3;
             this.goToWorldmap = true;
         }
         //ANIMACION DE MUERTE
@@ -288,21 +306,25 @@ platformer.level2 ={
             this.hero.body.velocity.x=gameOptions.heroSpeed;
             this.hero.scale.setTo(1,1);
             this.hero.animations.play('walk');
-        }else if (this.space.isDown&&!this.hero.dead&&this.space.downDuration(2500)){
+        }else if (this.space.isDown&& !this.hero.dead){
             this.hero.animations.play('idleShoot');
             this.hero.body.velocity.x=0;
-            
                 if(this.oneTime){
-                this.bullet = new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this);
-                this.game.add.existing(this.bullet);
+                    if(this.hero.uzi){
+                        this.bulletArray.push(new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this,2));
                     
-
-                //this.spawnFruit();
-                    
-                this.game.world.swap(this.hero,this.bullet);
-                this.oneTime = false;
-                //ORDEN DE DIBUJO 
-                this.game.world.swap(this.timer,this.bullet);
+                        //this.game.world.swap(this.hero,this.bulletArray);
+                        this.oneTime = false;
+                        //ORDEN DE DIBUJO 
+                        //this.game.world.swap(this.timer,this.bulletArray);
+                    } else if (this.bulletCollisionGroup.length < 1 || (this.bulletCollisionGroup.length < 2 && this.hero.doubleHook)){
+                        if(this.hero.powerWire){
+                            this.bulletArray.push(new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this,1));
+                        } else {
+                            this.bulletArray.push(new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this,0));
+                        }
+                        this.oneTime = false;
+                    }
                 }
             
         }else if(!this.hero.dead){
