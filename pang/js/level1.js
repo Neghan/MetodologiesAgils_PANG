@@ -56,9 +56,16 @@ platformer.level1 ={
         this.timer.anchor.setTo(0.5, 0.5);
         
         //LIVES
-        this.lifes = this.game.add.sprite(15,230,'life',0);
-        this.lifes2 = this.game.add.sprite(35,230,'life',0);
-        this.lifes3 = this.game.add.sprite(55,230,'life',0);
+        if(gameOptions.heroHP==3){
+            this.lifes = this.game.add.sprite(15,230,'life',0);
+            this.lifes2 = this.game.add.sprite(35,230,'life',0);
+            this.lifes3 = this.game.add.sprite(55,230,'life',0);
+        }else if(gameOptions.heroHP==2){
+            this.lifes = this.game.add.sprite(15,230,'life',0);
+            this.lifes2 = this.game.add.sprite(35,230,'life',0);
+        }else if(gameOptions.heroHP==1){
+            this.lifes = this.game.add.sprite(15,230,'life',0);
+        }
 
         
         this.timeLeft = 100;
@@ -261,21 +268,19 @@ platformer.level1 ={
         }
         
         
-        //VIDAS
-        if(gameOptions.heroHP<=2 &&gameOptions.onceLevel1){
+       //VIDAS
+        if(gameOptions.heroHP==2 &&gameOptions.onceLevel1){
             this.lifes3.destroy();
-            //this.state.start('level1');
-            gameOptions.onceLevel1  = false;
+            console.log('died');
+            this.state.start('level1');
         }
-        if(gameOptions.heroHP<=1&&gameOptions.onceLevel1){
+        if(gameOptions.heroHP==1&&gameOptions.onceLevel2){
             this.lifes2.destroy();
             this.state.start('level1');
-            gameOptions.onceLevel1  = false;
         }
-        if(gameOptions.heroHP<=0&&gameOptions.onceLevel1){
+        if(gameOptions.heroHP==0&&gameOptions.onceLevel3){
             this.lifes.destroy();
             this.goToWorldmap = true;
-            gameOptions.onceLevel1  = false;
         }
         //ANIMACION DE MUERTE
         if(this.hero.dead){
