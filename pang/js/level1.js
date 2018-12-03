@@ -294,17 +294,17 @@ platformer.level1 ={
         //VIDAS
         if(gameOptions.heroHP==2 &&gameOptions.onceLevel1){
            //this.lifes3.destroy();
-            console.log('died1');
+            this.music.stop();
             this.state.start('level1');
             gameOptions.onceLevel1 = false;
         }else if(gameOptions.heroHP==1&&gameOptions.onceLevel2){
             //this.lifes2.destroy();
-            console.log('died2');
+            this.music.stop();
             gameOptions.onceLevel2= false;
             this.state.start('level1');
         }else if(gameOptions.heroHP==0&&gameOptions.onceLevel3){
             //this.lifes.destroy();
-            console.log('died3');
+            this.music.stop();
             gameOptions.onceLevel3 = false;
             gameOptions.heroHP=3;
             this.goToWorldmap = true;
