@@ -317,7 +317,7 @@ platformer.level1 ={
             this.hero.body.velocity.y=30;
             this.hero.body.collideWorldBounds = false;
             this.music.stop();
-            //this.state.start('level1');
+            this.state.start('level1');
         }
         
         
