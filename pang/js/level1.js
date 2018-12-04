@@ -200,7 +200,7 @@ platformer.level1 ={
             for(i = 0; i < this.bubbleArray.length; i++){
                 if(this.bubbleArray[i].size < 3){
                     this.bubbleArray[i].animations.play('explode');
-                    if (this.bubbleArray[i].size < 3){
+                    if (!this.bubbleArray[i].exploded && this.bubbleArray[i].size < 3){
                         this.spawnBubbles(this.bubbleArray[i].x, this.bubbleArray[i].y, this.bubbleArray[i].size + 1, this.bubbleArray[i].color, this.bubbleArray[i].directionX);
                     }
                     this.bubbleArray[i].exploded = true;
