@@ -21,6 +21,11 @@ platformer.level1 ={
         
         this.load.audio('MusicBarcelona', 'assets/audio/music/10 - Barcelona.mp3');
         
+        //CARGA DEL MAPA
+        this.load.tilemap('TilemapNY','assets/tilemaps/TilemapNY.json',null,Phaser.Tilemap.TILED_JSON);
+        this.load.image('border','assets/UtilsLevel/border.png');
+        
+        
         this.load.image('bg','assets/img/barcelona.png');
         this.load.tilemap('level1','assets/tilemaps/barcelona.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.spritesheet('walls','assets/img/walls_barcelona_floor.png');
@@ -47,6 +52,12 @@ platformer.level1 ={
     create:function(){
 
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
+        
+        this.map=this.game.add.tilemap('TilemapNY');
+        this.map.addTilesetImage('border');
+        
+        this.walls_layer = this.map.createLayer('tile_walls_layer');
+        this.map.setCollisionBetween(1,1,true,'tile_walls_layer');
         
         //HUD
         this.hud = new platformer.HUD(this.game,this,"Barcelona","1-1 Stage");
@@ -115,32 +126,6 @@ platformer.level1 ={
         this.cursors=this.game.input.keyboard.createCursorKeys();    
         this.space=this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);   
         
-        
-        //COLISIONES MUROS
-        //SUELO
-        this.muro = this.game.add.sprite(0,200,'walls',0);
-        this.game.physics.arcade.enable(this.muro);
-        this.muro.body.allowGravity = false;
-        this.muro.body.immovable = true;
-        this.game.physics.arcade.collide(this.hero,this.muro);
-        //TECHO
-        this.muro2 = this.game.add.sprite(0,0,'walls',0);
-        this.game.physics.arcade.enable(this.muro2);
-        this.muro2.body.allowGravity = false;
-        this.muro2.body.immovable = true;
-        this.game.physics.arcade.collide(this.hero,this.muro2);
-        //LEFT
-        this.muroLados1 = this.game.add.sprite(0,8,'walls1',0);
-        this.game.physics.arcade.enable(this.muroLados1);
-        this.muroLados1.body.allowGravity = false;
-        this.muroLados1.body.immovable = true;
-        this.game.physics.arcade.collide(this.hero,this.muroLados1);
-        //RIGHT
-        this.muroLados2 = this.game.add.sprite(376,8,'walls1',0);
-        this.game.physics.arcade.enable(this.muroLados2);
-        this.muroLados2.body.allowGravity = false;
-        this.muroLados2.body.immovable = true;
-        this.game.physics.arcade.collide(this.hero,this.muroLados2);
         
         //BUBBLES
         this.bubbleCollisionGroup = this.game.add.group();
@@ -249,13 +234,10 @@ platformer.level1 ={
         
         //COLISIONES
         if(!this.hero.dead){
-        this.game.physics.arcade.collide(this.hero,this.muro);
-        this.game.physics.arcade.collide(this.hero,this.muro2);
-        this.game.physics.arcade.collide(this.bulletArray,this.muro2);
-        this.game.physics.arcade.collide(this.hero,this.muroLados1);
-        this.game.physics.arcade.collide(this.hero,this.muroLados2);
-        this.game.physics.arcade.collide(this.comida,this.muro);
-        this.game.physics.arcade.collide(this.POWUP,this.muro);
+        this.game.physics.arcade.collide(this.hero,this.walls_layer);
+        this.game.physics.arcade.collide(this.bullet,this.walls_layer);
+        this.game.physics.arcade.collide(this.comida,this.walls_layer);
+        this.game.physics.arcade.collide(this.POWUP,this.walls_layer);
         }
         
         console.log(this.bulletCollisionGroup.length);
