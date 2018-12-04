@@ -9,7 +9,7 @@ platformer.loot_powerup = function(game,x,y,level){
     this.animations.add("1.5",[5,16],5,true); 
     this.animations.add("2",[9,10,11],5,true); //DYNAMITE
     this.animations.add("2.5",[11,16],5,true); 
-    this.animations.add("3",[12,16],5,true); // EXTRA TIME
+    this.animations.add("3",[12,16],5,true); // SLOW TIME
     this.animations.add("4",[13,16],5,true); // STOP TIME
     this.animations.add("5",[14,16],5,true); // DOUBLE HOOK
     this.animations.add("6",[15,16],5,true); // GRAB HOOK
@@ -35,7 +35,7 @@ platformer.loot_powerup.prototype.constructor = platformer.loot_powerup;
 
 platformer.loot_powerup.prototype.update = function(){
     
-    this.game.physics.arcade.collide(this,this.level.muro);
+    this.game.physics.arcade.collide(this,this.level.walls_layer);
     
     this.game.physics.arcade.collide(this,this.level.hero,this.collHero,null,this);
     

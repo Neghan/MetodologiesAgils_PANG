@@ -18,11 +18,11 @@ platformer.level2 ={
     preload:function(){ 
         this.load.image('bg','assets/img/nueva_york.png');
         //CARGA DEL MAPA
-       //this.load.tilemap('TilemapNY','assets/tilemaps/TilemapNY.json',null,Phaser.Tilemap.TILED_JSON);
+       this.load.tilemap('TilemapNY','assets/tilemaps/TilemapNY.json',null,Phaser.Tilemap.TILED_JSON);
         
         this.load.image('stairs','assets/UtilsLevel/stairs.png');
-        this.load.image('collisionsWalls','assets/UtilsLevel/border.png');
-        this.load.image('normalCollisions','assets/UtilsLevel/unbreakable_platform.png');
+        this.load.image('border','assets/UtilsLevel/border.png');
+        this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
         
         this.load.audio('MusicBarcelona', 'assets/audio/music/10 - Barcelona.mp3');
         
@@ -49,14 +49,18 @@ platformer.level2 ={
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
         
         //CREACION DEL TILEMAP
-        //this.map=this.game.add.tilemap('TilemapNY');
-        //this.map.addTilesetImage('stairs');
-        //this.map.addTilesetImage('collisionWalls');
-        //this.map.addTilesetImage('normalCollisions');
-        //this.Hcoll = this.map.createLayer('walls');
-        //this.Ndestruct = this.map.createLayer('rigid_collision');
-        //this.map.setCollisionBetween(1,1,true,'walls');
-        //this.map.setCollisionBetween(1,4,true,'rigid_collision');
+        this.map=this.game.add.tilemap('TilemapNY');
+        this.map.addTilesetImage('stairs');
+        this.map.addTilesetImage('border');
+        this.map.addTilesetImage('unbreakable_platform');
+        
+        this.walls_layer = this.map.createLayer('tile_walls_layer');
+        this.unbreakable_layer = this.map.createLayer('unbreakable_layer');
+        this.stairs_layer = this.map.createLayer('stairs_layer');
+        
+        this.map.setCollisionBetween(1,1,true,'tile_walls_layer');
+        this.map.setCollisionBetween(1,1,true,'stairs_layer');
+        this.map.setCollisionBetween(1,4,true,'unbreakable_layer');
         
         //HUD
         this.hud = new platformer.HUD(this.game,this,"New York","14-1 Stage");
@@ -67,11 +71,25 @@ platformer.level2 ={
         });
         this.timer.anchor.setTo(0.5, 0.5);
         
+        //DISPAROS
+        this.oneTime = true;
+        this.bulletCollisionGroup = this.game.add.group();
+        this.bulletCollisionGroup.enableBody = true;
+        this.bulletCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        this.bulletArray = [];
+        
         //LIVES
-        this.lifes = this.game.add.sprite(15,230,'life',0);
-        this.lifes2 = this.game.add.sprite(35,230,'life',0);
-        this.lifes3 = this.game.add.sprite(55,230,'life',0);
-        //this.interfaz = new platformer.HUD(this.game,this);
+        if(gameOptions.heroHP==3){
+            this.lifes = this.game.add.sprite(15,230,'life',0);
+            this.lifes2 = this.game.add.sprite(35,230,'life',0);
+            this.lifes3 = this.game.add.sprite(55,230,'life',0);
+        }else if(gameOptions.heroHP==1){
+            this.lifes = this.game.add.sprite(15,230,'life',0);
+            this.lifes2 = this.game.add.sprite(35,230,'life',0);
+        }else if(gameOptions.heroHP==1){
+            this.lifes = this.game.add.sprite(15,230,'life',0);
+        }
         
         this.timeLeft = 100;
         this.timeSpawnFruit = 15;
@@ -94,38 +112,7 @@ platformer.level2 ={
         this.hero.body.collideWorldBounds = true;
         
         this.cursors=this.game.input.keyboard.createCursorKeys();    
-        this.space=this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);   
-        
-        
-        //COLISIONES MUROS
-        //SUELO
-        this.muro = this.game.add.sprite(0,200,'walls',0);
-        this.game.physics.arcade.enable(this.muro);
-        this.muro.body.allowGravity = false;
-        this.muro.body.immovable = true;
-        this.game.physics.arcade.collide(this.hero,this.muro);
-        //TECHO
-        this.muro2 = this.game.add.sprite(0,0,'walls',0);
-        this.game.physics.arcade.enable(this.muro2);
-        this.muro2.body.allowGravity = false;
-        this.muro2.body.immovable = true;
-        this.game.physics.arcade.collide(this.hero,this.muro2);
-        //LEFT
-        this.muroLados1 = this.game.add.sprite(0,8,'walls1',0);
-        this.game.physics.arcade.enable(this.muroLados1);
-        this.muroLados1.body.allowGravity = false;
-        this.muroLados1.body.immovable = true;
-        this.game.physics.arcade.collide(this.hero,this.muroLados1);
-        //RIGHT
-        this.muroLados2 = this.game.add.sprite(376,8,'walls1',0);
-        this.game.physics.arcade.enable(this.muroLados2);
-        this.muroLados2.body.allowGravity = false;
-        this.muroLados2.body.immovable = true;
-        this.game.physics.arcade.collide(this.hero,this.muroLados2);
-  
-        //DISPAROS
-        this.oneTime = true;
-        //this.bullet = this.game.add.sprite('shoot');
+        this.space=this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         
         //BUBBLES
         this.bubbleCollisionGroup = this.game.add.group();
@@ -162,6 +149,7 @@ platformer.level2 ={
         this.camera.shake(0.025,100);
         this.hero.body.velocity.x =0;
         this.hero.dead=true;
+        this.hero.lives--;
         gameOptions.heroHP-=1;
     },
     
@@ -219,13 +207,11 @@ platformer.level2 ={
         }
         //COLISIONES
        if(!this.hero.dead){
-        this.game.physics.arcade.collide(this.hero,this.muro);
-        this.game.physics.arcade.collide(this.hero,this.muro2);
-        this.game.physics.arcade.collide(this.bullet,this.muro2);
-        this.game.physics.arcade.collide(this.hero,this.muroLados1);
-        this.game.physics.arcade.collide(this.hero,this.muroLados2);
-        this.game.physics.arcade.collide(this.comida,this.muro);
-        this.game.physics.arcade.collide(this.POWUP,this.muro);
+        this.game.physics.arcade.collide(this.hero,this.walls_layer);
+        this.game.physics.arcade.collide(this.bullet,this.walls_layer);
+        this.game.physics.arcade.collide(this.hero,this.walls_layer);
+        this.game.physics.arcade.collide(this.comida,this.walls_layer);
+        this.game.physics.arcade.collide(this.POWUP,this.walls_layer);
         }
         
         console.log(this.bubbleCollisionGroup.length);
@@ -257,18 +243,20 @@ platformer.level2 ={
         
         //VIDAS
         if(gameOptions.heroHP==2 &&gameOptions.onceLevel1){
-            this.lifes3.destroy();
-            console.log('died');
+           //this.lifes3.destroy();
+            this.music.stop();
             this.state.start('level2');
-            gameOptions.onceLevel1  = false;
-        }
-        if(gameOptions.heroHP==1&&gameOptions.onceLevel2){
-            this.lifes2.destroy();
+            gameOptions.onceLevel1 = false;
+        }else if(gameOptions.heroHP==1&&gameOptions.onceLevel2){
+            //this.lifes2.destroy();
+            this.music.stop();
+            gameOptions.onceLevel2= false;
             this.state.start('level2');
-            gameOptions.onceLevel2  = false;
-        }
-        if(gameOptions.heroHP==0&&gameOptions.onceLevel3){
-            this.lifes.destroy();
+        }else if(gameOptions.heroHP==0&&gameOptions.onceLevel3){
+            //this.lifes.destroy();
+            this.music.stop();
+            gameOptions.onceLevel3 = false;
+            gameOptions.heroHP = 3;
             this.goToWorldmap = true;
             gameOptions.onceLevel1  = true;
             gameOptions.onceLevel2  = true;
@@ -284,8 +272,11 @@ platformer.level2 ={
             //this.state.start('level1');
         }
         
-        
+       ;
         //MOVIMIENTO HEROE 
+        if(this.game.physics.arcade.overlap(this.hero,this.stairs_layer)==true){
+           console.log('Overlapped');
+        }
         if(this.cursors.left.isDown&&!this.hero.dead){
             this.hero.body.velocity.x=-gameOptions.heroSpeed;
             this.hero.animations.play('walk');
@@ -294,21 +285,25 @@ platformer.level2 ={
             this.hero.body.velocity.x=gameOptions.heroSpeed;
             this.hero.scale.setTo(1,1);
             this.hero.animations.play('walk');
-        }else if (this.space.isDown&&!this.hero.dead&&this.space.downDuration(2500)){
+        }else if (this.space.isDown&& !this.hero.dead){
             this.hero.animations.play('idleShoot');
             this.hero.body.velocity.x=0;
-            
                 if(this.oneTime){
-                this.bullet = new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this);
-                this.game.add.existing(this.bullet);
+                    if(this.hero.uzi){
+                        this.bulletArray.push(new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this,2));
                     
-
-                //this.spawnFruit();
-                    
-                this.game.world.swap(this.hero,this.bullet);
-                this.oneTime = false;
-                //ORDEN DE DIBUJO 
-                this.game.world.swap(this.timer,this.bullet);
+                        //this.game.world.swap(this.hero,this.bulletArray);
+                        this.oneTime = false;
+                        //ORDEN DE DIBUJO 
+                        //this.game.world.swap(this.timer,this.bulletArray);
+                    } else if (this.bulletCollisionGroup.length < 1 || (this.bulletCollisionGroup.length < 2 && this.hero.doubleHook)){
+                        if(this.hero.powerWire){
+                            this.bulletArray.push(new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this,1));
+                        } else {
+                            this.bulletArray.push(new platformer.shoot(this.game,this.hero.position.x,this.hero.position.y,240,368,100,1,this,0));
+                        }
+                        this.oneTime = false;
+                    }
                 }
             
         }else if(!this.hero.dead){
