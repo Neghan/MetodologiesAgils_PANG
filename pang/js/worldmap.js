@@ -27,7 +27,6 @@ platformer.worldmap ={
         this.music.play();
         
         
-        this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
         this.background=this.game.add.tileSprite(0,0,384,308,'worldmap');
         
         this.selector = this.game.add.sprite(0,0,'selector');

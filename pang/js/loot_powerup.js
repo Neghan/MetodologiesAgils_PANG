@@ -35,7 +35,7 @@ platformer.loot_powerup.prototype.constructor = platformer.loot_powerup;
 
 platformer.loot_powerup.prototype.update = function(){
     
-    this.game.physics.arcade.collide(this,this.level.muro);
+    this.game.physics.arcade.collide(this,this.level.walls_layer);
     
     this.game.physics.arcade.collide(this,this.level.hero,this.collHero,null,this);
     

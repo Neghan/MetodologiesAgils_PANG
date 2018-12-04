@@ -21,7 +21,7 @@ platformer.splashscreen ={
     },
 
     create:function(){
-      this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
+     
 
         this.music = this.add.audio('MusicOpening',1,true);
 

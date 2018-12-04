@@ -11,8 +11,8 @@ platformer.HUD=function(game,   level, name,stage){
         });
         this.ready.setShadow(-1, 1, 'rgba(0,0,0,255)',0);
         this.ready.anchor.setTo(0.5, 0.5);
-        this.text = game.add.text(game.world.centerX, game.world.centerY+115, this.name, {
-        font: "10px Pixel",
+        this.text = game.add.text(game.world.centerX, game.world.centerY+125, this.name, {
+        font: "15px Pixel",
         fill: "#ffffff",
         align: "center"
         });

@@ -65,10 +65,7 @@ platformer.bubble_prefab.prototype.constructor = platformer.bubble_prefab;
 platformer.bubble_prefab.prototype.update = function(){
     
     //this.game.debug.body(this);
-    this.game.physics.arcade.collide(this,this.level.muroLados1);
-    this.game.physics.arcade.collide(this,this.level.muroLados2);
-    this.game.physics.arcade.collide(this,this.level.muro);
-    this.game.physics.arcade.collide(this,this.level.muro2);
+    this.game.physics.arcade.collide(this,this.level.walls_layer);
     this.game.physics.arcade.overlap(this,this.level.hero,this.hitHero,null,this);
     this.game.physics.arcade.collide(this,this.level.bulletArray,this.hitShoot,null,this);
     

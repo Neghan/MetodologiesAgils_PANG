@@ -308,6 +308,7 @@ platformer.level1 ={
             gameOptions.onceLevel3 = false;
             gameOptions.heroHP=3;
             this.goToWorldmap = true;
+            this.state.start('world_map');
         }
         //ANIMACION DE MUERTE
         if(this.hero.dead){
