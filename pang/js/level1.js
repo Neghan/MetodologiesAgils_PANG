@@ -49,6 +49,7 @@ platformer.level1 ={
         this.load.spritesheet('shield','assets/img/shield.png',32,39);
         
         this.load.spritesheet('buho','assets/img/buho.png',32,29);
+        this.load.spritesheet('colibri','assets/img/colibri.png',32,26);
         
     },
     create:function(){
@@ -97,6 +98,7 @@ platformer.level1 ={
         this.timeSpawnFruit = 15;
         this.timeSpawnLoot = 10;
         this.timeSpawnBuho = 12;
+        this.timeSpawnColibri = 2;
         
         //SHIELD
         this.shield = this.game.add.sprite(0,0, 'shield', 0);
@@ -154,6 +156,13 @@ platformer.level1 ={
         this.buhoCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
         
         this.buhoArray = [];
+        
+        //ENEMY COLIBRI
+        this.colibriCollisionGroup = this.game.add.group();
+        this.colibriCollisionGroup.enableBody = true;
+        this.colibriCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        this.colibriArray = [];
                 
         //DELAY WIN CONDITION
         this.delayWinCondition = 2;
@@ -373,6 +382,23 @@ platformer.level1 ={
         }
         else{
             this.timeSpawnBuho -= 0.012;
+        } 
+              
+        //SPAWN COLIBRI
+        if (this.timeSpawnColibri <= 0){
+            this.randomValueDirectionColibri = this.game.rnd.integerInRange(0,1);
+            
+            if (this.randomValueDirectionColibri == 0){
+            this.colibriArray.push(new platformer.colibri_prefab(this.game,-1,this.hero.position.y-25,this,1));
+            }
+            else if (this.randomValueDirectionColibri == 1){
+            this.colibriArray.push(new platformer.colibri_prefab(this.game,360,this.hero.position.y-25,this,-1));
+            }
+            
+            this.timeSpawnColibri = this.game.rnd.integerInRange(5,20);
+        }
+        else{
+            this.timeSpawnColibri -= 0.012;
         } 
     }
 };

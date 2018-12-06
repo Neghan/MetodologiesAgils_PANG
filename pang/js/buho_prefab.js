@@ -34,6 +34,7 @@ platformer.buho_prefab.prototype.update = function(){
     
     //Check if is alive
     if(this.died == true){
+        this.body.enable = false
         this.body.velocity.x = 0;
         if(this.buhoDestroyDelay >= 0){
             this.buhoDestroyDelay -= 0.016;
