@@ -48,6 +48,8 @@ platformer.level1 ={
         
         this.load.spritesheet('shield','assets/img/shield.png',32,39);
         
+        this.load.spritesheet('buho','assets/img/buho.png',32,29);
+        
     },
     create:function(){
 
@@ -144,6 +146,16 @@ platformer.level1 ={
         
         this.powerupArray = [];
         
+        //ENEMY BUHO
+        this.buhoCollisionGroup = this.game.add.group();
+        this.buhoCollisionGroup.enableBody = true;
+        this.buhoCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        this.buhoArray = [];
+        this.buhoArray.push(new platformer.buho_prefab(this.game,-1,25,this));
+                
+        //DELAY WIN CONDITION
+        this.delayWinCondition = 2;
         
         
         //MUSICA
@@ -277,9 +289,9 @@ platformer.level1 ={
         if(gameOptions.heroHP==2 &&gameOptions.onceLevel1){
            //this.lifes3.destroy();
             this.music.stop();
-            this.state.start('level1');
             gameOptions.onceLevel1 = false;
-        }else if(gameOptions.heroHP==1&&gameOptions.onceLevel2){
+            this.state.start('level1');
+            }else if(gameOptions.heroHP==1&&gameOptions.onceLevel2){
             //this.lifes2.destroy();
             this.music.stop();
             gameOptions.onceLevel2= false;

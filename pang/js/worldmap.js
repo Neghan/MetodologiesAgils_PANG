@@ -22,9 +22,9 @@ platformer.worldmap ={
 
     create:function(){
         
-        this.music = this.add.audio('MusicWorldMap',1,true);
+        this.musicWM = this.add.audio('MusicWorldMap',1,true);
         this.soundEffect = this.add.audio('SoundEffectButton');
-        this.music.play();
+        this.musicWM.play();
         
         
         this.background=this.game.add.tileSprite(0,0,384,308,'worldmap');
@@ -222,7 +222,7 @@ platformer.worldmap ={
             }
             //OBRIM MAPA
             else{
-                this.music.pause();
+                this.musicWM.pause();
                 if( this.currentLevel == 1){
                 this.state.start('level1');   //NIVEL1
                 }
