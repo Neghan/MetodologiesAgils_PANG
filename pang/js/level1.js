@@ -93,8 +93,10 @@ platformer.level1 ={
 
         
         this.timeLeft = 100;
+        //TIME SPAWN THINGS
         this.timeSpawnFruit = 15;
         this.timeSpawnLoot = 10;
+        this.timeSpawnBuho = 12;
         
         //SHIELD
         this.shield = this.game.add.sprite(0,0, 'shield', 0);
@@ -152,7 +154,6 @@ platformer.level1 ={
         this.buhoCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
         
         this.buhoArray = [];
-        this.buhoArray.push(new platformer.buho_prefab(this.game,-1,25,this));
                 
         //DELAY WIN CONDITION
         this.delayWinCondition = 2;
@@ -184,6 +185,10 @@ platformer.level1 ={
     hitFruit:function(){
         this.hero.score+=250;
     },
+    
+    //buhoHitShoot:function(){
+    //  this.hero.score+= 500;  
+    //},
     
     collHero:function(powerUpType){
         console.log("Adri implementa el Power Up");
@@ -360,6 +365,14 @@ platformer.level1 ={
         else{
             this.timeSpawnFruit -= 0.012;
         }
-         
+        
+        //SPAWN BUHO
+        if (this.timeSpawnBuho <= 0){
+            this.buhoArray.push(new platformer.buho_prefab(this.game,-1,25,this));
+            this.timeSpawnBuho = 12;
+        }
+        else{
+            this.timeSpawnBuho -= 0.012;
+        } 
     }
 };
