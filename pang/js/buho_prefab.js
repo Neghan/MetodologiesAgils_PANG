@@ -11,7 +11,7 @@ platformer.buho_prefab = function(game,x,y,level){
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
     this.body.allowGravity = false;
     
-    this.speedX = 80;
+    this.speedX = 100;
     this.directionX = 1;
     this.died = false;
     this.buhoDestroyDelay = 1.2;

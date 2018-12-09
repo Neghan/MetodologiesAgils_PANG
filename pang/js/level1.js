@@ -50,6 +50,7 @@ platformer.level1 ={
         
         this.load.spritesheet('buho','assets/img/buho.png',32,29);
         this.load.spritesheet('colibri','assets/img/colibri.png',32,26);
+        this.load.spritesheet('cangrejo','assets/img/cangrejo.png',32,28);
         
     },
     create:function(){
@@ -98,7 +99,8 @@ platformer.level1 ={
         this.timeSpawnFruit = 15;
         this.timeSpawnLoot = 10;
         this.timeSpawnBuho = 12;
-        this.timeSpawnColibri = 2;
+        this.timeSpawnColibri = 6;
+        this.timeSpawnCangrejo = 2;
         
         //SHIELD
         this.shield = this.game.add.sprite(0,0, 'shield', 0);
@@ -163,6 +165,13 @@ platformer.level1 ={
         this.colibriCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
         
         this.colibriArray = [];
+                       
+        //ENEMY CANGREJO
+        this.cangrejoCollisionGroup = this.game.add.group();
+        this.cangrejoCollisionGroup.enableBody = true;
+        this.cangrejoCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        this.cangrejoArray = [];
                 
         //DELAY WIN CONDITION
         this.delayWinCondition = 2;
@@ -378,7 +387,7 @@ platformer.level1 ={
         //SPAWN BUHO
         if (this.timeSpawnBuho <= 0){
             this.buhoArray.push(new platformer.buho_prefab(this.game,-1,25,this));
-            this.timeSpawnBuho = 12;
+            this.timeSpawnBuho = this.game.rnd.integerInRange(5,20);
         }
         else{
             this.timeSpawnBuho -= 0.012;
@@ -399,6 +408,21 @@ platformer.level1 ={
         }
         else{
             this.timeSpawnColibri -= 0.012;
+        }               
+        
+        //SPAWN CANGREJO
+        if (this.timeSpawnCangrejo <= 0){
+            if(this.hero.position.x <150){
+                this.cangrejoArray.push(new platformer.cangrejo_prefab(this.game,this.game.rnd.integerInRange(170,300), 20 ,this,1));
+               }
+            else{
+                this.cangrejoArray.push(new platformer.cangrejo_prefab(this.game,this.game.rnd.integerInRange(25,130), 20 ,this,1));
+            }
+
+            this.timeSpawnCangrejo = this.game.rnd.integerInRange(5,20);
+        }
+        else{
+            this.timeSpawnCangrejo -= 0.012;
         } 
     }
 };

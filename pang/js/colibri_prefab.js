@@ -13,7 +13,7 @@ platformer.colibri_prefab = function(game,x,y,level,direction){
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
     this.body.allowGravity = false;
     
-    this.speedX = 100;
+    this.speedX = 120;
     this.directionX = direction;
     this.colibriTime = 0;
     this.died = false;
