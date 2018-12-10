@@ -17,6 +17,7 @@ platformer.cangrejo_prefab = function(game,x,y,level,direction){
     this.directionX = direction;
     this.died = false;
     this.cangrejoDestroyDelay = 1.2;
+    this.bubblesPoped = 0;
 
     
     this.game.add.existing(this);
@@ -34,12 +35,14 @@ platformer.cangrejo_prefab.prototype.constructor = platformer.cangrejo_prefab;
 platformer.cangrejo_prefab.prototype.update = function(){
     
         //Colisions
-    this.game.physics.arcade.overlap(this,this.level.hero,this.cangrejoHitHero,null,this);
+    this.game.physics.arcade.overlap(this,this.level.bubbleArray,this.cangrejoHitBubbles,null,this);
     this.game.physics.arcade.collide(this,this.level.bulletArray,this.cangrejoHitShoot,null,this);
     this.game.physics.arcade.collide(this,this.level.walls_layer,this.cangrejoHitWall,null,this);
+
     
     //Check if is alive
     if(this.died == true){
+        this.animations.play('die');
         this.body.enable = false
         this.body.velocity.x = 0;
         if(this.cangrejoDestroyDelay >= 0){
@@ -65,8 +68,6 @@ platformer.cangrejo_prefab.prototype.update = function(){
 
     
     platformer.cangrejo_prefab.prototype.cangrejoHitShoot = function(_cangrejo, _shot){
-        
-        this.animations.play('die');
         _shot.destroy();
         this.died = true;
 
@@ -74,9 +75,13 @@ platformer.cangrejo_prefab.prototype.update = function(){
 
 
 
-    platformer.cangrejo_prefab.prototype.cangrejoHitHero = function(_cangrejo,_hero){
-    if(_cangrejo.body.touching && _hero.body.touching){
+    platformer.cangrejo_prefab.prototype.cangrejoHitBubbles = function(_cangrejo,_bubble){
+        if(_cangrejo.body.touching && _bubble.body.touching){
+        this.bubblesPoped++;
+        if(this.bubblesPoped >= 3){
+           this.died  =true;
+           }
         
-        this.level.hitHero();
     }
+   
 };
