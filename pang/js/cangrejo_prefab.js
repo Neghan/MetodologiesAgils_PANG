@@ -62,7 +62,6 @@ platformer.cangrejo_prefab.prototype.update = function(){
 
         
     }
-    console.log(this.level.hero.position.x);
     
 };
 

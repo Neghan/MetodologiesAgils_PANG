@@ -49,6 +49,7 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     this.body.gravity.y = 1; //Parece que a partir de cierto número no baja mas
     
     this.bubbleScore;
+    this.spawnRandom = 0;
     
     this.spawnRateLoot = 3;
     this.spawnedLoot = false;
@@ -96,8 +97,12 @@ platformer.bubble_prefab.prototype.update = function(){
         this.destroyDelay -= 0.3;
         if(this.destroyDelay <= 0){
             if (this.spawnedLoot == false){
-                this.level.spawnLoot(this.body.position.x, this.body.position.y);
-                this.spawnedLoot = true;
+                this.spawnRandom = this.game.rnd.integerInRange(1,3);
+                console.log (this.spawnRandom);
+                if (this.spawnRandom == 1){
+                    this.level.spawnLoot(this.body.position.x, this.body.position.y);
+                    this.spawnedLoot = true;
+                }
             }
             if (this.size == 3){
                 this.bubbleScore.setText("");

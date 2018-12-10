@@ -275,7 +275,7 @@ platformer.level1 ={
         this.game.physics.arcade.collide(this.POWUP,this.walls_layer);
         }
         
-        console.log(this.bulletCollisionGroup.length);
+        //console.log(this.bulletCollisionGroup.length);
         //CONDICION DE VICTORIA --> MATAS TODAS LAS BURBUJAS
         if (this.bubbleCollisionGroup.length == 0) {
             this.delayWinCondition -= 0.012;
