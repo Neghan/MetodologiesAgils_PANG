@@ -58,9 +58,9 @@ platformer.level2 ={
         this.unbreakable_layer = this.map.createLayer('unbreakable_layer');
         this.stairs_layer = this.map.createLayer('stairs_layer');
         
-        this.map.setCollisionBetween(1,1,true,'tile_walls_layer');
-        this.map.setCollisionBetween(1,1,true,'stairs_layer');
-        this.map.setCollisionBetween(1,4,true,'unbreakable_layer');
+        this.map.setCollisionBetween(1,999,true,'tile_walls_layer');
+        this.map.setCollisionBetween(1,999,true,'stairs_layer');
+        this.map.setCollisionBetween(1,999,true,'unbreakable_layer');
         
         //HUD
         this.hud = new platformer.HUD(this.game,this,"New York","14-1 Stage");
@@ -102,6 +102,7 @@ platformer.level2 ={
         this.hero.animations.add('idle',[10],10,true);
         this.hero.animations.add('deathR',[17],10,true);
         this.hero.animations.add('deathL',[16],10,true);
+        this.hero.animations.add('stairsUp',[7,8,9,10],10,true);
         this.hero.dead=false;
         this.hero.lives = 3;
         this.hero.score = 0;
@@ -113,6 +114,7 @@ platformer.level2 ={
         
         this.cursors=this.game.input.keyboard.createCursorKeys();    
         this.space=this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        
         
         //BUBBLES
         this.bubbleCollisionGroup = this.game.add.group();
@@ -130,14 +132,13 @@ platformer.level2 ={
         this.powerupArray = [];
         
         //COLLISIONES
-        this.destructiblesInst = new platformer.destructibles(this.game,80,100,this);
+        this.destructiblesInst = new platformer.destructibles(this.game,70,80,this);
         this.game.add.existing(this.destructiblesInst);
 
-        this.destructiblesInst1 = new platformer.destructibles(this.game,300,100,this);
+        this.destructiblesInst1 = new platformer.destructibles(this.game,90,30,this);
         this.game.add.existing(this.destructiblesInst1);
         
-        this.collisionwallInst = new platformer.collsionwall(this.game,200,100,this);
-        this.game.add.existing(this.collisionwallInst);
+    
         
         //MUSICA
         this.music = this.add.audio('MusicBarcelona',1,true);
@@ -208,10 +209,12 @@ platformer.level2 ={
         //COLISIONES
        if(!this.hero.dead){
         this.game.physics.arcade.collide(this.hero,this.walls_layer);
+        this.game.physics.arcade.collide(this.hero,this.unbreakable_layer);
         this.game.physics.arcade.collide(this.bullet,this.walls_layer);
-        this.game.physics.arcade.collide(this.hero,this.walls_layer);
         this.game.physics.arcade.collide(this.comida,this.walls_layer);
+        this.game.physics.arcade.collide(this.comida,this.unbreakable_layer);
         this.game.physics.arcade.collide(this.POWUP,this.walls_layer);
+           this.game.physics.arcade.collide(this.POWUP,this.unbreakable_layer);
         }
         
         console.log(this.bubbleCollisionGroup.length);
@@ -274,9 +277,7 @@ platformer.level2 ={
         
        ;
         //MOVIMIENTO HEROE 
-        if(this.game.physics.arcade.overlap(this.hero,this.stairs_layer)==true){
-           console.log('Overlapped');
-        }
+        
         if(this.cursors.left.isDown&&!this.hero.dead){
             this.hero.body.velocity.x=-gameOptions.heroSpeed;
             this.hero.animations.play('walk');
@@ -305,8 +306,18 @@ platformer.level2 ={
                         this.oneTime = false;
                     }
                 }
+        
+        }else if(this.game.physics.arcade.overlap(this.hero,this.powerupArray)==true&&!this.hero.dead){
             
-        }else if(!this.hero.dead){
+           if(this.cursors.up.isDown&&!this.hero.dead){
+               this.hero.animations.play('stairsUp');
+               this.hero.body.velocity.y=-gameOptions.heroSpeed;
+           }else if(this.cursors.down.isDown&&!this.hero.dead){
+               this.hero.animations.play('stairsUp');
+                this.hero.body.velocity.y=gameOptions.heroSpeed;
+           }
+        }
+        else if(!this.hero.dead){
             this.oneTime = true;
             this.hero.animations.play('idle');
             this.hero.body.velocity.x=0;
