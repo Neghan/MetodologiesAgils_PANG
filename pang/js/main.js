@@ -15,7 +15,7 @@ var gameOptions={
     onceLevel1:true,
     onceLevel2:true,
     onceLevel3:true,
-    currentLevel:3
+    currentLevel:0
 };
 
 platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,Phaser.AUTO,'gameFrame',this,false,false);

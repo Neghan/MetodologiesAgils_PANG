@@ -55,7 +55,6 @@ platformer.level1 ={
         this.load.tilemap('Tilemap','assets/tilemaps/TilemapBCN.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.image('border','assets/UtilsLevel/border.png');
         this.load.image('stairs','assets/UtilsLevel/stairs.png');
-        this.load.image('border','assets/UtilsLevel/border.png');
         this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
         }
         else if (gameOptions.currentLevel == 2){
@@ -66,17 +65,15 @@ platformer.level1 ={
         this.load.tilemap('Tilemap','assets/tilemaps/TilemapNY.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.image('border','assets/UtilsLevel/border.png');
         this.load.image('stairs','assets/UtilsLevel/stairs.png');
-        this.load.image('border','assets/UtilsLevel/border.png');
         this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
         }else if (gameOptions.currentLevel == 3){
-        this.load.image('bg','assets/img/nueva_york.png');
+        this.load.image('bg','assets/img/emerald_temple.png');
             
         this.load.audio('MusicGuilin', 'assets/audio/music/02 - Guilin.mp3');
         //CARGA DEL MAPA
         this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.image('border','assets/UtilsLevel/border.png');
         this.load.image('stairs','assets/UtilsLevel/stairs.png');
-        this.load.image('border','assets/UtilsLevel/border.png');
         this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
         }
         
@@ -109,7 +106,7 @@ platformer.level1 ={
             this.hud = new platformer.HUD(this.game,this,"New York","14-1 Stage");
         } 
         else if (gameOptions.currentLevel == 3){
-            this.hud = new platformer.HUD(this.game,this,"Guilin","02-1 Stage");
+            this.hud = new platformer.HUD(this.game,this,"Emerald Temple","02-1 Stage");
         }
         
         //HUD
@@ -165,6 +162,7 @@ platformer.level1 ={
         this.hero.animations.add('idle',[10],10,true);
         this.hero.animations.add('deathR',[17],10,true);
         this.hero.animations.add('deathL',[16],10,true);
+        this.hero.animations.add('stairsUP',[7,8,9,10],10,true);
         this.hero.dead=false;
         this.hero.lives = 3;
         this.hero.score = 0;
@@ -434,6 +432,18 @@ platformer.level1 ={
             this.oneTime = true;
             this.hero.animations.play('idle');
             this.hero.body.velocity.x=0;
+            
+        ///NOT OVERLAPPING!!!!!!
+        }else if(this.game.physics.arcade.overlap(this.hero,this.stairs_layer)==true&&!this.hero.dead){
+            console.log('overlapped');
+            if(this.cursors.up.isDown){
+                this.hero.body.velocity.y=-gameOptions.heroSpeed;
+                 this.hero.animations.play('stairsUP');
+            }
+            if(this.cursors.down.isDown){
+               this.hero.body.velocity.y=gameOptions.heroSpeed;
+                 this.hero.animations.play('stairsUP');
+            }
         }
         
         //SPAWN FRUIT

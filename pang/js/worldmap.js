@@ -224,12 +224,15 @@ platformer.worldmap ={
             else{
                 this.musicWM.pause();
                 if( this.currentLevel == 1){
+                    gameOptions.currentLevel = 1;
                 this.state.start('level1');   //NIVEL1
                 }
                 else if( this.currentLevel == 2){ 
-                this.state.start('level2');   //NIVEL2
+                    gameOptions.currentLevel = 2;
+                this.state.start('level1');   //NIVEL2
                 }
                 else if( this.currentLevel == 3){
+                    gameOptions.currentLevel = 3;
                 this.state.start('level1');   //NIVEL3
                 }
                 else if( this.currentLevel == 4){
@@ -263,7 +266,7 @@ platformer.worldmap ={
                 this.state.start('level1');   //NIVEL13
                 }
                 else if( this.currentLevel == 14){
-                this.state.start('level2');   //NIVEL14
+                this.state.start('level1');   //NIVEL14
                 }
                 else if( this.currentLevel == 15){ 
                 this.state.start('level1');   //NIVEL15
