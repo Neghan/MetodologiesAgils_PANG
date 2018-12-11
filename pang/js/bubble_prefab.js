@@ -76,7 +76,7 @@ platformer.bubble_prefab.prototype.update = function(){
     this.body.velocity.x = this.speedX*this.directionX;
     //this.body.velocity.y = this.speedY*this.directionY;
 
-   if(this.body.touching.right || this.body.touching.left){
+   if(this.body.onWall()){
         this.directionX *=-1;
         this.body.velocity.x = this.speedX*this.directionX;
    }
