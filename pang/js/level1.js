@@ -19,15 +19,7 @@ platformer.level1 ={
     },
     preload:function(){ 
         
-        this.load.audio('MusicBarcelona', 'assets/audio/music/10 - Barcelona.mp3');
         
-        //CARGA DEL MAPA
-        this.load.tilemap('TilemapNY','assets/tilemaps/TilemapNY.json',null,Phaser.Tilemap.TILED_JSON);
-        this.load.image('border','assets/UtilsLevel/border.png');
-        
-        
-        this.load.image('bg','assets/img/barcelona.png');
-        this.load.tilemap('level1','assets/tilemaps/barcelona.json',null,Phaser.Tilemap.TILED_JSON);
         this.load.spritesheet('walls','assets/img/walls_barcelona_floor.png');
         this.load.spritesheet('walls1','assets/img/walls_barcelona.png');
         
@@ -52,19 +44,62 @@ platformer.level1 ={
         this.load.spritesheet('colibri','assets/img/colibri.png',32,26);
         this.load.spritesheet('cangrejo','assets/img/cangrejo.png',32,28);
         
+        this.load.spritesheet('destructibles2','assets/img/destructibles2.png',8,31);
+        
+        //CADA NIVEL CON SUS LOADS
+        if (gameOptions.currentLevel == 1){
+        this.load.image('bg','assets/img/barcelona.png');
+            
+        this.load.audio('MusicBarcelona', 'assets/audio/music/10 - Barcelona.mp3');
+        //CARGA DEL MAPA
+        this.load.tilemap('Tilemap','assets/tilemaps/TilemapBCN.json',null,Phaser.Tilemap.TILED_JSON);
+        this.load.image('border','assets/UtilsLevel/border.png');
+        this.load.image('stairs','assets/UtilsLevel/stairs.png');
+        this.load.image('border','assets/UtilsLevel/border.png');
+        this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+        }
+        else if (gameOptions.currentLevel == 2){
+        this.load.image('bg','assets/img/nueva_york.png');
+            
+        this.load.audio('MusicNY', 'assets/audio/music/14 - New York.mp3');
+        //CARGA DEL MAPA
+        this.load.tilemap('Tilemap','assets/tilemaps/TilemapNY.json',null,Phaser.Tilemap.TILED_JSON);
+        this.load.image('border','assets/UtilsLevel/border.png');
+        this.load.image('stairs','assets/UtilsLevel/stairs.png');
+        this.load.image('border','assets/UtilsLevel/border.png');
+        this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+        }
+        
+       
+        
     },
     create:function(){
 
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
         
-        this.map=this.game.add.tilemap('TilemapNY');
+        this.map=this.game.add.tilemap('Tilemap');
+        this.map.addTilesetImage('stairs');
         this.map.addTilesetImage('border');
+        this.map.addTilesetImage('unbreakable_platform');
         
         this.walls_layer = this.map.createLayer('tile_walls_layer');
-        this.map.setCollisionBetween(1,1,true,'tile_walls_layer');
+        this.unbreakable_layer = this.map.createLayer('unbreakable_layer');
+        this.stairs_layer = this.map.createLayer('stairs_layer');
+        
+        this.map.setCollisionBetween(1,999,true,'tile_walls_layer');
+        this.map.setCollisionBetween(1,999,true,'stairs_layer');
+        this.map.setCollisionBetween(1,999,true,'unbreakable_layer');
+        
+        if (gameOptions.currentLevel == 1){
+        
+            this.hud = new platformer.HUD(this.game,this,"Barcelona","1-1 Stage");
+        }
+        
+        else if (gameOptions.currentLevel == 2){
+            this.hud = new platformer.HUD(this.game,this,"New York","14-1 Stage");
+        }
         
         //HUD
-        this.hud = new platformer.HUD(this.game,this,"Barcelona","1-1 Stage");
         this.timer = this.game.add.text(this.game.world.centerX+130, this.game.world.centerY-80, "TIME:", {
         font: "20px Arial",
         fill: "#ffffff",
@@ -181,6 +216,13 @@ platformer.level1 ={
         this.music = this.add.audio('MusicBarcelona',1,true);
         this.music.play();
         
+         //COLLISIONES
+        this.destructiblesInst = new platformer.destructibles(this.game,70,80,this);
+        this.game.add.existing(this.destructiblesInst);
+
+        this.destructiblesInst1 = new platformer.destructibles(this.game,90,30,this);
+        this.game.add.existing(this.destructiblesInst1);
+        
     },
         //HIT HERO
     hitHero:function(){
@@ -270,9 +312,15 @@ platformer.level1 ={
         //COLISIONES
         if(!this.hero.dead){
         this.game.physics.arcade.collide(this.hero,this.walls_layer);
+        this.game.physics.arcade.collide(this.hero,this.unbreakable_layer);
+            
         this.game.physics.arcade.collide(this.bullet,this.walls_layer);
+            
         this.game.physics.arcade.collide(this.comida,this.walls_layer);
+        this.game.physics.arcade.collide(this.comida,this.unbreakable_layer);
+            
         this.game.physics.arcade.collide(this.POWUP,this.walls_layer);
+        this.game.physics.arcade.collide(this.POWUP,this.unbreakable_layer);
         }
         
         //console.log(this.bulletCollisionGroup.length);
