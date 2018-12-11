@@ -17,11 +17,8 @@ platformer.shoot = function(game,x,y,pointA,pointB,speed,direction,level,type){
 
     }
     this.anchor.setTo(0.5,0.92);    
-    //this.animations.play('walk');
-    //this.patrolA = pointA;
-    //this.patrolB = pointB;
-    //this.speed = speed;
-    //this.direction = direction;
+
+    
     this.level = level;
     this.game.physics.arcade.enable(this);
     if (this.type != 2){

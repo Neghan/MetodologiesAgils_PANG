@@ -48,6 +48,10 @@ platformer.level1 ={
         
         this.load.spritesheet('shield','assets/img/shield.png',32,39);
         
+        this.load.spritesheet('buho','assets/img/buho.png',32,29);
+        this.load.spritesheet('colibri','assets/img/colibri.png',32,26);
+        this.load.spritesheet('cangrejo','assets/img/cangrejo.png',32,28);
+        
     },
     create:function(){
 
@@ -91,8 +95,12 @@ platformer.level1 ={
 
         
         this.timeLeft = 100;
+        //TIME SPAWN THINGS
         this.timeSpawnFruit = 15;
         this.timeSpawnLoot = 10;
+        this.timeSpawnBuho = 12;
+        this.timeSpawnColibri = 6;
+        this.timeSpawnCangrejo = 2;
         
         //SHIELD
         this.shield = this.game.add.sprite(0,0, 'shield', 0);
@@ -144,6 +152,29 @@ platformer.level1 ={
         
         this.powerupArray = [];
         
+        //ENEMY BUHO
+        this.buhoCollisionGroup = this.game.add.group();
+        this.buhoCollisionGroup.enableBody = true;
+        this.buhoCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        this.buhoArray = [];
+        
+        //ENEMY COLIBRI
+        this.colibriCollisionGroup = this.game.add.group();
+        this.colibriCollisionGroup.enableBody = true;
+        this.colibriCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        this.colibriArray = [];
+                       
+        //ENEMY CANGREJO
+        this.cangrejoCollisionGroup = this.game.add.group();
+        this.cangrejoCollisionGroup.enableBody = true;
+        this.cangrejoCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
+        
+        this.cangrejoArray = [];
+                
+        //DELAY WIN CONDITION
+        this.delayWinCondition = 2;
         
         
         //MUSICA
@@ -172,6 +203,10 @@ platformer.level1 ={
     hitFruit:function(){
         this.hero.score+=250;
     },
+    
+    //buhoHitShoot:function(){
+    //  this.hero.score+= 500;  
+    //},
     
     collHero:function(powerUpType){
         console.log("Adri implementa el Power Up");
@@ -240,7 +275,7 @@ platformer.level1 ={
         this.game.physics.arcade.collide(this.POWUP,this.walls_layer);
         }
         
-        console.log(this.bulletCollisionGroup.length);
+        //console.log(this.bulletCollisionGroup.length);
         //CONDICION DE VICTORIA --> MATAS TODAS LAS BURBUJAS
         if (this.bubbleCollisionGroup.length == 0) {
             this.delayWinCondition -= 0.012;
@@ -277,9 +312,9 @@ platformer.level1 ={
         if(gameOptions.heroHP==2 &&gameOptions.onceLevel1){
            //this.lifes3.destroy();
             this.music.stop();
-            this.state.start('level1');
             gameOptions.onceLevel1 = false;
-        }else if(gameOptions.heroHP==1&&gameOptions.onceLevel2){
+            this.state.start('level1');
+            }else if(gameOptions.heroHP==1&&gameOptions.onceLevel2){
             //this.lifes2.destroy();
             this.music.stop();
             gameOptions.onceLevel2= false;
@@ -348,6 +383,46 @@ platformer.level1 ={
         else{
             this.timeSpawnFruit -= 0.012;
         }
-         
+        
+        //SPAWN BUHO
+        if (this.timeSpawnBuho <= 0){
+            this.buhoArray.push(new platformer.buho_prefab(this.game,-1,25,this));
+            this.timeSpawnBuho = this.game.rnd.integerInRange(5,20);
+        }
+        else{
+            this.timeSpawnBuho -= 0.012;
+        } 
+              
+        //SPAWN COLIBRI
+        if (this.timeSpawnColibri <= 0){
+            this.randomValueDirectionColibri = this.game.rnd.integerInRange(0,1);
+            
+            if (this.randomValueDirectionColibri == 0){
+            this.colibriArray.push(new platformer.colibri_prefab(this.game,-1,this.hero.position.y-25,this,1));
+            }
+            else if (this.randomValueDirectionColibri == 1){
+            this.colibriArray.push(new platformer.colibri_prefab(this.game,360,this.hero.position.y-25,this,-1));
+            }
+            
+            this.timeSpawnColibri = this.game.rnd.integerInRange(5,20);
+        }
+        else{
+            this.timeSpawnColibri -= 0.012;
+        }               
+        
+        //SPAWN CANGREJO
+        if (this.timeSpawnCangrejo <= 0){
+            if(this.hero.position.x <150){
+                this.cangrejoArray.push(new platformer.cangrejo_prefab(this.game,this.game.rnd.integerInRange(170,300), 20 ,this,1));
+               }
+            else{
+                this.cangrejoArray.push(new platformer.cangrejo_prefab(this.game,this.game.rnd.integerInRange(25,130), 20 ,this,1));
+            }
+
+            this.timeSpawnCangrejo = this.game.rnd.integerInRange(5,20);
+        }
+        else{
+            this.timeSpawnCangrejo -= 0.012;
+        } 
     }
 };

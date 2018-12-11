@@ -49,6 +49,7 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     this.body.gravity.y = 1; //Parece que a partir de cierto número no baja mas
     
     this.bubbleScore;
+    this.spawnRandom = 0;
     
     this.spawnRateLoot = 3;
     this.spawnedLoot = false;
@@ -68,6 +69,7 @@ platformer.bubble_prefab.prototype.update = function(){
     this.game.physics.arcade.collide(this,this.level.walls_layer);
     this.game.physics.arcade.overlap(this,this.level.hero,this.hitHero,null,this);
     this.game.physics.arcade.collide(this,this.level.bulletArray,this.hitShoot,null,this);
+    this.game.physics.arcade.collide(this,this.level.cangrejoArray,this.hitCrab,null,this);
     
     this.game.physics.arcade.collide(this,this.level.bullet,this.hitShoot,null,this);
     
@@ -95,8 +97,12 @@ platformer.bubble_prefab.prototype.update = function(){
         this.destroyDelay -= 0.3;
         if(this.destroyDelay <= 0){
             if (this.spawnedLoot == false){
-                this.level.spawnLoot(this.body.position.x, this.body.position.y);
-                this.spawnedLoot = true;
+                this.spawnRandom = this.game.rnd.integerInRange(1,3);
+                console.log (this.spawnRandom);
+                if (this.spawnRandom == 1){
+                    this.level.spawnLoot(this.body.position.x, this.body.position.y);
+                    this.spawnedLoot = true;
+                }
             }
             if (this.size == 3){
                 this.bubbleScore.setText("");
@@ -116,6 +122,16 @@ platformer.bubble_prefab.prototype.hitShoot = function(_bubble, _shot){
         _shot.destroy();
         this.exploded = true;
         //delay o quan acabi la animació --> destroy.
+
+};
+
+platformer.bubble_prefab.prototype.hitCrab = function(_crab, _shot){
+        
+        this.animations.play('explode');
+        if (this.size < 3){
+            this.level.spawnBubbles(this.body.x, this.body.y, this.size + 1, this.color, this.directionX);
+        }
+        this.exploded = true;
 
 };
 
