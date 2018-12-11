@@ -68,6 +68,16 @@ platformer.level1 ={
         this.load.image('stairs','assets/UtilsLevel/stairs.png');
         this.load.image('border','assets/UtilsLevel/border.png');
         this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+        }else if (gameOptions.currentLevel == 3){
+        this.load.image('bg','assets/img/nueva_york.png');
+            
+        this.load.audio('MusicGuilin', 'assets/audio/music/02 - Guilin.mp3');
+        //CARGA DEL MAPA
+        this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+        this.load.image('border','assets/UtilsLevel/border.png');
+        this.load.image('stairs','assets/UtilsLevel/stairs.png');
+        this.load.image('border','assets/UtilsLevel/border.png');
+        this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
         }
         
        
@@ -97,6 +107,9 @@ platformer.level1 ={
         
         else if (gameOptions.currentLevel == 2){
             this.hud = new platformer.HUD(this.game,this,"New York","14-1 Stage");
+        } 
+        else if (gameOptions.currentLevel == 3){
+            this.hud = new platformer.HUD(this.game,this,"Guilin","02-1 Stage");
         }
         
         //HUD
