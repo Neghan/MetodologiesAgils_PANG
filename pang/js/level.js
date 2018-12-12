@@ -1,7 +1,9 @@
 var platformer = platformer || {};
 
-platformer.level1 ={
+platformer.level ={
     init:function(){
+        
+        //INICIALIZAR VENTANA Y SISTEMA DE FÍSICAS
         this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
         this.scale.pageAlignHorizontally = true;
         this.scale.pageAlignVertically = true;
@@ -372,12 +374,12 @@ platformer.level1 ={
            //this.lifes3.destroy();
             this.music.stop();
             gameOptions.onceLevel1 = false;
-            this.state.start('level1');
+            this.state.start('level');
             }else if(gameOptions.heroHP==1&&gameOptions.onceLevel2){
             //this.lifes2.destroy();
             this.music.stop();
             gameOptions.onceLevel2= false;
-            this.state.start('level1');
+            this.state.start('level');
         }else if(gameOptions.heroHP==0&&gameOptions.onceLevel3){
             //this.lifes.destroy();
             this.music.stop();
@@ -394,7 +396,7 @@ platformer.level1 ={
             this.hero.body.velocity.y=30;
             this.hero.body.collideWorldBounds = false;
             this.music.stop();
-            this.state.start('level1');
+            this.state.start('level');
         }
         
         

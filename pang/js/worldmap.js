@@ -225,57 +225,57 @@ platformer.worldmap ={
                 this.musicWM.pause();
                 if( this.currentLevel == 1){
                     gameOptions.currentLevel = 1;
-                this.state.start('level1');   //NIVEL1
+                this.state.start('level');   //NIVEL1
                 }
                 else if( this.currentLevel == 2){ 
                     gameOptions.currentLevel = 2;
-                this.state.start('level1');   //NIVEL2
+                this.state.start('level');   //NIVEL2
                 }
                 else if( this.currentLevel == 3){
                     gameOptions.currentLevel = 3;
-                this.state.start('level1');   //NIVEL3
+                this.state.start('level');   //NIVEL3
                 }
                 else if( this.currentLevel == 4){
-                this.state.start('level1');   //NIVEL4
+                this.state.start('level');   //NIVEL4
                 }
                 else if( this.currentLevel == 5){ 
-                this.state.start('level1');   //NIVEL5
+                this.state.start('level');   //NIVEL5
                 }
                 else if( this.currentLevel == 6){
-                this.state.start('level1');   //NIVEL6
+                this.state.start('level');   //NIVEL6
                 }
                 else if( this.currentLevel == 7){
-                this.state.start('level1');   //NIVEL7
+                this.state.start('level');   //NIVEL7
                 }
                 else if( this.currentLevel == 8){ 
-                this.state.start('level1');   //NIVEL8
+                this.state.start('level');   //NIVEL8
                 }
                 else if( this.currentLevel == 9){
-                this.state.start('level1');   //NIVEL9
+                this.state.start('level');   //NIVEL9
                 }
                 else if( this.currentLevel == 10){
-                this.state.start('level1');   //NIVEL10
+                this.state.start('level');   //NIVEL10
                 }
                 else if( this.currentLevel == 11){ 
-                this.state.start('level1');   //NIVEL11
+                this.state.start('level');   //NIVEL11
                 }
                 else if( this.currentLevel == 12){
-                this.state.start('level1');   //NIVEL12
+                this.state.start('level');   //NIVEL12
                 }
                 else if( this.currentLevel == 13){
-                this.state.start('level1');   //NIVEL13
+                this.state.start('level');   //NIVEL13
                 }
                 else if( this.currentLevel == 14){
-                this.state.start('level1');   //NIVEL14
+                this.state.start('level');   //NIVEL14
                 }
                 else if( this.currentLevel == 15){ 
-                this.state.start('level1');   //NIVEL15
+                this.state.start('level');   //NIVEL15
                 }
                 else if( this.currentLevel == 16){
-                this.state.start('level1');   //NIVEL16
+                this.state.start('level');   //NIVEL16
                 }
                 else if( this.currentLevel == 17){
-                this.state.start('level1');   //NIVEL17
+                this.state.start('level');   //NIVEL17
                 }
             }
         }

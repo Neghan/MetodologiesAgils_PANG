@@ -25,11 +25,26 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     }
 
     this.animations.play('normal');
-    this.level = level;
+    this.level = level
+    
     this.speedX = 50;
 //    this.speedY = 30;
+    this.acceleration = 100;
+    if(size == 3){
+        this.speedY = Math.sqrt(2 * this.acceleration * (y - 174));
+    } else if (size == 2){
+        this.speedY = Math.sqrt(2 * this.acceleration * (y - 133));
+    } else if (size == 1){
+        this.speedY = Math.sqrt(2 * this.acceleration * (y - 91));
+    } else{
+        this.speedY = Math.sqrt(2 * this.acceleration * (y - 49));
+    }
+
     this.directionX = direction;
+    this.directionY = 1;
 //    this.directionY = 1;
+    //this.body.gravity.y = 1; //Parece que a partir de cierto número no baja mas
+    
     //this.game.physics.arcade.enable(this);
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
     
@@ -45,8 +60,8 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     this.destroyDelay = 10;
     this.exploded = false;
     this.setText = false;
+
     this.body.bounce.y = 1;
-    this.body.gravity.y = 1; //Parece que a partir de cierto número no baja mas
     
     this.bubbleScore;
     this.spawnRandom = 0;
@@ -73,12 +88,26 @@ platformer.bubble_prefab.prototype.update = function(){
     
     this.game.physics.arcade.collide(this,this.level.bullet,this.hitShoot,null,this);
     
-    this.body.velocity.x = this.speedX*this.directionX;
+    this.body.velocity.x = this.speedX * this.directionX;
+    
+    this.speedY += this.acceleration*0.017
+    this.body.velocity.y = this.speedY * this.directionY;
     //this.body.velocity.y = this.speedY*this.directionY;
 
    if(this.body.onWall()){
         this.directionX *=-1;
         this.body.velocity.x = this.speedX*this.directionX;
+   }
+   if(this.body.onFloor()){
+        if(this.size == 3){
+            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y - 174));
+        } else if (this.size == 2){
+            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y  - 133));
+        } else if (this.size == 1){
+            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y  - 91));
+        } else{
+            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y  - 49));
+        }
    }
        
     if (this.exploded == true){
