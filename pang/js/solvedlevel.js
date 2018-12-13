@@ -108,7 +108,7 @@ platformer.solvedlevel ={
             this.timer = 6;
         }
     }
-    console.log(this.timer);
+
     this.PressToContinue = this.game.add.text(this.game.world.centerX -55, this.game.world.centerY+100, this.message, {
         font: "10px Arial",
         fill: "#ffffff",

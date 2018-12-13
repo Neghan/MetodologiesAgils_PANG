@@ -12,11 +12,9 @@ var gameOptions={
     heroScore:0,
     currentLevelName:'undefined',
     timeBonus:0,
-    onceLevel1:false,
-    onceLevel2:false,
-    onceLevel3:true,
-    currentLevel:0
-    // ONCE LEVEL 1 AND 2 SET TO FALSE FOR DEBUG
+    currentLevel:0,
+    dead:false
+
 };
 
 platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,Phaser.AUTO,'gameFrame',this,false,false);
