@@ -157,7 +157,7 @@ platformer.level ={
         this.shield.anchor.setTo(0.5);
         
         //HERO FUNCTIONS
-        this.hero=this.game.add.sprite(65,40,'hero',0);
+        this.hero=this.game.add.sprite(65,180,'hero',0);
         this.hero.animations.add('walk',[0,1,2,3,4],10,true);
         //this.hero.animations.add('left',[0,1,2,3,4],10,true);
         this.hero.animations.add('idleShoot',[10,11],10,false);
