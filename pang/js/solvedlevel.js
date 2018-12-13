@@ -21,6 +21,8 @@ platformer.solvedlevel ={
 
     create:function(){
       //this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
+        
+        gameOptions.heroHP = 3;
 
         this.music = this.add.audio('MusicOpening',1,false);
 

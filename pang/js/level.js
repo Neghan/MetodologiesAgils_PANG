@@ -379,7 +379,7 @@ platformer.level ={
             else if(gameOptions.heroHP==0){
                 this.lifes.destroy();        
                 this.gameOverText.setText("GAME OVER")
-                this.music.stop();
+                this.music.stop();S
                 this.goToWorldmap = true;
             }
             

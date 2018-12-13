@@ -8,7 +8,7 @@ var gameOptions={
     heroGravity:1000,
     heroSpeed:200,
     heroJump:450,
-    heroHP:1,
+    heroHP:3,
     heroScore:0,
     currentLevelName:'undefined',
     timeBonus:0,
