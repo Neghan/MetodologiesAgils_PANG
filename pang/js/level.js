@@ -145,9 +145,9 @@ platformer.level ={
         //TIME SPAWN THINGS
         this.timeSpawnFruit = 15;
         this.timeSpawnLoot = 10;
-        this.timeSpawnBuho = 12;
-        this.timeSpawnColibri = 6;
-        this.timeSpawnCangrejo = 2;
+        this.timeSpawnBuho = this.game.rnd.integerInRange(10,99);
+        this.timeSpawnColibri = this.game.rnd.integerInRange(10,99);
+        this.timeSpawnCangrejo = this.game.rnd.integerInRange(10,99);
         
         //SHIELD
         this.shield = this.game.add.sprite(0,0, 'shield', 0);
@@ -460,7 +460,7 @@ platformer.level ={
         //SPAWN BUHO
         if (this.timeSpawnBuho <= 0){
             this.buhoArray.push(new platformer.buho_prefab(this.game,-1,25,this));
-            this.timeSpawnBuho = this.game.rnd.integerInRange(5,20);
+            this.timeSpawnBuho = this.game.rnd.integerInRange(10,99);
         }
         else{
             this.timeSpawnBuho -= 0.012;
@@ -477,7 +477,7 @@ platformer.level ={
             this.colibriArray.push(new platformer.colibri_prefab(this.game,360,this.hero.position.y-25,this,-1));
             }
             
-            this.timeSpawnColibri = this.game.rnd.integerInRange(5,20);
+            this.timeSpawnColibri = this.game.rnd.integerInRange(10,99);
         }
         else{
             this.timeSpawnColibri -= 0.012;
@@ -492,7 +492,7 @@ platformer.level ={
                 this.cangrejoArray.push(new platformer.cangrejo_prefab(this.game,this.game.rnd.integerInRange(25,130), 20 ,this,1));
             }
 
-            this.timeSpawnCangrejo = this.game.rnd.integerInRange(5,20);
+            this.timeSpawnCangrejo = this.game.rnd.integerInRange(10,99);
         }
         else{
             this.timeSpawnCangrejo -= 0.012;
