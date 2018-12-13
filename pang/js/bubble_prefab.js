@@ -30,6 +30,9 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     this.speedX = 50;
 //    this.speedY = 30;
     this.acceleration = 100;
+    if(this.level.timeSlowed){
+        this.acceleration /= 2;
+    }
     this.speedY = 0;
 
     this.directionX = direction;
@@ -54,9 +57,16 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     this.setText = false;
 
     this.body.bounce.y = 1;
+    this.body.allowGravity = false;
     
     this.bubbleScore;
     this.spawnRandom = 0;
+    
+    if(this.level.timeStopped){
+        this.stopped = true;   
+    } else {
+        this.stopped = false;
+    }
     
     this.spawnRateLoot = 3;
     this.spawnedLoot = false;
@@ -81,36 +91,41 @@ platformer.bubble_prefab.prototype.update = function(){
     
     this.game.physics.arcade.collide(this,this.level.bullet,this.hitShoot,null,this);
     
-    this.body.velocity.x = this.speedX * this.directionX;
+    if(!this.stopped){
+        this.body.velocity.x = this.speedX * this.directionX;
     
-    this.speedY += this.acceleration*0.017
-    this.body.velocity.y = this.speedY * this.directionY;
+        this.speedY += this.acceleration*0.017
+        this.body.velocity.y = this.speedY * this.directionY;
+    } else {
+        this.body.velocity.x = 0;
+        this.body.velocity.y = 0
+    }
     //this.body.velocity.y = this.speedY*this.directionY;
 
-   if(this.body.onWall()){
+   if(this.body.onWall() || this.body.touching.left || this.body.touching.right){
         this.directionX *=-1;
         this.body.velocity.x = this.speedX*this.directionX;
    }
-   if(this.body.onFloor()){
-        if(this.size == 3){
-            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y - 120));
-        } else if (this.size == 2){
+   if(this.body.onFloor() || this.body.touching.down){
+        if(this.size == 0 || this.body.y <= 40){
+            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y - 40));
+        } else if (this.size == 1 || this.body.y <= 60){
+            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y  - 60));
+        } else if (this.size == 1 || this.body.y <= 80){
             this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y  - 80));
-        } else if (this.size == 1){
-            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y  - 40));
         } else{
-            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y));
+            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y - 100));
         }
    }
-   if(this.body.onCeiling()){
-        if(this.size == 3){
-            this.speedY = Math.sqrt(2 * this.acceleration * (this.body.y - 120));
-        } else if (this.size == 2){
+   if(this.body.onCeiling() || this.body.touching.up){
+        if(this.size == 0 || this.body.y <= 40){
+            this.speedY = Math.sqrt(2 * this.acceleration * (this.body.y - 40));
+        } else if (this.size == 1 || this.body.y <= 60){
+            this.speedY = Math.sqrt(2 * this.acceleration * (this.body.y  - 60));
+        } else if (this.size == 1 || this.body.y <= 80){
             this.speedY = Math.sqrt(2 * this.acceleration * (this.body.y  - 80));
-        } else if (this.size == 1){
-            this.speedY = Math.sqrt(2 * this.acceleration * (this.body.y  - 40));
         } else{
-            this.speedY = Math.sqrt(2 * this.acceleration * (this.body.y));
+            this.speedY = Math.sqrt(2 * this.acceleration * (this.body.y - 100));
         }
    }
        

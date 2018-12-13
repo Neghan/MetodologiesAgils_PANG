@@ -191,6 +191,9 @@ platformer.level ={
         this.bubbleArray = [];
         this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,0,1));
         
+        this.timeSlowed = false;
+        this.timeStopped = false;
+        
         this.delayWinCondition = 2;
         
         //POWERUP PICK UP
@@ -289,9 +292,15 @@ platformer.level ={
                 }
             }
         }else if(powerUpType == 3){//EXTRA TIME
-            //TODO
+            this.timeSlowed = true;
+            for(i = 0; i < this.bubbleArray.length; i++){
+                this.bubbleArray[i].acceleration /= 2;
+            }
         }else if(powerUpType == 4){//STOP TIME
-            //TODO
+            this.timeStopped = true
+            for(i = 0; i < this.bubbleArray.length; i++){
+                this.bubbleArray[i].stopped = true;
+            }
         }else if(powerUpType == 5){//DOUBLE HOOK
             this.hero.doubleHook = true;
         }else if(powerUpType == 6){//POWER WIRE
