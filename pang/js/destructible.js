@@ -24,15 +24,20 @@ platformer.destructibles.prototype.update = function(){
       this.game.physics.arcade.collide(this,this.level.hero);
    this.game.physics.arcade.collide(this,this.level.bubbleCollisionGroup);
     this.game.physics.arcade.collide(this,this.level.bulletCollisionGroup,this.gotHit,null,this);
+    
+    if(this.onetimeplease == false){
+         if(this.timertodie<=0){
+
+            this.destroy();
+        }else{
+            this.timertodie-=0.017;
+        }
+    }
 };
 
-platformer.destructibles.prototype.gotHit = function(){
-    if(this.timertodie<=0){
-        this.destroy();
-    }else{
-        this.timertodie-=0.017;
-    }
-    
+platformer.destructibles.prototype.gotHit = function(_body,_shoot){
+    _shoot.destroy();
+
     if(this.onetimeplease == true){
         this.animations.play('explode');
         this.onetimeplease = false;

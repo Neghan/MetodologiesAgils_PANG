@@ -42,7 +42,7 @@ platformer.solvedlevel ={
         });
     this.CurrentLevel.anchor.setTo(0, 0.5);
     
-    this.CurrentLevelText = this.game.add.text(this.game.world.centerX+60, this.game.world.centerY+50, gameOptions.currentLevel, {
+    this.CurrentLevelText = this.game.add.text(this.game.world.centerX+60, this.game.world.centerY+50, gameOptions.currentLevelName, {
         font: "10px Arial",
         fill: "#ffffff",
         align: "right"

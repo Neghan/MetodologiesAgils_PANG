@@ -8,14 +8,15 @@ var gameOptions={
     heroGravity:1000,
     heroSpeed:200,
     heroJump:450,
-    heroHP:3,
+    heroHP:1,
     heroScore:0,
-    currentLevel:'undefined',
+    currentLevelName:'undefined',
     timeBonus:0,
-    onceLevel1:true,
-    onceLevel2:true,
+    onceLevel1:false,
+    onceLevel2:false,
     onceLevel3:true,
     currentLevel:0
+    // ONCE LEVEL 1 AND 2 SET TO FALSE FOR DEBUG
 };
 
 platformer.game = new Phaser.Game(gameOptions.gameWidth,gameOptions.gameHeight,Phaser.AUTO,'gameFrame',this,false,false);

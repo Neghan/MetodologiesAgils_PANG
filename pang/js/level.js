@@ -83,6 +83,8 @@ platformer.level ={
         
     },
     create:function(){
+        
+        gameOptions.dead = false;
 
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
         
@@ -132,14 +134,12 @@ platformer.level ={
             this.lifes = this.game.add.sprite(15,230,'life',0);
             this.lifes2 = this.game.add.sprite(35,230,'life',0);
             this.lifes3 = this.game.add.sprite(55,230,'life',0);
-        }else if(gameOptions.heroHP==1){
+        }else if(gameOptions.heroHP==2){
             this.lifes = this.game.add.sprite(15,230,'life',0);
             this.lifes2 = this.game.add.sprite(35,230,'life',0);
         }else if(gameOptions.heroHP==1){
             this.lifes = this.game.add.sprite(15,230,'life',0);
         }
-       
-
         
         this.timeLeft = 100;
         //TIME SPAWN THINGS
@@ -224,26 +224,33 @@ platformer.level ={
         //DELAY WIN CONDITION
         this.delayWinCondition = 2;
         
+        //DELAY GAME OVER
+        this.delayGameOver = 2;
         
         //MUSICA
         this.music = this.add.audio('MusicBarcelona',1,true);
         this.music.play();
         
          //COLLISIONES
+        if (gameOptions.currentLevel == 2){
         this.destructiblesInst = new platformer.destructibles(this.game,70,80,this);
         this.game.add.existing(this.destructiblesInst);
 
         this.destructiblesInst1 = new platformer.destructibles(this.game,90,30,this);
         this.game.add.existing(this.destructiblesInst1);
+        }
         
     },
         //HIT HERO
     hitHero:function(){
         if(!this.hero.shield && this.hero.invincibilityFrames <= 0){
+            if (gameOptions.dead == false){
             this.camera.shake(0.025,100);
             this.hero.body.velocity.x =0;
             this.hero.dead=true;
+            gameOptions.dead = true;
             gameOptions.heroHP-=1;
+            }
         } else if (this.hero.invincibilityFrames <= 0){
             this.hero.shield = false;
             this.shield.visible = false;
@@ -310,10 +317,20 @@ platformer.level ={
     },
     
     update:function(){
-        //console.log(this.bubbleArray.length);
+        
+
+        
+        
+        // CUANDO TE QUEDAS SIN VIDAS LLAMAS A UN DELAY Y CUANDO ACABA TE VAS AL WORLD MAP
         if (this.goToWorldmap == true){
+            if (this.delayGameOver >= 0){
+            this.delayGameOver -= 0.017;
+            }
+            else{
+            gameOptions.heroHP=3;
             this.state.start('worldmap');
             this.goToWorldmap = false;
+            }
         }
         
         this.shield.x = this.hero.x;
@@ -370,23 +387,35 @@ platformer.level ={
         }
         
         //VIDAS
-        if(gameOptions.heroHP==2 &&gameOptions.onceLevel1){
+        if(gameOptions.heroHP==2 && gameOptions.dead == true){
            //this.lifes3.destroy();
             this.music.stop();
-            gameOptions.onceLevel1 = false;
+            
             this.state.start('level');
-            }else if(gameOptions.heroHP==1&&gameOptions.onceLevel2){
+            }
+        else if(gameOptions.heroHP==1 && gameOptions.dead == true){
             //this.lifes2.destroy();
             this.music.stop();
-            gameOptions.onceLevel2= false;
+            
             this.state.start('level');
-        }else if(gameOptions.heroHP==0&&gameOptions.onceLevel3){
-            //this.lifes.destroy();
+        }else if(gameOptions.heroHP==0 && gameOptions.dead == true){
+            
+            this.lifes.destroy();        
+            //GAME OVER
+            this.gameOverText = this.game.add.text(this.game.world.centerX-150, this.game.world.centerY+135, "GAME OVER", {
+            font: "10px Pixel",
+            fill: "#ffffff",
+            align: "center"
+            });
+            this.gameOverText.anchor.setTo(0.5, 0.5);
+            
+            //AQUI HABRA UN DELAY
+            console.log("HASTA AQUI LLEGAMOS");
+            
             this.music.stop();
-            gameOptions.onceLevel3 = false;
-            gameOptions.heroHP=3;
+
             this.goToWorldmap = true;
-            this.state.start('world_map');
+
         }
         //ANIMACION DE MUERTE
         if(this.hero.dead){
