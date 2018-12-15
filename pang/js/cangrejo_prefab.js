@@ -18,6 +18,7 @@ platformer.cangrejo_prefab = function(game,x,y,level,direction){
     this.died = false;
     this.cangrejoDestroyDelay = 1.2;
     this.bubblesPoped = 0;
+    this.playCangrejoDie = true;
 
     
     this.game.add.existing(this);
@@ -42,6 +43,10 @@ platformer.cangrejo_prefab.prototype.update = function(){
     
     //Check if is alive
     if(this.died == true){
+        if (this.playCangrejoDie == true){
+            this.level.CrabDie.play();
+            this.playCangrejoDie = false;
+        }
         this.animations.play('die');
         this.body.enable = false
         this.body.velocity.x = 0;

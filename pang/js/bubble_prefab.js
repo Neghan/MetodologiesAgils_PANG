@@ -43,6 +43,8 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     //this.game.physics.arcade.enable(this);
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
     
+
+    
     if(size == 3){
         this.body.setCircle(3);
     } else if (size == 2){
@@ -72,6 +74,9 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     this.spawnedLoot = false;
     this.game.add.existing(this);
     this.level.bubbleCollisionGroup.add(this);
+    
+    this.playExplosionSound = true;
+    
 };
 
 
@@ -130,6 +135,10 @@ platformer.bubble_prefab.prototype.update = function(){
    }
        
     if (this.exploded == true){
+        if(this.playExplosionSound ==  true){
+            this.level.bubbleExplosion.play();
+            this.playExplosionSound = false;
+        }
         this.body.enable = false;
         if(this.setText == false){
             if (this.size == 3){

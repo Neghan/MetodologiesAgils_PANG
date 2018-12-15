@@ -18,6 +18,7 @@ platformer.colibri_prefab = function(game,x,y,level,direction){
     this.colibriTime = 0;
     this.died = false;
     this.colibriDestroyDelay = 1.2;
+    this.playColibriDie = true;
 
     
     this.game.add.existing(this);
@@ -40,6 +41,10 @@ platformer.colibri_prefab.prototype.update = function(){
     
     //Check if is alive
     if(this.died == true){
+        if (this.playColibriDie == true){
+            this.level.ColibriDie.play();
+            this.playColibriDie = false;
+        }
         this.body.enable = false
         this.body.velocity.x = 0;
         if(this.colibriDestroyDelay >= 0){

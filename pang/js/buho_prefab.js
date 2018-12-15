@@ -15,6 +15,7 @@ platformer.buho_prefab = function(game,x,y,level){
     this.directionX = 1;
     this.died = false;
     this.buhoDestroyDelay = 1.2;
+    this.playBuhoDie = true;
     
     this.game.add.existing(this);
     this.level.buhoCollisionGroup.add(this);
@@ -34,6 +35,10 @@ platformer.buho_prefab.prototype.update = function(){
     
     //Check if is alive
     if(this.died == true){
+        if (this.playBuhoDie == true){
+            this.level.BuhoDie.play();
+            this.playBuhoDie = false;
+        }
         this.body.enable = false
         this.body.velocity.x = 0;
         if(this.buhoDestroyDelay >= 0){

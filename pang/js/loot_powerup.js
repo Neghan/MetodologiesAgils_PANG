@@ -27,7 +27,7 @@ platformer.loot_powerup = function(game,x,y,level){
     this.lootDestroyDelay = 1;
     this.game.add.existing(this);
     this.level.powerupCollisionGroup.add(this);
-
+    
 };
 
 platformer.loot_powerup.prototype = Object.create(Phaser.Sprite.prototype);
