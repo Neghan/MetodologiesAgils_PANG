@@ -97,6 +97,7 @@ platformer.level ={
         this.unbreakable_layer = this.map.createLayer('unbreakable_layer');
         this.stairs_layer = this.map.createLayer('stairs_layer');
         
+        
         this.map.setCollisionBetween(1,999,true,'tile_walls_layer');
         this.map.setCollisionBetween(1,999,true,'stairs_layer');
         this.map.setCollisionBetween(1,999,true,'unbreakable_layer');
@@ -252,6 +253,14 @@ platformer.level ={
         }
         
     },
+    checkOverlap:function(spriteA, spriteB) {
+
+    var boundsA = spriteA.getBounds();
+    var boundsB = spriteB.getBounds();
+
+    return Phaser.Rectangle.intersects(boundsA, boundsB);
+
+    },
         //HIT HERO
     hitHero:function(){
         if(!this.hero.shield && this.hero.invincibilityFrames <= 0){
@@ -314,6 +323,8 @@ platformer.level ={
         }else if(powerUpType == 6){//POWER WIRE
             this.hero.powerWire = true;
         }
+       
+        
     },
     
     spawnFruit:function(){
@@ -464,9 +475,10 @@ platformer.level ={
                 this.oneTime = true;
                 this.hero.animations.play('idle');
                 this.hero.body.velocity.x=0;
-
+        
             ///NOT OVERLAPPING!!!!!!
-            }else if(this.game.physics.arcade.overlap(this.hero,this.stairs_layer)==true&&!this.hero.dead){
+            }else if(this.checkOverlap(this.hero,this.stairs_layer)){
+                
                 if(this.cursors.up.isDown){
                     this.hero.body.velocity.y=-gameOptions.heroSpeed;
                      this.hero.animations.play('stairsUP');
@@ -476,6 +488,7 @@ platformer.level ={
                      this.hero.animations.play('stairsUP');
                 }
             }
+            console.log("Overlapping Stairs: "+this.checkOverlap(this.hero,this.unbreakable_layer));
 
             //SPAWN FRUIT
             if (this.timeSpawnFruit <= 0){
