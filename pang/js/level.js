@@ -24,6 +24,7 @@ platformer.level ={
         
         this.load.spritesheet('walls','assets/img/walls_barcelona_floor.png');
         this.load.spritesheet('walls1','assets/img/walls_barcelona.png');
+        this.load.spritesheet('escaleras','assets/img/stairs.png');
         
         this.load.spritesheet('hero','assets/img/player_1.png',41,32);
         this.load.spritesheet('life','assets/img/player_1_life.png',16,16);
@@ -254,6 +255,12 @@ platformer.level ={
         this.game.add.existing(this.destructiblesInst1);
         }
         
+        this.escaleras = this.game.add.sprite(85,180, 'escaleras', 0);
+        this.escaleras.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras, Phaser.Physics.ARCADE);
+        this.escaleras.body.immovable = true;
+        this.escaleras.body.allowGravity = false;
+        
     },
     checkOverlap:function(spriteA, spriteB) {
 
@@ -480,10 +487,11 @@ platformer.level ={
                 this.oneTime = true;
                 this.hero.animations.play('idle');
                 this.hero.body.velocity.x=0;
-        
-            ///NOT OVERLAPPING!!!!!!
-            }else if(this.checkOverlap(this.hero,this.stairs_layer)){
-                
+
+            
+            }
+            //CHECK OVERLAP
+            if(this.checkOverlap(this.hero,this.escaleras)&&!this.hero.dead){
                 if(this.cursors.up.isDown){
                     this.hero.body.velocity.y=-gameOptions.heroSpeed;
                      this.hero.animations.play('stairsUP');
@@ -493,7 +501,6 @@ platformer.level ={
                      this.hero.animations.play('stairsUP');
                 }
             }
-            console.log("Overlapping Stairs: "+this.checkOverlap(this.hero,this.unbreakable_layer));
 
             //SPAWN FRUIT
             if (this.timeSpawnFruit <= 0){
