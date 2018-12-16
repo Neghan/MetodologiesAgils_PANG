@@ -8,7 +8,10 @@ platformer.shoot = function(game,x,y,pointA,pointB,speed,direction,level,type){
 
     } else if (type == 1){
         Phaser.Sprite.call(this,game,x,y,'powerWire');
-        this.animations.add('regular',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71],60,false);
+        this.animations.add('regular',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70],60,false);
+        this.animations.add('disappear', [70,71], 10, true);
+        this.disappearingTime = 2;
+        this.stayingTime = 3;
 
     } else if (type == 2) {
         Phaser.Sprite.call(this,game,x,y,'uzi');
@@ -46,8 +49,16 @@ platformer.shoot.prototype.update = function(){
         }
     } else if(this.type == 1){
         
-        
-        
+        if (this.frame == 70){
+            this.stayingTime -= 0.017;
+        }
+        if (this.stayingTime <=0){
+            this.animations.play('disappear');
+            this.disappearingTime -= 0.017;
+        }
+        if (this.disappearingTime <=0){
+            this.destroy();
+        }
     } else if (this.type == 0){
         if(this.frame >= 69){
             this.destroy();

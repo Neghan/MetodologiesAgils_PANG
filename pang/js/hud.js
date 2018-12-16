@@ -1,8 +1,9 @@
 var platformer = platformer || {};
 
-platformer.HUD=function(game,   level, name,stage){
+platformer.HUD=function(game,   level, name,stage,highScore){
     this.name = name;
     this.stage = stage;
+    this.highScore = highScore;
        //HUD TEXT
         this.ready = game.add.text(game.world.centerX, game.world.centerY-20, "READY", {
         font: "15px Pixel",
@@ -41,7 +42,7 @@ platformer.HUD=function(game,   level, name,stage){
         align: "center"
         });
         this.text4.anchor.setTo(0.5, 0.5);
-        this.text5 = game.add.text(game.world.centerX, game.world.centerY+150, "HI: 10000", {
+        this.text5 = game.add.text(game.world.centerX, game.world.centerY+150, "HI: " + this.highScore, {
         font: "10px Pixel",
         fill: "#ffffff",
         align: "center"

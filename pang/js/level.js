@@ -79,8 +79,6 @@ platformer.level ={
         this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
         }
         
-       
-        
     },
     create:function(){
         
@@ -102,16 +100,20 @@ platformer.level ={
         this.map.setCollisionBetween(1,999,true,'stairs_layer');
         this.map.setCollisionBetween(1,999,true,'unbreakable_layer');
         
+        //STORAGE SCORE
+        this.localStorageName = "PANGLevel" + gameOptions.currentLevel;
+        this.highScore = localStorage.getItem(this.localStorageName) == null ? 0 : localStorage.getItem(this.localStorageName);
+        
         if (gameOptions.currentLevel == 1){
         
-            this.hud = new platformer.HUD(this.game,this,"Barcelona","1-1 Stage");
+            this.hud = new platformer.HUD(this.game,this,"Barcelona","1-1 Stage",this.highScore);
         }
         
         else if (gameOptions.currentLevel == 2){
-            this.hud = new platformer.HUD(this.game,this,"New York","14-1 Stage");
+            this.hud = new platformer.HUD(this.game,this,"New York","14-1 Stage",this.highScore);
         } 
         else if (gameOptions.currentLevel == 3){
-            this.hud = new platformer.HUD(this.game,this,"Emerald Temple","02-1 Stage");
+            this.hud = new platformer.HUD(this.game,this,"Emerald Temple","02-1 Stage",this.highScore);
         }
         
         //HUD
@@ -345,7 +347,6 @@ platformer.level ={
     },
     
     update:function(){
-        
         //COLISIONES QUE SE HACEN SIEMPRE ESTES VIVO O MUERTO (TODAS EXCEPTO LAS DEL PLAYER)  
         this.game.physics.arcade.collide(this.bullet,this.walls_layer);
 
@@ -414,6 +415,10 @@ platformer.level ={
                 this.delayWinCondition -= 0.012;
                 if(this.delayWinCondition <=0){
                     gameOptions.heroScore = this.hero.score;
+                    if (this.hero.score > this.highScore){
+                        localStorage.setItem(this.localStorageName, this.hero.score);
+                        console.log("score of " + this.hero.score + " saved to " + this.localStorageName);
+                    }
                     gameOptions.timeBonus = Math.trunc(this.timeLeft);
                     gameOptions.currentLevel = "Level 1";
                     this.music.stop();
