@@ -87,11 +87,15 @@ platformer.level ={
         this.load.audio('Pick_Fruit','assets/audio/soundeffects/Pick_Fruit.mp3');
         this.load.audio('Pick_Extra_Time','assets/audio/soundeffects/Pick_Extra_Time.wav');
         this.load.audio('Player_Die','assets/audio/soundeffects/Player_Die.mp3');
+        this.load.audio('Get_Points','assets/audio/soundeffects/Get_Points.wav');
         
         this.load.audio('ShootSound','assets/audio/soundeffects/Shoot.wav');
         this.load.audio('UZI','assets/audio/soundeffects/UZI.wav');
         this.load.audio('DynamiteExplosion','assets/audio/soundeffects/DynamiteExplosion.wav');
         this.load.audio('Freeze_Time','assets/audio/soundeffects/Freeze_Time.wav');
+        this.load.audio('Shield_Activate','assets/audio/soundeffects/Shield_Activate.wav');
+        this.load.audio('Shield_Destroyed','assets/audio/soundeffects/Shield_Destroyed.wav');
+        this.load.audio('No_Inmediate_Pow_Up','assets/audio/soundeffects/No_Inmediate_Pow_Up.wav');
         
 
 
@@ -99,8 +103,7 @@ platformer.level ={
         this.playDinamiteSound = true;
         this.playFrezzeTimeSound = true;
         this.playExtraTimeSound = true;
-
-
+        this.playNoInmediatePowUp = true;
         
        
         
@@ -271,6 +274,7 @@ platformer.level ={
         this.BuhoDie = this.add.audio('Buho_die');
         this.CrabDie = this.add.audio('Crab_die');
         this.PickFruit = this.add.audio('Pick_Fruit');
+        this.GetPoints = this.add.audio('Get_Points');
 
         this.PlayerDie = this.add.audio('Player_Die');
         
@@ -279,6 +283,9 @@ platformer.level ={
         this.DynamiteExplosion = this.add.audio('DynamiteExplosion');
         this.FrezzeTime = this.add.audio('Freeze_Time');
         this.ExtraTime = this.add.audio('Pick_Extra_Time');
+        this.ShieldActivate = this.add.audio('Shield_Activate');
+        this.ShieldDestroyed = this.add.audio('Shield_Destroyed');
+        this.NoInmediatePowUp = this.add.audio('No_Inmediate_Pow_Up');
         
          //COLLISIONES
         if (gameOptions.currentLevel == 2){
@@ -310,10 +317,12 @@ platformer.level ={
     
     hitShoot:function(){
         this.hero.score+=100;
+        this.GetPoints.play();
     },
     
     hitFruit:function(){
         this.hero.score+=250;
+        this.GetPoints.play();
     },
     
     //buhoHitShoot:function(){
@@ -325,12 +334,16 @@ platformer.level ={
         console.log("Estoy en ello danielom");
         if(powerUpType == 0){//UZI
             this.hero.uzi = true;
+            if (this.playNoInmediatePowUp == true){
+                this.NoInmediatePowUp.play();           //Pick song done
+                this.playNoInmediatePowUp = false;
+            }
         } else if(powerUpType == 1){//SHIELD
             this.hero.shield = true;
             this.shield.visible = true;
         } else if(powerUpType == 2){//  DYNAMITE
             if(this.playDinamiteSound == true){
-                this.DynamiteExplosion.play();
+                this.DynamiteExplosion.play();             //Pick song done
                 this.playDinamiteSound = false;
             }
             for(i = 0; i < this.bubbleArray.length; i++){
@@ -345,7 +358,7 @@ platformer.level ={
             }
         }else if(powerUpType == 3){//EXTRA TIME
             if (this.playExtraTimeSound == true){
-                this.ExtraTime.play();
+                this.ExtraTime.play();                      //Pick song done
                 this.playExtraTimeSound = false;
             }
             this.playExtraTimeSound = true;
@@ -360,9 +373,18 @@ platformer.level ={
             }
         }else if(powerUpType == 5){//DOUBLE HOOK
             this.hero.doubleHook = true;
+            if (this.playNoInmediatePowUp == true){
+                this.NoInmediatePowUp.play();               //Pick song done
+                this.playNoInmediatePowUp = false;
+            }
         }else if(powerUpType == 6){//POWER WIRE
             this.hero.powerWire = true;
+            if (this.playNoInmediatePowUp == true){
+                this.NoInmediatePowUp.play();               //Pick song done
+                this.playNoInmediatePowUp = false;
+            }
         }
+        this.playNoInmediatePowUp = true;
     },
     
     spawnFruit:function(){
@@ -438,7 +460,8 @@ platformer.level ={
             //COLISIONES CON LOS MUROS SOLO SI ESTA VIVO
             this.game.physics.arcade.collide(this.hero,this.walls_layer);
             this.game.physics.arcade.collide(this.hero,this.unbreakable_layer);
-        
+            
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////ES AQUI DONDE DEBO IMPLEMENTAR EL SHIELD??
             this.shield.x = this.hero.x;
             this.shield.y = this.hero.y;
             if(this.hero.invincibilityFrames > 0){

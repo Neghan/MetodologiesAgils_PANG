@@ -174,8 +174,11 @@ platformer.bubble_prefab.prototype.hitShoot = function(_bubble, _shot){
         this.animations.play('explode');
         if (this.size < 3){
             this.level.spawnBubbles(this.body.x, this.body.y, this.size + 1, this.color, this.directionX);
+            
         }
-        this.level.hitShoot();
+        else{
+          this.level.hitShoot();  
+        }
         _shot.destroy();
         this.exploded = true;
         //delay o quan acabi la animació --> destroy.
