@@ -141,6 +141,17 @@ platformer.level ={
         
         this.bulletArray = [];
         
+        
+        //STAIRS
+        if(gameOptions.currentLevel == 2){
+        this.escaleras = this.game.add.sprite(300,160, 'escaleras', 0);
+        this.escaleras.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras, Phaser.Physics.ARCADE);
+        this.escaleras.body.immovable = true;
+        this.escaleras.body.allowGravity = false;
+        }
+        
+        
         //LIVES
         if(gameOptions.heroHP==3){
             this.lifes = this.game.add.sprite(15,230,'life',0);
@@ -255,11 +266,7 @@ platformer.level ={
         this.game.add.existing(this.destructiblesInst1);
         }
         
-        this.escaleras = this.game.add.sprite(85,180, 'escaleras', 0);
-        this.escaleras.anchor.setTo(.5);
-        this.game.physics.enable(this.escaleras, Phaser.Physics.ARCADE);
-        this.escaleras.body.immovable = true;
-        this.escaleras.body.allowGravity = false;
+        
         
     },
     checkOverlap:function(spriteA, spriteB) {
@@ -491,6 +498,7 @@ platformer.level ={
             
             }
             //CHECK OVERLAP
+            if(gameOptions.currentLevel == 2){
             if(this.checkOverlap(this.hero,this.escaleras)&&!this.hero.dead){
                 if(this.cursors.up.isDown){
                     this.hero.body.velocity.y=-gameOptions.heroSpeed;
@@ -500,6 +508,7 @@ platformer.level ={
                    this.hero.body.velocity.y=gameOptions.heroSpeed;
                      this.hero.animations.play('stairsUP');
                 }
+            }
             }
 
             //SPAWN FRUIT
