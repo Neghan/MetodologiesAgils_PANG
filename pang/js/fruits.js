@@ -43,6 +43,8 @@ platformer.fruits = function(game,x,y,level){
     this.theDestroy = false;
     this.fruitDestroyDelay = 1;
     this.fruitSetText = false;
+    
+    this.playPickFruitSound = true;
 };
 
 platformer.fruits.prototype = Object.create(Phaser.Sprite.prototype);
@@ -51,6 +53,10 @@ platformer.fruits.prototype.constructor = platformer.fruits;
 platformer.fruits.prototype.update = function(){
     
     if (this.theDestroy == true){
+        if (this.playPickFruitSound == true){
+            this.level.PickFruit.play();
+            this.playPickFruitSound = false;
+        }
         this.animations.play(this.value);
         this.fruitDestroyDelay -= 0.012;
         if(this.fruitDestroyDelay <= 0){

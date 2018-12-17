@@ -81,6 +81,30 @@ platformer.level ={
         this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
         }
         
+        //SOUNDEFFECTS     
+        this.load.audio('Bubble_Explosion','assets/audio/soundeffects/Bubble_Explosion.wav');
+        this.load.audio('Buho_die','assets/audio/soundeffects/Buho_die.wav');
+        this.load.audio('Colibri_die','assets/audio/soundeffects/Colibri_die.wav');
+        this.load.audio('Crab_die','assets/audio/soundeffects/Crab_die.ogg');
+        this.load.audio('Pick_Fruit','assets/audio/soundeffects/Pick_Fruit.mp3');
+        this.load.audio('Pick_Extra_Time','assets/audio/soundeffects/Pick_Extra_Time.wav');
+        this.load.audio('Player_Die','assets/audio/soundeffects/Player_Die.mp3');
+        this.load.audio('Get_Points','assets/audio/soundeffects/Get_Points.wav');
+        
+        this.load.audio('ShootSound','assets/audio/soundeffects/Shoot.wav');
+        this.load.audio('UZI','assets/audio/soundeffects/UZI.wav');
+        this.load.audio('DynamiteExplosion','assets/audio/soundeffects/DynamiteExplosion.wav');
+        this.load.audio('Freeze_Time','assets/audio/soundeffects/Freeze_Time.wav');
+        this.load.audio('Shield_Activate','assets/audio/soundeffects/Shield_Activate.wav');
+        this.load.audio('Shield_Destroyed','assets/audio/soundeffects/Shield_Destroyed.wav');
+        this.load.audio('No_Inmediate_Pow_Up','assets/audio/soundeffects/No_Inmediate_Pow_Up.wav');
+        
+        this.playUZISound = true;
+        this.playDinamiteSound = true;
+        this.playFrezzeTimeSound = true;
+        this.playExtraTimeSound = true;
+        this.playNoInmediatePowUp = true;
+        
     },
     create:function(){
         
@@ -282,6 +306,27 @@ platformer.level ={
         this.music = this.add.audio('MusicBarcelona',1,true);
         this.music.play();
         
+        //SOUNDEFFECTS
+        this.bubbleExplosion = this.add.audio('Bubble_Explosion');
+        this.ColibriDie = this.add.audio('Colibri_die');
+        this.BuhoDie = this.add.audio('Buho_die');
+        this.CrabDie = this.add.audio('Crab_die');
+        this.PickFruit = this.add.audio('Pick_Fruit');
+        this.GetPoints = this.add.audio('Get_Points');
+        
+        this.PlayerDie = this.add.audio('Player_Die');
+        
+        this.ShootSound = this.add.audio('ShootSound');
+        this.UZI = this.add.audio('UZI');
+        this.DynamiteExplosion = this.add.audio('DynamiteExplosion');
+        this.FrezzeTime = this.add.audio('Freeze_Time');
+        this.ExtraTime = this.add.audio('Pick_Extra_Time');
+        this.ShieldActivate = this.add.audio('Shield_Activate');
+        this.ShieldDestroyed = this.add.audio('Shield_Destroyed');
+        this.NoInmediatePowUp = this.add.audio('No_Inmediate_Pow_Up');
+        
+        this.loopShield = new Phaser.Sound(this,'Shield_Activate',1,true);
+        
          //COLLISIONES
         if (gameOptions.currentLevel == 2){
         this.destructiblesInst = new platformer.destructibles(this.game,70,80,this);
@@ -306,6 +351,7 @@ platformer.level ={
     hitHero:function(){
         if(!this.hero.shield && this.hero.invincibilityFrames <= 0){
             if (gameOptions.dead == false){
+            this.PlayerDie.play();
             this.camera.shake(0.025,100);
             this.hero.body.velocity.x =0;
             this.hero.dead=true;
@@ -316,15 +362,18 @@ platformer.level ={
             this.hero.shield = false;
             this.shield.visible = false;
             this.hero.invincibilityFrames = 2;
+            this.loopShield.stop();
         }
     },
     
     hitShoot:function(){
         this.hero.score+=100;
+        this.GetPoints.play();
     },
     
     hitFruit:function(){
         this.hero.score+=250;
+        this.GetPoints.play();
     },
     
     //buhoHitShoot:function(){
@@ -336,10 +385,19 @@ platformer.level ={
         console.log("Estoy en ello danielom");
         if(powerUpType == 0){//UZI
             this.hero.uzi = true;
+            if (this.playNoInmediatePowUp == true){
+                this.NoInmediatePowUp.play();           //Pick song done
+                this.playNoInmediatePowUp = false;
+            }
         } else if(powerUpType == 1){//SHIELD
             this.hero.shield = true;
             this.shield.visible = true;
+            this.loopShield.play();
         } else if(powerUpType == 2){//  DYNAMITE
+           if(this.playDinamiteSound == true){
+                this.DynamiteExplosion.play();
+                this.playDinamiteSound = false;
+            }
             for(i = 0; i < this.bubbleArray.length; i++){
                 if(this.bubbleArray[i].size < 3){
                     this.bubbleArray[i].animations.play('explode');
@@ -348,9 +406,15 @@ platformer.level ={
                     }
                     this.bubbleArray[i].exploded = true;
                 }
+                this.playDinamiteSound = true;
             }
         }else if(powerUpType == 3){//EXTRA TIME
             this.timeSlowed = true;
+            if (this.playExtraTimeSound == true){
+                this.ExtraTime.play();
+                this.playExtraTimeSound = false;
+            }
+            this.playExtraTimeSound = true;
             for(i = 0; i < this.bubbleArray.length; i++){
                 this.bubbleArray[i].acceleration /= 2;
             }
@@ -361,9 +425,18 @@ platformer.level ={
             }
         }else if(powerUpType == 5){//DOUBLE HOOK
             this.hero.doubleHook = true;
+            if (this.playNoInmediatePowUp == true){
+                this.NoInmediatePowUp.play();               //Pick song done
+                this.playNoInmediatePowUp = false;
+            }
         }else if(powerUpType == 6){//POWER WIRE
             this.hero.powerWire = true;
+            if (this.playNoInmediatePowUp == true){
+                this.NoInmediatePowUp.play();               //Pick song done
+                this.playNoInmediatePowUp = false;
+            }
         }
+        this.playNoInmediatePowUp = true;
        
         
     },
@@ -453,6 +526,7 @@ platformer.level ={
             if (this.bubbleCollisionGroup.length == 0) {
                 this.delayWinCondition -= 0.012;
                 if(this.delayWinCondition <=0){
+                    this.loopShield.stop();
                     gameOptions.heroScore = this.hero.score;
                     if (this.hero.score > this.highScore){
                         localStorage.setItem(this.localStorageName, this.hero.score);

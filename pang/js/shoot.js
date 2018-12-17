@@ -2,6 +2,9 @@ var platformer = platformer || {};
 
 
 platformer.shoot = function(game,x,y,pointA,pointB,speed,direction,level,type){
+    
+    this.playShootSound = true;
+    
     if(type == 0){
         Phaser.Sprite.call(this,game,x,y,'shoot');
         this.animations.add('regular',[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69],60,false);
@@ -42,13 +45,20 @@ platformer.shoot.prototype.update = function(){
     this.game.debug.body(this);
     
     if(this.type == 2) {
+        if(this.playShootSound == true){
+            this.level.UZI.play();
+            this.playShootSound = false;
+        }
         this.body.velocity.y = -500;
         this.game.physics.arcade.collide(this,this.level.walls_layer,this.hitWall,null,this);
         if (this.frame >= 6){
             this.destroy();
         }
     } else if(this.type == 1){
-        
+        if(this.playShootSound == true){
+            this.level.ShootSound.play();
+            this.playShootSound = false;
+        }
         if (this.frame == 70){
             this.stayingTime -= 0.017;
         }
@@ -60,6 +70,10 @@ platformer.shoot.prototype.update = function(){
             this.destroy();
         }
     } else if (this.type == 0){
+        if(this.playShootSound == true){
+            this.level.ShootSound.play();
+            this.playShootSound = false;
+        }
         if(this.frame >= 69){
             this.destroy();
         }

@@ -72,6 +72,8 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     this.spawnedLoot = false;
     this.game.add.existing(this);
     this.level.bubbleCollisionGroup.add(this);
+    
+    this.playExplosionSound = true;
 };
 
 
@@ -130,6 +132,10 @@ platformer.bubble_prefab.prototype.update = function(){
    }
        
     if (this.exploded == true){
+        if(this.playExplosionSound ==  true){
+            this.level.bubbleExplosion.play();
+            this.playExplosionSound = false;
+        }
         this.body.enable = false;
         if(this.setText == false){
             if (this.size == 3){
@@ -165,8 +171,11 @@ platformer.bubble_prefab.prototype.hitShoot = function(_bubble, _shot){
         this.animations.play('explode');
         if (this.size < 3){
             this.level.spawnBubbles(this.body.x, this.body.y, this.size + 1, this.color, this.directionX);
+            
         }
-        this.level.hitShoot();
+        else{
+          this.level.hitShoot();  
+        }
         _shot.destroy();
         this.exploded = true;
         //delay o quan acabi la animació --> destroy.
