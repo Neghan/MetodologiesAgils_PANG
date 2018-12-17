@@ -287,6 +287,8 @@ platformer.level ={
         this.ShieldDestroyed = this.add.audio('Shield_Destroyed');
         this.NoInmediatePowUp = this.add.audio('No_Inmediate_Pow_Up');
         
+        this.loopShield = new Phaser.Sound(this,'Shield_Activate',1,true);
+        
          //COLLISIONES
         if (gameOptions.currentLevel == 2){
         this.destructiblesInst = new platformer.destructibles(this.game,70,80,this);
@@ -312,6 +314,7 @@ platformer.level ={
             this.hero.shield = false;
             this.shield.visible = false;
             this.hero.invincibilityFrames = 2;
+            this.loopShield.stop();
         }
     },
     
@@ -340,6 +343,7 @@ platformer.level ={
             }
         } else if(powerUpType == 1){//SHIELD
             this.hero.shield = true;
+            this.loopShield.play();
             this.shield.visible = true;
         } else if(powerUpType == 2){//  DYNAMITE
             if(this.playDinamiteSound == true){
