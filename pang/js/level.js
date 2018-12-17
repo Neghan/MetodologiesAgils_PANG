@@ -25,6 +25,7 @@ platformer.level ={
         this.load.spritesheet('walls','assets/img/walls_barcelona_floor.png');
         this.load.spritesheet('walls1','assets/img/walls_barcelona.png');
         this.load.spritesheet('escaleras','assets/img/stairs.png');
+        this.load.spritesheet('escaleras1','assets/img/stairs1.png');
         
         this.load.spritesheet('hero','assets/img/player_1.png',41,32);
         this.load.spritesheet('life','assets/img/player_1_life.png',16,16);
@@ -149,6 +150,30 @@ platformer.level ={
         this.game.physics.enable(this.escaleras, Phaser.Physics.ARCADE);
         this.escaleras.body.immovable = true;
         this.escaleras.body.allowGravity = false;
+        }else if(gameOptions.currentLevel == 3){
+        this.escaleras1 = this.game.add.sprite(220,160, 'escaleras', 0);
+        this.escaleras1.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras1, Phaser.Physics.ARCADE);
+        this.escaleras1.body.immovable = true;
+        this.escaleras1.body.allowGravity = false;
+        
+        this.escaleras2 = this.game.add.sprite(164,160, 'escaleras', 0);
+        this.escaleras2.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras2, Phaser.Physics.ARCADE);
+        this.escaleras2.body.immovable = true;
+        this.escaleras2.body.allowGravity = false;
+            
+        this.escaleras3 = this.game.add.sprite(116,92, 'escaleras1', 0);
+        this.escaleras3.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras3, Phaser.Physics.ARCADE);
+        this.escaleras3.body.immovable = true;
+        this.escaleras3.body.allowGravity = false;
+        
+        this.escaleras4 = this.game.add.sprite(268,92, 'escaleras1', 0);
+        this.escaleras4.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras4, Phaser.Physics.ARCADE);
+        this.escaleras4.body.immovable = true;
+        this.escaleras4.body.allowGravity = false;
         }
         
         
@@ -508,8 +533,20 @@ platformer.level ={
                    this.hero.body.velocity.y=gameOptions.heroSpeed;
                      this.hero.animations.play('stairsUP');
                 }
+                }
+            }else if(gameOptions.currentLevel == 3){
+               if(this.checkOverlap(this.hero,this.escaleras4)||this.checkOverlap(this.hero,this.escaleras3)||this.checkOverlap(this.hero,this.escaleras2)||this.checkOverlap(this.hero,this.escaleras1)&&!this.hero.dead){
+                if(this.cursors.up.isDown){
+                    this.hero.body.velocity.y=-gameOptions.heroSpeed;
+                     this.hero.animations.play('stairsUP');
+                }
+                if(this.cursors.down.isDown){
+                   this.hero.body.velocity.y=gameOptions.heroSpeed;
+                     this.hero.animations.play('stairsUP');
+                } 
+                }
             }
-            }
+            
 
             //SPAWN FRUIT
             if (this.timeSpawnFruit <= 0){
