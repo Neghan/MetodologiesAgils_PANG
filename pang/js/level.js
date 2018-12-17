@@ -256,15 +256,16 @@ platformer.level ={
         
         
         //BUBBLES
+        this.timeSlowed = false;
+        this.timeStopped = false;
+        this.timeStoppedTimer = 10;
+        
         this.bubbleCollisionGroup = this.game.add.group();
         this.bubbleCollisionGroup.enableBody = true;
         this.bubbleCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
         
         this.bubbleArray = [];
         this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,0,1));
-        
-        this.timeSlowed = false;
-        this.timeStopped = false;
         
         this.delayWinCondition = 2;
         
@@ -670,7 +671,20 @@ platformer.level ={
             }
             else{
                 this.timeSpawnCangrejo -= 0.012;
-            } 
+            }
+            //TIME STOPPED
+            if(this.timeStopped){
+                this.timeStoppedTimer -= 0.017;
+                console.log(this.timeStoppedTimer);
+                if(this.timeStoppedTimer <= 0){
+                    console.log("WE GOOD")
+                    this.timeStopped = false;
+                    this.timeStoppedTimer = 10;
+                    for(i = 0; i < this.bubbleArray.length; i++){
+                        this.bubbleArray[i].stopped = false;
+                    }
+                }
+            }
         }
     }
 };
