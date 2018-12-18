@@ -28,6 +28,7 @@ platformer.level ={
         this.load.spritesheet('escaleras1','assets/img/stairs1.png');
         
         this.load.spritesheet('hero','assets/img/player_1.png',41,32);
+        this.load.spritesheet('hero2', 'assets/img/player_2.png',41,32);
         this.load.spritesheet('life','assets/img/player_1_life.png',16,16);
         
         this.load.spritesheet('shoot','assets/img/hook.png',9,189);
@@ -455,8 +456,8 @@ platformer.level ={
     },
     
     spawnBubbles:function(x, y, size, color, direction){
-            this.bubbleArray.push(new platformer.bubble_prefab(this.game,x,y,this,size,color,direction));
-            this.bubbleArray.push(new platformer.bubble_prefab(this.game,x,y,this,size,color,-direction));
+            this.bubbleArray.push(new platformer.bubble_prefab(this.game,x + 10,y,this,size,color,direction));
+            this.bubbleArray.push(new platformer.bubble_prefab(this.game,x - 10,y,this,size,color,-direction));
     },
     
     update:function(){
