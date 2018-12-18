@@ -109,6 +109,10 @@ platformer.level ={
     },
     create:function(){
         
+        
+        this.Pause = this.input.keyboard.addKey(Phaser.Keyboard.P);
+        this.Pause.onDown.add(function(){this.FunPause();},this);
+        
         gameOptions.dead = false;
 
         this.bg = this.game.add.tileSprite(0,0,gameOptions.level1Width,gameOptions.level1Height,'bg');
@@ -158,6 +162,18 @@ platformer.level ={
         align: "center"
         });
         this.gameOverText.anchor.setTo(0.5, 0.5);
+        
+        //PAUSE MENU
+        this.PauseText = this.game.add.text(this.game.world.centerX -31, this.game.world.centerY - 15, " ", {
+            font: "15px Pixel",
+            fill: "#000000",
+            align: "left"
+        });
+        this.PressP = this.game.add.text(this.game.world.centerX - 70, this.game.world.centerY + 15, " ", {
+            font: "15px Pixel",
+            fill: "#000000",
+            align: "left"
+        });
         
         //DISPAROS
         this.oneTime = true;
@@ -349,6 +365,19 @@ platformer.level ={
     return Phaser.Rectangle.intersects(boundsA, boundsB);
 
     },
+    
+    FunPause:function(){
+        this.game.paused = this.game.paused? false:true;
+        if (this.game.paused){
+            this.PauseText.setText("PAUSED")
+            this.PressP.setText("PRESS P TO RESUME")
+        }
+        else{
+            this.PauseText.setText(" ")
+            this.PressP.setText(" ")
+        }
+    },
+    
         //HIT HERO
     hitHero:function(){
         if(!this.hero.shield && this.hero.invincibilityFrames <= 0){
