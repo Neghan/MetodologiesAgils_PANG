@@ -392,9 +392,11 @@ platformer.level ={
                 this.playNoInmediatePowUp = false;
             }
         } else if(powerUpType == 1){//SHIELD
+            if(!this.hero.shield){
+                this.loopShield.play();
+            }
             this.hero.shield = true;
             this.shield.visible = true;
-            this.loopShield.play();
         } else if(powerUpType == 2){//  DYNAMITE
            if(this.playDinamiteSound == true){
                 this.DynamiteExplosion.play();
