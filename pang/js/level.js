@@ -458,8 +458,8 @@ platformer.level ={
     },
     
     spawnBubbles:function(x, y, size, color, direction){
-            this.bubbleArray.push(new platformer.bubble_prefab(this.game,x + 10,y,this,size,color,direction));
-            this.bubbleArray.push(new platformer.bubble_prefab(this.game,x - 10,y,this,size,color,-direction));
+            this.bubbleArray.push(new platformer.bubble_prefab(this.game,x + direction * 2,y,this,size,color,direction));
+            this.bubbleArray.push(new platformer.bubble_prefab(this.game,x -direction * 2,y,this,size,color,-direction));
     },
     
     update:function(){
