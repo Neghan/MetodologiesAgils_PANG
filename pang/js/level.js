@@ -51,36 +51,183 @@ platformer.level ={
         
         this.load.spritesheet('destructibles2','assets/img/destructibles2.png',8,31);
         
-        //CADA NIVEL CON SUS LOADS
-        if (gameOptions.currentLevel == 1){
-        this.load.image('bg','assets/img/barcelona.png');
+        //CADA NIVEL CON SUS LOADS NO VAN LOS NAMESPACEPS Y HAGO ESTO PARA TRABAJAR MEJOR
+                
+        
+        if (true){
+        
+            if (gameOptions.currentLevel == 1){
+            this.load.image('bg','assets/img/BG/BG01.png');
+            this.load.audio('musica', 'assets/audio/music/M01.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapBCN.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
             
-        this.load.audio('MusicBarcelona', 'assets/audio/music/10 - Barcelona.mp3');
-        //CARGA DEL MAPA
-        this.load.tilemap('Tilemap','assets/tilemaps/TilemapBCN.json',null,Phaser.Tilemap.TILED_JSON);
-        this.load.image('border','assets/UtilsLevel/border.png');
-        this.load.image('stairs','assets/UtilsLevel/stairs.png');
-        this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            else if (gameOptions.currentLevel == 2){
+            this.load.image('bg','assets/img/BG/BG02.png');    
+            this.load.audio('musica', 'assets/audio/music/M02.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapNY.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+            
+            else if (gameOptions.currentLevel == 3){
+            this.load.image('bg','assets/img/BG/BG03.png');    
+            this.load.audio('musica', 'assets/audio/music/M03.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+            
+            else if (gameOptions.currentLevel == 4){
+            this.load.image('bg','assets/img/BG/BG04.png');    
+            this.load.audio('musica', 'assets/audio/music/M04.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+    
+            else if (gameOptions.currentLevel == 5){
+            this.load.image('bg','assets/img/BG/BG05.png');    
+            this.load.audio('musica', 'assets/audio/music/M05.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+            
+            else if (gameOptions.currentLevel == 6){
+            this.load.image('bg','assets/img/BG/BG06.png');    
+            this.load.audio('musica', 'assets/audio/music/M06.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+            
+            else if (gameOptions.currentLevel == 7){
+            this.load.image('bg','assets/img/BG/BG07.png');    
+            this.load.audio('musica', 'assets/audio/music/M07.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+            
+            else if (gameOptions.currentLevel == 8){
+            this.load.image('bg','assets/img/BG/BG08.png');    
+            this.load.audio('musica', 'assets/audio/music/M08.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+    
+            else if (gameOptions.currentLevel == 9){
+            this.load.image('bg','assets/img/BG/BG09.png');    
+            this.load.audio('MusicGuilin', 'assets/audio/music/M09.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+            
+            else if (gameOptions.currentLevel == 10){
+            this.load.image('bg','assets/img/BG/BG10.png');    
+            this.load.audio('musica', 'assets/audio/music/M10.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+            
+            else if (gameOptions.currentLevel == 11){
+            this.load.image('bg','assets/img/BG/BG11.png');    
+            this.load.audio('musica', 'assets/audio/music/M11.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+            
+            else if (gameOptions.currentLevel == 12){
+            this.load.image('bg','assets/img/BG/BG12.png');    
+            this.load.audio('musica', 'assets/audio/music/M12.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('musica','assets/UtilsLevel/unbreakable_platform.png');
+            }
+    
+            else if (gameOptions.currentLevel == 13){
+            this.load.image('bg','assets/img/BG/BG13.png');    
+            this.load.audio('musica', 'assets/audio/music/M13.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+            
+            else if (gameOptions.currentLevel == 14){
+            this.load.image('bg','assets/img/BG/BG14.png');    
+            this.load.audio('musica', 'assets/audio/music/M14.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+            
+            else if (gameOptions.currentLevel == 15){
+            this.load.image('bg','assets/img/BG/BG15.png');    
+            this.load.audio('musica', 'assets/audio/music/M15.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+            
+            else if (gameOptions.currentLevel == 16){
+            this.load.image('bg','assets/img/BG/BG16.png');    
+            this.load.audio('musica', 'assets/audio/music/M16.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+    
+            else if (gameOptions.currentLevel == 17){
+            this.load.image('bg','assets/img/BG/BG17.png');    
+            this.load.audio('musica', 'assets/audio/music/M17.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
+            //#endRegion
         }
-        else if (gameOptions.currentLevel == 2){
-        this.load.image('bg','assets/img/nueva_york.png');
-            
-        this.load.audio('MusicNY', 'assets/audio/music/14 - New York.mp3');
-        //CARGA DEL MAPA
-        this.load.tilemap('Tilemap','assets/tilemaps/TilemapNY.json',null,Phaser.Tilemap.TILED_JSON);
-        this.load.image('border','assets/UtilsLevel/border.png');
-        this.load.image('stairs','assets/UtilsLevel/stairs.png');
-        this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
-        }else if (gameOptions.currentLevel == 3){
-        this.load.image('bg','assets/img/emerald_temple.png');
-            
-        this.load.audio('MusicGuilin', 'assets/audio/music/02 - Guilin.mp3');
-        //CARGA DEL MAPA
-        this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
-        this.load.image('border','assets/UtilsLevel/border.png');
-        this.load.image('stairs','assets/UtilsLevel/stairs.png');
-        this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
-        }
+
         
         //SOUNDEFFECTS     
         this.load.audio('Bubble_Explosion','assets/audio/soundeffects/Bubble_Explosion.wav');
@@ -141,6 +288,9 @@ platformer.level ={
         } 
         else if (gameOptions.currentLevel == 3){
             this.hud = new platformer.HUD(this.game,this,"Emerald Temple","02-1 Stage",this.highScore);
+        }
+        else{
+            this.hud = new platformer.HUD(this.game,this,"OUT OF RANGE","1-1 Stage",this.highScore);
         }
         
         //HUD
@@ -305,7 +455,7 @@ platformer.level ={
         this.delayGameOver = 2;
         
         //MUSICA
-        this.music = this.add.audio('MusicBarcelona',1,true);
+        this.music = this.add.audio('musica',1,true);
         this.music.play();
         
         //SOUNDEFFECTS
@@ -537,7 +687,6 @@ platformer.level ={
                         console.log("score of " + this.hero.score + " saved to " + this.localStorageName);
                     }
                     gameOptions.timeBonus = Math.trunc(this.timeLeft);
-                    gameOptions.currentLevel = "Level 1";
                     this.music.stop();
                     this.state.start('solvedlevel'); 
                 }
