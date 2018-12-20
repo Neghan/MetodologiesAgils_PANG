@@ -51,9 +51,8 @@ platformer.level ={
         
         this.load.spritesheet('destructibles2','assets/img/destructibles2.png',8,31);
         
-        //CADA NIVEL CON SUS LOADS NO VAN LOS NAMESPACEPS Y HAGO ESTO PARA TRABAJAR MEJOR
+        //CADA NIVEL CON SUS LOADS NO VAN LOS NAMESPACEPS Y HAGO ESTE IF TRUE PARA QUE NO OCUPE MUCHO
                 
-        
         if (true){
         
             if (gameOptions.currentLevel == 1){
@@ -173,7 +172,7 @@ platformer.level ={
             this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
             this.load.image('border','assets/UtilsLevel/border.png');
             this.load.image('stairs','assets/UtilsLevel/stairs.png');
-            this.load.image('musica','assets/UtilsLevel/unbreakable_platform.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
             }
     
             else if (gameOptions.currentLevel == 13){
@@ -278,19 +277,62 @@ platformer.level ={
         this.localStorageName = "PANGLevel" + gameOptions.currentLevel;
         this.highScore = localStorage.getItem(this.localStorageName) == null ? 0 : localStorage.getItem(this.localStorageName);
         
-        if (gameOptions.currentLevel == 1){
-        
-            this.hud = new platformer.HUD(this.game,this,"Barcelona","1-1 Stage",this.highScore);
-        }
-        
-        else if (gameOptions.currentLevel == 2){
-            this.hud = new platformer.HUD(this.game,this,"New York","14-1 Stage",this.highScore);
-        } 
-        else if (gameOptions.currentLevel == 3){
-            this.hud = new platformer.HUD(this.game,this,"Emerald Temple","02-1 Stage",this.highScore);
-        }
-        else{
-            this.hud = new platformer.HUD(this.game,this,"OUT OF RANGE","1-1 Stage",this.highScore);
+        //EL HUD PERSONAL DE CADA NIVEL CON EL IF TRUE PARA QUE NO OCUPE MUCHO
+        if (true){
+            if (gameOptions.currentLevel == 1){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"1-1 Stage",this.highScore);
+            }
+            else if (gameOptions.currentLevel == 2){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"2-1 Stage",this.highScore);
+            } 
+            else if (gameOptions.currentLevel == 3){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"3-1 Stage",this.highScore);
+            }
+            else if (gameOptions.currentLevel == 4){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"4-1 Stage",this.highScore);
+            } 
+            else if (gameOptions.currentLevel == 5){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"5-1 Stage",this.highScore);
+            }
+            else if (gameOptions.currentLevel == 6){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"6-1 Stage",this.highScore);
+            } 
+            else if (gameOptions.currentLevel == 7){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"7-1 Stage",this.highScore);
+            }
+            else if (gameOptions.currentLevel == 8){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"8-1 Stage",this.highScore);
+            } 
+            else if (gameOptions.currentLevel == 9){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"9-1 Stage",this.highScore);
+            }
+            else if (gameOptions.currentLevel == 10){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"10-1 Stage",this.highScore);
+            } 
+            else if (gameOptions.currentLevel == 11){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"11-1 Stage",this.highScore);
+            }
+            else if (gameOptions.currentLevel == 12){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"12-1 Stage",this.highScore);
+            } 
+            else if (gameOptions.currentLevel == 13){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"13-1 Stage",this.highScore);
+            }
+            else if (gameOptions.currentLevel == 14){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"14-1 Stage",this.highScore);
+            } 
+            else if (gameOptions.currentLevel == 15){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"15-1 Stage",this.highScore);
+            }
+            else if (gameOptions.currentLevel == 16){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"16-1 Stage",this.highScore);
+            } 
+            else if (gameOptions.currentLevel == 17){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"17-1 Stage",this.highScore);
+            }
+            else{
+                this.hud = new platformer.HUD(this.game,this,"OUT OF RANGE","1-1 Stage",this.highScore);
+            }
         }
         
         //HUD
