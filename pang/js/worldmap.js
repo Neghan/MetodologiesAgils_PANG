@@ -234,63 +234,77 @@ platformer.worldmap ={
                 this.state.start('level');   //NIVEL2
                 }
                 else if( this.currentLevel == 3){
-                    gameOptions.currentLevelName = "EMERALD TEMPLE"
                     gameOptions.currentLevel = 3;
+                    gameOptions.currentLevelName = "EMERALD TEMPLE"
                 this.state.start('level');   //NIVEL3
                 }
                 else if( this.currentLevel == 4){
+                    gameOptions.currentLevel = 4;
                     gameOptions.currentLevelName = "ANKOR WATT"
                 this.state.start('level');   //NIVEL4
                 }
                 else if( this.currentLevel == 5){ 
+                    gameOptions.currentLevel = 5;
                     gameOptions.currentLevelName = "AUSTRALIA"
                 this.state.start('level');   //NIVEL5
                 }
                 else if( this.currentLevel == 6){
+                    gameOptions.currentLevel = 6;
                     gameOptions.currentLevelName = "TAJ MAHAL"
                 this.state.start('level');   //NIVEL6
                 }
                 else if( this.currentLevel == 7){
+                    gameOptions.currentLevel = 7;
                     gameOptions.currentLevelName = "LENINGRAD"
                 this.state.start('level');   //NIVEL7
                 }
                 else if( this.currentLevel == 8){ 
+                    gameOptions.currentLevel = 8;
                     gameOptions.currentLevelName = "PARIS"
                 this.state.start('level');   //NIVEL8
                 }
                 else if( this.currentLevel == 9){
+                    gameOptions.currentLevel = 9;
                     gameOptions.currentLevelName = "LONDON"
                 this.state.start('level');   //NIVEL9
                 }
                 else if( this.currentLevel == 10){
+                    gameOptions.currentLevel = 10;
                     gameOptions.currentLevelName = "BARCELONA"
                 this.state.start('level');   //NIVEL10
                 }
                 else if( this.currentLevel == 11){ 
+                    gameOptions.currentLevel = 11;
                     gameOptions.currentLevelName = "ATHENS"
                 this.state.start('level');   //NIVEL11
                 }
                 else if( this.currentLevel == 12){
+                    gameOptions.currentLevel = 12;
                     gameOptions.currentLevelName = "EGYPT"
                 this.state.start('level');   //NIVEL12
                 }
                 else if( this.currentLevel == 13){
+                    gameOptions.currentLevel = 13;
                     gameOptions.currentLevelName = "KENYA"
                 this.state.start('level');   //NIVEL13
                 }
                 else if( this.currentLevel == 14){
+                    gameOptions.currentLevel = 14;
                     gameOptions.currentLevelName = "NEW YORK"
                 this.state.start('level');   //NIVEL14
                 }
                 else if( this.currentLevel == 15){ 
+                    gameOptions.currentLevel = 15;
                     gameOptions.currentLevelName = "MAYA"
                 this.state.start('level');   //NIVEL15
                 }
                 else if( this.currentLevel == 16){
+                    gameOptions.currentLevel = 16;
                     gameOptions.currentLevelName = "ANTARTIC"
                 this.state.start('level');   //NIVEL16
                 }
                 else if( this.currentLevel == 17){
+                    gameOptions.currentLevel = 17;
                     gameOptions.currentLevelName = "EASTER ISLAND"
                 this.state.start('level');   //NIVEL17
                 }
