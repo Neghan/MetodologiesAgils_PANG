@@ -69,7 +69,7 @@ platformer.worldmap ={
         //Al principio el selector esta estatico
         if(this.timeflow == 20){
         this.selector.animations.play('move');
-        this.MapName.setText("BARCELONA");
+        this.MapName.setText("MT. FUJI");
         this.Stage.setText("1-1 STAGE");
         }
         
@@ -204,19 +204,25 @@ platformer.worldmap ={
         this.Stage.setText("17-1 STAGE")
         }
         
-        //Si Pulsamos Pause seleccionamos ese nivel en concreto
+        //Si Pulsamos Sapce seleccionamos ese nivel en concreto
         if (this.space.isDown){
-            //SALTAR AL NIVEL LEVEL1 POR AHORA
             this.selectedLevel = true;
             this.canChangeLevel2 = false;
         }
+        else if (this.game.input.keyboard.isDown(Phaser.Keyboard.F)){
+            this.selectedLevel = true;
+            this.currentLevel = 18;
+        }
+        
         //CUANDO SELECCIONAMOS EL NIVEL EMPIEZA A PARPADEAR EL SELECTOR Y AL CABO DE X TIEMPO ENTRAMOS EN EL MAPA
         if ( this.selectedLevel == true){
             if (this.boolSoundButton == false){
                 this.soundEffect.play();
                 this.boolSoundButton = true;
                 }
+            if (this.currentLevel < 18){
             this.selector.animations.play('selected');
+            }
             if(this.timeflow >= 0){
                 this.timeflow -= 0.25;
             }
@@ -307,6 +313,11 @@ platformer.worldmap ={
                     gameOptions.currentLevel = 17;
                     gameOptions.currentLevelName = "EASTER ISLAND"
                 this.state.start('level');   //NIVEL17
+                }
+                else if( this.currentLevel == 18){
+                gameOptions.currentLevel = 18;
+                gameOptions.currentLevelName = "MULTIPLAYER LEVEL"
+                this.state.start('level');   //NIVEL18
                 }
             }
         }

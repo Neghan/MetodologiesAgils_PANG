@@ -224,6 +224,16 @@ platformer.level ={
             this.load.image('stairs','assets/UtilsLevel/stairs.png');
             this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
             }
+            
+            else if (gameOptions.currentLevel == 18){
+            this.load.image('bg','assets/img/BG/BG18.png');    
+            this.load.audio('musica', 'assets/audio/music/M17.mp3');
+            //CARGA DEL MAPA
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.image('border','assets/UtilsLevel/border.png');
+            this.load.image('stairs','assets/UtilsLevel/stairs.png');
+            this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
+            }
             //#endRegion
         }
 
@@ -333,6 +343,9 @@ platformer.level ={
             } 
             else if (gameOptions.currentLevel == 17){
                 this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"17-1 Stage",this.highScore);
+            }
+            else if (gameOptions.currentLevel == 18){
+                this.hud = new platformer.HUD(this.game,this,gameOptions.currentLevelName,"Get the best Score!",this.highScore);
             }
             else{
                 this.hud = new platformer.HUD(this.game,this,"OUT OF RANGE","1-1 Stage",this.highScore);
