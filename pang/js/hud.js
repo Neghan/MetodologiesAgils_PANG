@@ -42,6 +42,12 @@ platformer.HUD=function(game,   level, name,stage,highScore){
         align: "center"
         });
         this.text4.anchor.setTo(0.5, 0.5);
+        this.scoretext2 = game.add.text(game.world.centerX+100, game.world.centerY+115, "0", {
+        font: "10px Pixel",
+        fill: "#ffffff",
+        align: "center"
+        });
+        this.scoretext2.anchor.setTo(0.5, 0.5);
         this.text5 = game.add.text(game.world.centerX, game.world.centerY+150, "HI: " + this.highScore, {
         font: "10px Pixel",
         fill: "#ffffff",

@@ -20,11 +20,12 @@ platformer.player = function(game,x,y,level,num){
     this.dead=false;
     this.lives = 3;
     this.score = 0;
-    this.shield = false;
+    this.shielded = false;
     this.doubleHook = false;
     this.powerWire = false;
-    this.uzi = false;
+    this.uzi = true;
     this.invincibilityFrames = 0;
+    this.shootOneTime = true;
     
     this.shield = this.game.add.sprite(0,0, 'shield', 0);
     this.shield.animations.add('shield', [0,1],10, true);
@@ -77,7 +78,7 @@ platformer.player.prototype.update = function(){
                     gameOptions.hero2HP=3;
                     this.level.goToWorldmap = false;
                     this.level.state.start('worldmap');
-                    gameOptions.dead1 = false;
+                    gameOptions.dead2 = false;
                 }
             }
 
@@ -85,7 +86,7 @@ platformer.player.prototype.update = function(){
             if(gameOptions.hero2HP==2){
                 this.level.music.stop();
                 this.level.state.start('level');
-                gameOptions.dead1 = false;
+                gameOptions.dead2 = false;
             }
             else if(gameOptions.hero2HP==1){
                 this.level.music.stop();
@@ -93,7 +94,7 @@ platformer.player.prototype.update = function(){
                 gameOptions.dead2 = false;
             }
             else if(gameOptions.hero2HP==0){
-                this.level.lifes.destroy();        
+                this.level.lifesplayer2.destroy();        
                 this.level.gameOverText.setText("GAME OVER");
                 this.level.music.stop();
                 this.level.goToWorldmap = true;
@@ -110,28 +111,7 @@ platformer.player.prototype.update = function(){
                 this.invincibilityFrames -= 0.012;
             }
 
-
-            //console.log(this.bulletCollisionGroup.length);
-            //CONDICION DE VICTORIA --> MATAS TODAS LAS BURBUJAS
-            if (this.level.bubbleCollisionGroup.length == 0) {
-                this.level.delayWinCondition -= 0.012;
-                if(this.level.delayWinCondition <=0){
-                    this.level.loopShield.stop();
-                    gameOptions.hero2Score = this.score;
-                    if (this.score > this.level.highScore){
-                        localStorage.setItem(this.level.localStorageName, this.score);
-                        console.log("score of " + this.score + " saved to " + this.level.localStorageName);
-                    }
-                    gameOptions.timeBonus = Math.trunc(this.level.timeLeft);
-                    this.level.music.stop();
-                    this.level.state.start('solvedlevel'); 
-                }
-            } else {
-                this.level.delayWinCondition = 2;
-            }
-
-
-            this.level.hud.scoretext.setText(""+this.score);
+            this.level.hud.scoretext2.setText(""+this.score);
             
             //MOVIMIENTO HEROE 
             if(this.leftkey.isDown&&!this.dead){
@@ -145,12 +125,12 @@ platformer.player.prototype.update = function(){
             }else if (this.shootKey.isDown&& !this.dead){
                 this.animations.play('idleShoot');
                 this.body.velocity.x=0;
-                    if(this.level.oneTime){
+                    if(this.shootOneTime){
                         if(this.uzi){
                             this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,2,this.num));
 
                             //this.game.world.swap(this.hero,this.bulletArray);
-                            this.level.oneTime = false;
+                            this.shootOneTime = false;
                             //ORDEN DE DIBUJO 
                             //this.game.world.swap(this.timer,this.bulletArray);
                         } else if (this.level.bulletCollisionGroup.length < 1 || (this.level.bulletCollisionGroup.length < 2 && this.doubleHook)){
@@ -159,12 +139,12 @@ platformer.player.prototype.update = function(){
                             } else {
                                 this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,0,this.num));
                             }
-                            this.level.oneTime = false;
+                            this.shootOneTime = false;
                         }
                     }
 
             }else if(!this.dead){
-                this.level.oneTime = true;
+                this.shootOneTime = true;
                 this.animations.play('idle');
                 this.body.velocity.x=0;
             }
@@ -247,27 +227,6 @@ platformer.player.prototype.update = function(){
                 this.invincibilityFrames -= 0.012;
             }
 
-
-            //console.log(this.bulletCollisionGroup.length);
-            //CONDICION DE VICTORIA --> MATAS TODAS LAS BURBUJAS
-            if (this.level.bubbleCollisionGroup.length == 0) {
-                this.level.delayWinCondition -= 0.012;
-                if(this.level.delayWinCondition <=0){
-                    this.level.loopShield.stop();
-                    gameOptions.hero1Score = this.score;
-                    if (this.score > this.level.highScore){
-                        localStorage.setItem(this.level.localStorageName, this.score);
-                        console.log("score of " + this.score + " saved to " + this.level.localStorageName);
-                    }
-                    gameOptions.timeBonus = Math.trunc(this.level.timeLeft);
-                    this.level.music.stop();
-                    this.level.state.start('solvedlevel'); 
-                }
-            } else {
-                this.level.delayWinCondition = 2;
-            }
-
-
             this.level.hud.scoretext.setText(""+this.score);
             
             //MOVIMIENTO HEROE 
@@ -282,12 +241,12 @@ platformer.player.prototype.update = function(){
             }else if (this.shootKey.isDown&& !this.dead){
                 this.animations.play('idleShoot');
                 this.body.velocity.x=0;
-                    if(this.level.oneTime){
+                    if(this.shootOneTime){
                         if(this.uzi){
                             this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,2,this.num));
 
                             //this.game.world.swap(this.hero,this.bulletArray);
-                            this.level.oneTime = false;
+                            this.shootOneTime = false;
                             //ORDEN DE DIBUJO 
                             //this.game.world.swap(this.timer,this.bulletArray);
                         } else if (this.level.bulletCollisionGroup.length < 1 || (this.level.bulletCollisionGroup.length < 2 && this.doubleHook)){
@@ -296,12 +255,12 @@ platformer.player.prototype.update = function(){
                             } else {
                                 this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,0,this.num));
                             }
-                            this.level.oneTime = false;
+                            this.shootOneTime = false;
                         }
                     }
 
             }else if(!this.dead){
-                this.level.oneTime = true;
+                this.shootOneTime = true;
                 this.animations.play('idle');
                 this.body.velocity.x=0;
             }

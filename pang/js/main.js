@@ -16,8 +16,7 @@ var gameOptions={
     timeBonus:0,
     currentLevel:0,
     dead1:false,
-    dead2:false,
-    player2Enabled: false
+    dead2:false
 
 };
 
