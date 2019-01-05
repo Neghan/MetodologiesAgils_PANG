@@ -31,7 +31,7 @@ platformer.buho_prefab.prototype.constructor = platformer.buho_prefab;
 platformer.buho_prefab.prototype.update = function(){
     
         //Colisions
-    this.game.physics.arcade.overlap(this,this.level.hero,this.buhoHitHero,null,this);
+    this.game.physics.arcade.overlap(this,this.level.playerCollisionGroup,this.buhoHitHero,null,this);
     this.game.physics.arcade.collide(this,this.level.bulletArray,this.buhoHitShoot,null,this);
     
     //Check if is alive
@@ -85,6 +85,6 @@ platformer.buho_prefab.prototype.update = function(){
     platformer.buho_prefab.prototype.buhoHitHero = function(_buho,_hero){
     if(_buho.body.touching && _hero.body.touching){
         
-        this.level.hitHero();
+        this.level.hitHero(_hero.num);
     }
 };

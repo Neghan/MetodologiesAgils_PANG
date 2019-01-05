@@ -65,7 +65,7 @@ platformer.fruits.prototype.update = function(){
         }
     }
     
-    this.game.physics.arcade.collide(this,this.level.hero,this.hitFruit,null,this);
+    this.game.physics.arcade.collide(this,this.level.playerCollisionGroup,this.hitFruit,null,this);
     
     this.body.velocity.y= 50;
     if(this.oneTimeFruit){
@@ -90,7 +90,7 @@ platformer.fruits.prototype.update = function(){
 
 platformer.fruits.prototype.hitFruit = function(_fruit,_hero){
     if(_fruit.body.touching && _hero.body.touching){
-        this.level.hitFruit();
+        this.level.hitFruit(_hero.num);
         this.body.enable = false;
             if (this.fruitSetText == false){
             this.fruitScore = this.game.add.text( this.body.position.x+10, this.body.position.y-10, "250", {

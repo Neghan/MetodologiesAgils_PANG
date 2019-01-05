@@ -8,12 +8,16 @@ var gameOptions={
     heroGravity:1000,
     heroSpeed:200,
     heroJump:450,
-    heroHP:3,
-    heroScore:0,
+    hero1HP:3,
+    hero2HP:3,
+    hero1Score:0,
+    hero2Score:0,
     currentLevelName:'undefined',
     timeBonus:0,
     currentLevel:0,
-    dead:false
+    dead1:false,
+    dead2:false,
+    player2Enabled: false
 
 };
 

@@ -2,7 +2,7 @@ var platformer = platformer || {};
 
 platformer.player = function(game,x,y,level,num){
     if(num == 2){
-        Phaser.Sprite.call(this,game,x,y,'hero_2');
+        Phaser.Sprite.call(this,game,x,y,'hero2');
     } else {
         Phaser.Sprite.call(this,game,x,y,'hero');
     }
@@ -31,6 +31,24 @@ platformer.player = function(game,x,y,level,num){
     this.shield.animations.play('shield');
     this.shield.visible = false;
     this.shield.anchor.setTo(0.5);
+    
+    if(this.num == 2){
+        this.upkey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
+        this.downkey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+        this.leftkey = this.game.input.keyboard.addKey(Phaser.Keyboard.A);
+        this.rightkey = this.game.input.keyboard.addKey(Phaser.Keyboard.D);
+        this.shootKey=this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+    }
+    else{
+        this.upkey = this.game.input.keyboard.addKey(Phaser.Keyboard.UP);
+        this.downkey = this.game.input.keyboard.addKey(Phaser.Keyboard.DOWN);
+        this.leftkey = this.game.input.keyboard.addKey(Phaser.Keyboard.LEFT);
+        this.rightkey = this.game.input.keyboard.addKey(Phaser.Keyboard.RIGHT);
+        this.shootKey=this.game.input.keyboard.addKey(Phaser.Keyboard.CONTROL);
+    } 
+    this.game.physics.enable(this, Phaser.Physics.ARCADE);
+    
+    this.level.playerCollisionGroup.add(this);
 };
 
 
@@ -39,121 +57,278 @@ platformer.player.prototype.constructor = platformer.bubble_prefab;
 
 
 platformer.player.prototype.update = function(){
-    
-    //this.game.debug.body(this);
-    this.game.physics.arcade.collide(this,this.level.walls_layer);
-    this.game.physics.arcade.collide(this,this.level.unbreakable_layer);
-    this.game.physics.arcade.overlap(this,this.level.hero,this.hitHero,null,this);
-    this.game.physics.arcade.collide(this,this.level.bulletArray,this.hitShoot,null,this);
-    this.game.physics.arcade.collide(this,this.level.cangrejoArray,this.hitCrab,null,this);
-    
-    this.game.physics.arcade.collide(this,this.level.bullet,this.hitShoot,null,this);
-    
-    if(!this.stopped){
-        this.body.velocity.x = this.speedX * this.directionX;
-    
-        this.speedY += this.acceleration*0.017
-        this.body.velocity.y = this.speedY * this.directionY;
-    } else {
-        this.body.velocity.x = 0;
-        this.body.velocity.y = 0
-    }
-    //this.body.velocity.y = this.speedY*this.directionY;
-
-   if(this.body.onWall() || this.body.touching.left || this.body.touching.right){
-        this.directionX *=-1;
-        this.body.velocity.x = this.speedX*this.directionX;
-   }
-   if(this.body.onFloor() || this.body.touching.down){
-        if(this.size == 0 || this.body.y <= 40){
-            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y - 40));
-        } else if (this.size == 1 || this.body.y <= 60){
-            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y  - 60));
-        } else if (this.size == 1 || this.body.y <= 80){
-            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y  - 80));
-        } else{
-            this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y - 100));
-        }
-   }
-   if(this.body.onCeiling() || this.body.touching.up){
-        if(this.size == 0 || this.body.y <= 40){
-            this.speedY = Math.sqrt(2 * this.acceleration * (this.body.y - 40));
-        } else if (this.size == 1 || this.body.y <= 60){
-            this.speedY = Math.sqrt(2 * this.acceleration * (this.body.y  - 60));
-        } else if (this.size == 1 || this.body.y <= 80){
-            this.speedY = Math.sqrt(2 * this.acceleration * (this.body.y  - 80));
-        } else{
-            this.speedY = Math.sqrt(2 * this.acceleration * (this.body.y - 100));
-        }
-   }
-       
-    if (this.exploded == true){
-        if(this.playExplosionSound ==  true){
-            this.level.bubbleExplosion.play();
-            this.playExplosionSound = false;
-        }
-        this.body.enable = false;
-        if(this.setText == false){
-            if (this.size == 3){
-                this.bubbleScore = this.game.add.text( this.body.position.x+5, this.body.position.y-5, "100", 
-                {
-                font: "10px Pixel",
-                fill: "#ffffff",
-                align: "left"
-                });
-                this.setText = true;
+    if(this.num == 2){
+        if (gameOptions.dead2 == true){
+            //ANIMACION DE MUERTE
+            if(this.dead){
+               this.animations.play('deathR');
+                //this.hero.setBounce(1);
+                this.body.velocity.x=30;
+                this.body.velocity.y=30;
+                this.body.collideWorldBounds = false;
             }
-        }
-        this.destroyDelay -= 0.3;
-        if(this.destroyDelay <= 0){
-            if (this.spawnedLoot == false){
-                this.spawnRandom = this.game.rnd.integerInRange(1,3);
-                console.log (this.spawnRandom);
-                if (this.spawnRandom == 1){
-                    this.level.spawnLoot(this.body.position.x, this.body.position.y);
-                    this.spawnedLoot = true;
+
+            // CUANDO TE QUEDAS SIN VIDAS LLAMAS A UN DELAY Y CUANDO ACABA TE VAS AL WORLD MAP
+            if (this.level.goToWorldmap == true){
+                if (this.level.delayGameOver >= 0){
+                    this.level.delayGameOver -= 0.017;
+                }
+                else{
+                    gameOptions.hero2HP=3;
+                    this.level.goToWorldmap = false;
+                    this.level.state.start('worldmap');
+                    gameOptions.dead1 = false;
                 }
             }
-            if (this.size == 3){
-                this.bubbleScore.setText("");
-            }
-            this.destroy();
-        }
-    }
-};
 
-platformer.player.prototype.hitShoot = function(_bubble, _shot){
-        
-        this.animations.play('explode');
-        if (this.size < 3){
-            this.level.spawnBubbles(this.body.x, this.body.y, this.size + 1, this.color, this.directionX);
-            
+            //VIDAS
+            if(gameOptions.hero2HP==2){
+                this.level.music.stop();
+                this.level.state.start('level');
+                gameOptions.dead1 = false;
+            }
+            else if(gameOptions.hero2HP==1){
+                this.level.music.stop();
+                this.level.state.start('level');
+                gameOptions.dead2 = false;
+            }
+            else if(gameOptions.hero2HP==0){
+                this.level.lifes.destroy();        
+                this.level.gameOverText.setText("GAME OVER");
+                this.level.music.stop();
+                this.level.goToWorldmap = true;
+            }
         }
         else{
-          this.level.hitShoot();  
-        }
-        _shot.destroy();
-        this.exploded = true;
-        //delay o quan acabi la animació --> destroy.
-
-};
-
-platformer.bubble_prefab.prototype.hitCrab = function(_crab, _shot){
+                        //COLISIONES CON LOS MUROS SOLO SI ESTA VIVO
+            this.game.physics.arcade.collide(this,this.level.walls_layer);
+            this.game.physics.arcade.collide(this,this.level.unbreakable_layer);
         
-        this.animations.play('explode');
-        if (this.size < 3){
-            this.level.spawnBubbles(this.body.x, this.body.y, this.size + 1, this.color, this.directionX);
+            this.shield.x = this.x;
+            this.shield.y = this.y;
+            if(this.invincibilityFrames > 0){
+                this.invincibilityFrames -= 0.012;
+            }
+
+
+            //console.log(this.bulletCollisionGroup.length);
+            //CONDICION DE VICTORIA --> MATAS TODAS LAS BURBUJAS
+            if (this.level.bubbleCollisionGroup.length == 0) {
+                this.level.delayWinCondition -= 0.012;
+                if(this.level.delayWinCondition <=0){
+                    this.level.loopShield.stop();
+                    gameOptions.hero2Score = this.score;
+                    if (this.score > this.level.highScore){
+                        localStorage.setItem(this.level.localStorageName, this.score);
+                        console.log("score of " + this.score + " saved to " + this.level.localStorageName);
+                    }
+                    gameOptions.timeBonus = Math.trunc(this.level.timeLeft);
+                    this.level.music.stop();
+                    this.level.state.start('solvedlevel'); 
+                }
+            } else {
+                this.level.delayWinCondition = 2;
+            }
+
+
+            this.level.hud.scoretext.setText(""+this.score);
+            
+            //MOVIMIENTO HEROE 
+            if(this.leftkey.isDown&&!this.dead){
+                this.body.velocity.x=-gameOptions.heroSpeed;
+                this.animations.play('walk');
+                this.scale.setTo(-1,1);
+            }else if(this.rightkey.isDown&&!this.dead){
+                this.body.velocity.x=gameOptions.heroSpeed;
+                this.scale.setTo(1,1);
+                this.animations.play('walk');
+            }else if (this.shootKey.isDown&& !this.dead){
+                this.animations.play('idleShoot');
+                this.body.velocity.x=0;
+                    if(this.level.oneTime){
+                        if(this.uzi){
+                            this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,2,this.num));
+
+                            //this.game.world.swap(this.hero,this.bulletArray);
+                            this.level.oneTime = false;
+                            //ORDEN DE DIBUJO 
+                            //this.game.world.swap(this.timer,this.bulletArray);
+                        } else if (this.level.bulletCollisionGroup.length < 1 || (this.level.bulletCollisionGroup.length < 2 && this.doubleHook)){
+                            if(this.powerWire){
+                                this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,1,this.num));
+                            } else {
+                                this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,0,this.num));
+                            }
+                            this.level.oneTime = false;
+                        }
+                    }
+
+            }else if(!this.dead){
+                this.level.oneTime = true;
+                this.animations.play('idle');
+                this.body.velocity.x=0;
+            }
+            //CHECK OVERLAP
+            if(gameOptions.currentLevel == 2){
+            if(this.level.checkOverlap(this,this.level.escaleras)&&!this.dead){
+                if(this.upkey.isDown){
+                    this.body.velocity.y=-gameOptions.heroSpeed;
+                     this.animations.play('stairsUP');
+                }
+                if(this.downkey.isDown){
+                   this.body.velocity.y=gameOptions.heroSpeed;
+                     this.animations.play('stairsUP');
+                }
+                }
+            }else if(gameOptions.currentLevel == 3){
+               if(this.level.checkOverlap(this,this.level.escaleras4)||this.level.checkOverlap(this,this.level.escaleras3)||this.level.checkOverlap(this,this.level.escaleras2)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
+                if(this.upkey.isDown){
+                    this.velocity.y=-gameOptions.heroSpeed;
+                     this.animations.play('stairsUP');
+                }
+                if(this.downkey.isDown){
+                   this.body.velocity.y=gameOptions.heroSpeed;
+                     this.animations.play('stairsUP');
+                } 
+                }
+            }
         }
-        this.exploded = true;
+    }
+    else{
+        if (gameOptions.dead1 == true){
+            //ANIMACION DE MUERTE
+            if(this.dead){
+               this.animations.play('deathR');
+                //this.hero.setBounce(1);
+                this.body.velocity.x=30;
+                this.body.velocity.y=30;
+                this.body.collideWorldBounds = false;
+            }
 
-};
+            // CUANDO TE QUEDAS SIN VIDAS LLAMAS A UN DELAY Y CUANDO ACABA TE VAS AL WORLD MAP
+            if (this.level.goToWorldmap == true){
+                if (this.level.delayGameOver >= 0){
+                    this.level.delayGameOver -= 0.017;
+                }
+                else{
+                    gameOptions.hero1HP=3;
+                    this.level.goToWorldmap = false;
+                    this.level.state.start('worldmap');
+                    gameOptions.dead1 = false;
+                }
+            }
 
-
-platformer.bubble_prefab.prototype.hitHero = function(_bubble,_hero){
-    if(_bubble.body.touching && _hero.body.touching){
+            //VIDAS
+            if(gameOptions.hero1HP==2){
+                this.level.music.stop();
+                this.level.state.start('level');
+                gameOptions.dead1 = false;
+            }
+            else if(gameOptions.hero1HP==1){
+                this.level.music.stop();
+                this.level.state.start('level');
+                gameOptions.dead1 = false;
+            }
+            else if(gameOptions.hero1HP==0){
+                this.level.lifes.destroy();        
+                this.level.gameOverText.setText("GAME OVER");
+                this.level.music.stop();
+                this.level.goToWorldmap = true;
+            }
+        }
+        else{
+                        //COLISIONES CON LOS MUROS SOLO SI ESTA VIVO
+            this.game.physics.arcade.collide(this,this.level.walls_layer);
+            this.game.physics.arcade.collide(this,this.level.unbreakable_layer);
         
-        this.level.hitHero();
-        //this.body.enable = false;
-        //delay o quan acabi la animació --> destroy.
+            this.shield.x = this.x;
+            this.shield.y = this.y;
+            if(this.invincibilityFrames > 0){
+                this.invincibilityFrames -= 0.012;
+            }
+
+
+            //console.log(this.bulletCollisionGroup.length);
+            //CONDICION DE VICTORIA --> MATAS TODAS LAS BURBUJAS
+            if (this.level.bubbleCollisionGroup.length == 0) {
+                this.level.delayWinCondition -= 0.012;
+                if(this.level.delayWinCondition <=0){
+                    this.level.loopShield.stop();
+                    gameOptions.hero1Score = this.score;
+                    if (this.score > this.level.highScore){
+                        localStorage.setItem(this.level.localStorageName, this.score);
+                        console.log("score of " + this.score + " saved to " + this.level.localStorageName);
+                    }
+                    gameOptions.timeBonus = Math.trunc(this.level.timeLeft);
+                    this.level.music.stop();
+                    this.level.state.start('solvedlevel'); 
+                }
+            } else {
+                this.level.delayWinCondition = 2;
+            }
+
+
+            this.level.hud.scoretext.setText(""+this.score);
+            
+            //MOVIMIENTO HEROE 
+            if(this.leftkey.isDown&&!this.dead){
+                this.body.velocity.x=-gameOptions.heroSpeed;
+                this.animations.play('walk');
+                this.scale.setTo(-1,1);
+            }else if(this.rightkey.isDown&&!this.dead){
+                this.body.velocity.x=gameOptions.heroSpeed;
+                this.scale.setTo(1,1);
+                this.animations.play('walk');
+            }else if (this.shootKey.isDown&& !this.dead){
+                this.animations.play('idleShoot');
+                this.body.velocity.x=0;
+                    if(this.level.oneTime){
+                        if(this.uzi){
+                            this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,2,this.num));
+
+                            //this.game.world.swap(this.hero,this.bulletArray);
+                            this.level.oneTime = false;
+                            //ORDEN DE DIBUJO 
+                            //this.game.world.swap(this.timer,this.bulletArray);
+                        } else if (this.level.bulletCollisionGroup.length < 1 || (this.level.bulletCollisionGroup.length < 2 && this.doubleHook)){
+                            if(this.powerWire){
+                                this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,1,this.num));
+                            } else {
+                                this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,0,this.num));
+                            }
+                            this.level.oneTime = false;
+                        }
+                    }
+
+            }else if(!this.dead){
+                this.level.oneTime = true;
+                this.animations.play('idle');
+                this.body.velocity.x=0;
+            }
+            //CHECK OVERLAP
+            if(gameOptions.currentLevel == 2){
+            if(this.level.checkOverlap(this,this.level.escaleras)&&!this.dead){
+                if(this.upkey.isDown){
+                    this.body.velocity.y=-gameOptions.heroSpeed;
+                     this.animations.play('stairsUP');
+                }
+                if(this.downkey.isDown){
+                   this.body.velocity.y=gameOptions.heroSpeed;
+                     this.animations.play('stairsUP');
+                }
+                }
+            }else if(gameOptions.currentLevel == 3){
+               if(this.level.checkOverlap(this,this.level.escaleras4)||this.level.checkOverlap(this,this.level.escaleras3)||this.level.checkOverlap(this,this.level.escaleras2)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
+                if(this.upkey.isDown){
+                    this.velocity.y=-gameOptions.heroSpeed;
+                     this.animations.play('stairsUP');
+                }
+                if(this.downkey.isDown){
+                   this.body.velocity.y=gameOptions.heroSpeed;
+                     this.animations.play('stairsUP');
+                } 
+                }
+            }
+        }
     }
 };

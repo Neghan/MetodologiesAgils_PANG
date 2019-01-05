@@ -36,7 +36,7 @@ platformer.colibri_prefab.prototype.constructor = platformer.colibri_prefab;
 platformer.colibri_prefab.prototype.update = function(){
     
         //Colisions
-    this.game.physics.arcade.overlap(this,this.level.hero,this.colibriHitHero,null,this);
+    this.game.physics.arcade.overlap(this,this.level.playerCollisionGroup,this.colibriHitHero,null,this);
     this.game.physics.arcade.collide(this,this.level.bulletArray,this.colibriHitShoot,null,this);
     
     //Check if is alive
@@ -79,6 +79,6 @@ platformer.colibri_prefab.prototype.update = function(){
     platformer.colibri_prefab.prototype.colibriHitHero = function(_colibri,_hero){
     if(_colibri.body.touching && _hero.body.touching){
         
-        this.level.hitHero();
+        this.level.hitHero(_hero.num);
     }
 };

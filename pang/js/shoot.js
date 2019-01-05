@@ -1,7 +1,7 @@
 var platformer = platformer || {};
 
 
-platformer.shoot = function(game,x,y,pointA,pointB,speed,direction,level,type){
+platformer.shoot = function(game,x,y,pointA,pointB,speed,direction,level,type,owner){
     
     this.playShootSound = true;
     
@@ -25,6 +25,7 @@ platformer.shoot = function(game,x,y,pointA,pointB,speed,direction,level,type){
     this.anchor.setTo(0.5,0.92);    
 
     this.type = type;
+    this.owner = owner;
     this.level = level;
     this.game.physics.arcade.enable(this);
     if (this.type != 2){

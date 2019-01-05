@@ -37,7 +37,7 @@ platformer.loot_powerup.prototype.update = function(){
     
     this.game.physics.arcade.collide(this,this.level.walls_layer);
     
-    this.game.physics.arcade.collide(this,this.level.hero,this.collHero,null,this);
+    this.game.physics.arcade.collide(this,this.level.playerCollisionGroup,this.collHero,null,this);
     
     this.body.velocity.y= 50;
     if(this.oneTimeLoot){ 
@@ -85,7 +85,7 @@ platformer.loot_powerup.prototype.update = function(){
 
 platformer.loot_powerup.prototype.collHero = function(_loot,_hero){
     if(_loot.body.touching && _hero.body.touching){
-        this.level.collHero(this.value);
+        this.level.collHero(this.value, _hero.num);
         this.body.enable = false;
         this.delayDestroy = true;
     }
