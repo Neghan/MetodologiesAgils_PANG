@@ -26,6 +26,7 @@ platformer.level ={
         this.load.spritesheet('walls1','assets/img/walls_barcelona.png');
         this.load.spritesheet('escaleras','assets/img/stairs.png');
         this.load.spritesheet('escaleras1','assets/img/stairs1.png');
+        this.load.spritesheet('escaleras2','assets/img/stairs3.png');
         
         this.load.spritesheet('hero','assets/img/player_1.png',41,32);
         this.load.spritesheet('hero2', 'assets/img/player_2.png',41,32);
@@ -90,7 +91,7 @@ platformer.level ={
             this.load.image('bg','assets/img/BG/BG04.png');    
             this.load.audio('musica', 'assets/audio/music/M04.mp3');
             //CARGA DEL MAPA
-            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapAW.json',null,Phaser.Tilemap.TILED_JSON);
             this.load.image('border','assets/UtilsLevel/border.png');
             this.load.image('stairs','assets/UtilsLevel/stairs.png');
             this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
@@ -100,7 +101,7 @@ platformer.level ={
             this.load.image('bg','assets/img/BG/BG05.png');    
             this.load.audio('musica', 'assets/audio/music/M05.mp3');
             //CARGA DEL MAPA
-            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapAust.json',null,Phaser.Tilemap.TILED_JSON);
             this.load.image('border','assets/UtilsLevel/border.png');
             this.load.image('stairs','assets/UtilsLevel/stairs.png');
             this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
@@ -420,6 +421,58 @@ platformer.level ={
         this.game.physics.enable(this.escaleras4, Phaser.Physics.ARCADE);
         this.escaleras4.body.immovable = true;
         this.escaleras4.body.allowGravity = false;
+        }else if(gameOptions.currentLevel == 4){
+            
+        this.escaleras = this.game.add.sprite(44,156, 'escaleras2', 0);
+        this.escaleras.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras, Phaser.Physics.ARCADE);
+        this.escaleras.body.immovable = true;
+        this.escaleras.body.allowGravity = false;
+            
+        this.escaleras1 = this.game.add.sprite(284,156, 'escaleras2', 0);
+        this.escaleras1.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras1, Phaser.Physics.ARCADE);
+        this.escaleras1.body.immovable = true;
+        this.escaleras1.body.allowGravity = false;
+        }else if(gameOptions.currentLevel == 5){
+            ///////////////////////////////////////////////////
+        this.escaleras1 = this.game.add.sprite(292,160, 'escaleras', 0);
+        this.escaleras1.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras1, Phaser.Physics.ARCADE);
+        this.escaleras1.body.immovable = true;
+        this.escaleras1.body.allowGravity = false;
+            
+        this.escaleras2 = this.game.add.sprite(44,160, 'escaleras', 0);
+        this.escaleras2.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras2, Phaser.Physics.ARCADE);
+        this.escaleras2.body.immovable = true;
+        this.escaleras2.body.allowGravity = false;
+        
+        this.escaleras3 = this.game.add.sprite(108,88,'escaleras', 0);
+        this.escaleras3.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras3, Phaser.Physics.ARCADE);
+        this.escaleras3.body.immovable = true;
+        this.escaleras3.body.allowGravity = false;
+            
+        this.escaleras4 = this.game.add.sprite(196,88, 'escaleras', 0);
+        this.escaleras4.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras4, Phaser.Physics.ARCADE);
+        this.escaleras4.body.immovable = true;
+        this.escaleras4.body.allowGravity = false;
+            ///////////////////////////////////////////////////
+        }else if(gameOptions.currentLevel == 18){
+            
+        this.escaleras = this.game.add.sprite(140,160, 'escaleras', 0);
+        this.escaleras.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras, Phaser.Physics.ARCADE);
+        this.escaleras.body.immovable = true;
+        this.escaleras.body.allowGravity = false;
+            
+        this.escaleras1 = this.game.add.sprite(244,160, 'escaleras', 0);
+        this.escaleras1.anchor.setTo(.5);
+        this.game.physics.enable(this.escaleras1, Phaser.Physics.ARCADE);
+        this.escaleras1.body.immovable = true;
+        this.escaleras1.body.allowGravity = false;
         }
         
         
