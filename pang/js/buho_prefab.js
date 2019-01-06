@@ -77,6 +77,7 @@ platformer.buho_prefab.prototype.update = function(){
     platformer.buho_prefab.prototype.buhoHitShoot = function(_buho, _shot){
         
         this.animations.play('die');
+        _shot.destroyed = true;
         _shot.destroy();
         this.died = true;
 

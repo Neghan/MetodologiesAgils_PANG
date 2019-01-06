@@ -88,7 +88,7 @@ platformer.bubble_prefab.prototype.update = function(){
     this.game.physics.arcade.collide(this,this.level.walls_layer);
     this.game.physics.arcade.collide(this,this.level.unbreakable_layer);
     this.game.physics.arcade.overlap(this,this.level.playerCollisionGroup,this.hitHero,null,this);
-    this.game.physics.arcade.collide(this,this.level.bulletArray,this.hitShoot,null,this);
+    this.game.physics.arcade.overlap(this,this.level.bulletArray,this.hitShoot,null,this);
     this.game.physics.arcade.collide(this,this.level.cangrejoArray,this.hitCrab,null,this);
     
     this.game.physics.arcade.collide(this,this.level.bullet,this.hitShoot,null,this);
@@ -104,11 +104,11 @@ platformer.bubble_prefab.prototype.update = function(){
     }
     //this.body.velocity.y = this.speedY*this.directionY;
 
-   if(this.body.onWall() || this.body.touching.left || this.body.touching.right){
+   if(this.body.onWall() /*|| this.body.touching.left || this.body.touching.right*/){
         this.directionX *=-1;
         this.body.velocity.x = this.speedX*this.directionX;
    }
-   if(this.body.onFloor() || this.body.touching.down){
+   if(this.body.onFloor() /*|| this.body.touching.down*/){
         if(this.size == 0 || this.body.y <= 40){
             this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y - 40));
         } else if (this.size == 1 || this.body.y <= 60){
@@ -119,7 +119,7 @@ platformer.bubble_prefab.prototype.update = function(){
             this.speedY = -Math.sqrt(2 * this.acceleration * (this.body.y - 100));
         }
    }
-   if(this.body.onCeiling() || this.body.touching.up){
+   if(this.body.onCeiling() /*|| this.body.touching.up*/){
         if(this.size == 0 || this.body.y <= 40){
             this.speedY = Math.sqrt(2 * this.acceleration * (this.body.y - 40));
         } else if (this.size == 1 || this.body.y <= 60){
@@ -152,7 +152,6 @@ platformer.bubble_prefab.prototype.update = function(){
         if(this.destroyDelay <= 0){
             if (this.spawnedLoot == false){
                 this.spawnRandom = this.game.rnd.integerInRange(1,3);
-                console.log (this.spawnRandom);
                 if (this.spawnRandom == 1){
                     this.level.spawnLoot(this.body.position.x, this.body.position.y);
                     this.spawnedLoot = true;
@@ -167,19 +166,20 @@ platformer.bubble_prefab.prototype.update = function(){
 };
 
 platformer.bubble_prefab.prototype.hitShoot = function(_bubble, _shot){
-        
-        this.animations.play('explode');
-        if (this.size < 3){
-            this.level.spawnBubbles(this.body.x, this.body.y, this.size + 1, this.color, this.directionX);
-            
-        }
-        else{
-          this.level.hitShoot(_shot.owner);  
-        }
-        _shot.destroy();
-        this.exploded = true;
-        //delay o quan acabi la animació --> destroy.
+        if((gameOptions.currentLevel == 18 && ((this.color == 0 && _shot.owner == 2)||(this.color == 2 && _shot.owner == 1)))|| gameOptions.currentLevel != 18){
+            this.animations.play('explode');
+            if (this.size < 3){
+                this.level.spawnBubbles(this.body.x, this.body.y, this.size + 1, this.color, this.directionX);
 
+            }
+            else{
+              this.level.hitShoot(_shot.owner);  
+            }
+            _shot.destroyed = true;
+            _shot.destroy();
+            this.exploded = true;
+            //delay o quan acabi la animació --> destroy.
+        }
 };
 
 platformer.bubble_prefab.prototype.hitCrab = function(_crab, _shot){
@@ -194,10 +194,10 @@ platformer.bubble_prefab.prototype.hitCrab = function(_crab, _shot){
 
 
 platformer.bubble_prefab.prototype.hitHero = function(_bubble,_hero){
-    if(_bubble.body.touching && _hero.body.touching){
+    //if(_bubble.body.touching && _hero.body.touching){
         
         this.level.hitHero(_hero.num);
         //this.body.enable = false;
         //delay o quan acabi la animació --> destroy.
-    }
+    //}
 };

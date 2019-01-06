@@ -593,15 +593,15 @@ platformer.level ={
                 this.playerArray[playerNum - 1].invincibilityFrames = 2;
                 this.loopShield.stop();
             } 
-        } else{
-            if(!this.playerArray[playerNum - 1].shield && this.playerArray[playerNum - 1].invincibilityFrames <= 0){
+        } else {
+            if(!this.playerArray[playerNum - 1].shielded && this.playerArray[playerNum - 1].invincibilityFrames <= 0){
                 if (gameOptions.dead1 == false){
-                this.PlayerDie.play();
-                this.camera.shake(0.025,100);
-                this.playerArray[playerNum - 1].body.velocity.x =0;
-                this.playerArray[playerNum - 1].dead=true;
-                gameOptions.dead1 = true;
-                gameOptions.hero1HP-=1;
+                    this.PlayerDie.play();
+                    this.camera.shake(0.025,100);
+                    this.playerArray[playerNum - 1].body.velocity.x =0;
+                    this.playerArray[playerNum - 1].dead=true;
+                    gameOptions.dead1 = true;
+                    gameOptions.hero1HP-=1;
                 }
             } else if (this.playerArray[playerNum - 1].invincibilityFrames <= 0){
                 this.playerArray[playerNum - 1].shielded = false;
@@ -718,14 +718,13 @@ platformer.level ={
             this.player1Won = true;
             this.player2Won = true;
             for(i = 0; i < this.bubbleArray.length; i++){
-                if(this.bubbleArray[i].color == 0){
+                if(this.bubbleArray[i].color == 0 && !this.bubbleArray[i].exploded){
                     this.player2Won = false;
                 }
-                else if(this.bubbleArray[i].color == 2){
+                else if(this.bubbleArray[i].color == 2 && !this.bubbleArray[i].exploded){
                     this.player1Won = false;
+                    console.log(this.player1Won);
                 }
-                console.log(this.player1Won);
-                console.log(this.player2Won);
             }
             if (this.player1Won || this.player2Won) {
                 console.log('somebody won');

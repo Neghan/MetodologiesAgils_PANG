@@ -33,6 +33,7 @@ platformer.shoot = function(game,x,y,pointA,pointB,speed,direction,level,type,ow
         this.body.allowGravity = false;
     }
     this.oneTimeShoot = true;
+    this.destroyed = false;
 
     this.game.add.existing(this);
     this.level.bulletCollisionGroup.add(this);
@@ -53,6 +54,7 @@ platformer.shoot.prototype.update = function(){
         this.body.velocity.y = -500;
         this.game.physics.arcade.collide(this,this.level.walls_layer,this.hitWall,null,this);
         if (this.frame >= 6){
+            this.destroyed = true;
             this.destroy();
         }
     } else if(this.type == 1){
@@ -68,6 +70,7 @@ platformer.shoot.prototype.update = function(){
             this.disappearingTime -= 0.017;
         }
         if (this.disappearingTime <=0){
+            this.destroyed = true;
             this.destroy();
         }
     } else if (this.type == 0){
@@ -76,6 +79,7 @@ platformer.shoot.prototype.update = function(){
             this.playShootSound = false;
         }
         if(this.frame >= 69){
+            this.destroyed = true;
             this.destroy();
         }
     }

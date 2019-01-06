@@ -23,7 +23,7 @@ platformer.player = function(game,x,y,level,num){
     this.shielded = false;
     this.doubleHook = false;
     this.powerWire = false;
-    this.uzi = true;
+    this.uzi = false;
     this.invincibilityFrames = 0;
     this.shootOneTime = true;
     
@@ -32,6 +32,9 @@ platformer.player = function(game,x,y,level,num){
     this.shield.animations.play('shield');
     this.shield.visible = false;
     this.shield.anchor.setTo(0.5);
+    
+    this.shot = false;
+    this.doubleShot = false;
     
     if(this.num == 2){
         this.upkey = this.game.input.keyboard.addKey(Phaser.Keyboard.W);
@@ -62,11 +65,16 @@ platformer.player.prototype.update = function(){
         if (gameOptions.dead2 == true){
             //ANIMACION DE MUERTE
             if(this.dead){
-               this.animations.play('deathR');
-                //this.hero.setBounce(1);
-                this.body.velocity.x=30;
-                this.body.velocity.y=30;
-                this.body.collideWorldBounds = false;
+                if(gameOptions.currentLevel != 18 || gameOptions.hero2HP == 0){
+                    this.animations.play('deathR');
+                    //this.hero.setBounce(1);
+                    this.body.velocity.x=30;
+                    this.body.velocity.y=30;
+                    this.body.collideWorldBounds = false;
+                } else{
+                    this.invincibilityFrames = 2;
+                    this.dead = false;
+                }
             }
 
             // CUANDO TE QUEDAS SIN VIDAS LLAMAS A UN DELAY Y CUANDO ACABA TE VAS AL WORLD MAP
@@ -84,17 +92,29 @@ platformer.player.prototype.update = function(){
 
             //VIDAS
             if(gameOptions.hero2HP==2){
-                this.level.music.stop();
-                this.level.state.start('level');
+                if(gameOptions.currentLevel != 18){
+                    this.level.music.stop();
+                    this.level.state.start('level');  
+                } else{
+                    this.level.lifesplayer2.destroy();
+                }
                 gameOptions.dead2 = false;
             }
             else if(gameOptions.hero2HP==1){
-                this.level.music.stop();
-                this.level.state.start('level');
+                if(gameOptions.currentLevel != 18){
+                    this.level.music.stop();
+                    this.level.state.start('level');  
+                } else{
+                    this.level.lifes2player2.destroy();
+                }
                 gameOptions.dead2 = false;
             }
             else if(gameOptions.hero2HP==0){
-                this.level.lifesplayer2.destroy();        
+                if(gameOptions.currentLevel != 18){
+                    this.level.lifesplayer2.destroy(); 
+                } else{
+                    this.level.lifes3player2.destroy();
+                }       
                 this.level.gameOverText.setText("GAME OVER");
                 this.level.music.stop();
                 this.level.goToWorldmap = true;
@@ -178,11 +198,16 @@ platformer.player.prototype.update = function(){
         if (gameOptions.dead1 == true){
             //ANIMACION DE MUERTE
             if(this.dead){
-               this.animations.play('deathR');
-                //this.hero.setBounce(1);
-                this.body.velocity.x=30;
-                this.body.velocity.y=30;
-                this.body.collideWorldBounds = false;
+                if(gameOptions.currentLevel != 18 || gameOptions.hero1HP == 0){
+                    this.animations.play('deathR');
+                    //this.hero.setBounce(1);
+                    this.body.velocity.x=30;
+                    this.body.velocity.y=30;
+                    this.body.collideWorldBounds = false;
+                } else {
+                    this.invincibilityFrames = 2;
+                    this.dead = false;
+                }
             }
 
             // CUANDO TE QUEDAS SIN VIDAS LLAMAS A UN DELAY Y CUANDO ACABA TE VAS AL WORLD MAP
@@ -200,17 +225,29 @@ platformer.player.prototype.update = function(){
 
             //VIDAS
             if(gameOptions.hero1HP==2){
-                this.level.music.stop();
-                this.level.state.start('level');
+                if(gameOptions.currentLevel != 18){
+                    this.level.music.stop();
+                    this.level.state.start('level');  
+                } else{
+                    this.level.lifes.destroy();
+                }
                 gameOptions.dead1 = false;
             }
             else if(gameOptions.hero1HP==1){
-                this.level.music.stop();
-                this.level.state.start('level');
+                if(gameOptions.currentLevel != 18){
+                    this.level.music.stop();
+                    this.level.state.start('level');  
+                } else{
+                    this.level.lifes2.destroy();
+                }
                 gameOptions.dead1 = false;
             }
             else if(gameOptions.hero1HP==0){
-                this.level.lifes.destroy();        
+                if(gameOptions.currentLevel != 18){
+                    this.level.lifes.destroy(); 
+                } else{
+                    this.level.lifes3.destroy();
+                }       
                 this.level.gameOverText.setText("GAME OVER");
                 this.level.music.stop();
                 this.level.goToWorldmap = true;
@@ -242,6 +279,17 @@ platformer.player.prototype.update = function(){
                 this.animations.play('idleShoot');
                 this.body.velocity.x=0;
                     if(this.shootOneTime){
+                        this.shot = false;
+                        this.doubleShot = false;
+                        for(i = 0; i < this.level.bulletArray.length; i++){
+                            if(this.level.bulletArray[i].owner == this.num && !this.level.bulletArray[i].destroyed){
+                                if(!this.shot){
+                                    this.shot = true;
+                                } else if(!this.doubleShot){
+                                    this.doubleShot = true;
+                                }
+                            }
+                        }
                         if(this.uzi){
                             this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,2,this.num));
 
@@ -249,7 +297,7 @@ platformer.player.prototype.update = function(){
                             this.shootOneTime = false;
                             //ORDEN DE DIBUJO 
                             //this.game.world.swap(this.timer,this.bulletArray);
-                        } else if (this.level.bulletCollisionGroup.length < 1 || (this.level.bulletCollisionGroup.length < 2 && this.doubleHook)){
+                        } else if (!this.shot || (!this.doubleShot && this.doubleHook)){
                             if(this.powerWire){
                                 this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,1,this.num));
                             } else {

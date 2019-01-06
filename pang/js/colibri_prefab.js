@@ -71,6 +71,7 @@ platformer.colibri_prefab.prototype.update = function(){
     platformer.colibri_prefab.prototype.colibriHitShoot = function(_colibri, _shot){
         
         this.animations.play('die');
+        _shot.destroyed = true;
         _shot.destroy();
         this.died = true;
 

@@ -72,6 +72,7 @@ platformer.cangrejo_prefab.prototype.update = function(){
 
     
     platformer.cangrejo_prefab.prototype.cangrejoHitShoot = function(_cangrejo, _shot){
+        _shot.destroyed = true;
         _shot.destroy();
         this.died = true;
 
