@@ -528,7 +528,140 @@ platformer.level ={
         this.bubbleCollisionGroup.physicsBodyType = Phaser.Physics.ARCADE;
         
         this.bubbleArray = [];
+        if(gameOptions.currentLevel == 1){
         this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,2,1));
+        }
+        else if(gameOptions.currentLevel == 2){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,100,this,2,2,1));
+        }
+        else if(gameOptions.currentLevel == 3){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,100,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,100,this,2,2,1));
+        }
+        else if(gameOptions.currentLevel == 4){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,100,this,2,2,1));
+        }
+        else if(gameOptions.currentLevel == 5){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,250,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,500,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,500,50,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,500,50,this,2,2,1));
+        }
+        else if(gameOptions.currentLevel == 6){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,500,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,50,this,1,2,1));
+        }
+        else if(gameOptions.currentLevel == 7){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,50,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,100,this,4,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,500,100,this,4,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,500,50,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,50,this,2,2,1));
+        }
+        else if(gameOptions.currentLevel == 8){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,50,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,100,this,4,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,500,100,this,4,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,50,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,500,50,this,0,2,1));
+        }
+        else if(gameOptions.currentLevel == 9){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,500,100,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,50,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,50,this,3,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,500,50,this,3,2,1));
+        }
+        else if(gameOptions.currentLevel == 10){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,100,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,100,this,3,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,50,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,50,this,2,2,1));
+
+        }
+        else if(gameOptions.currentLevel == 11){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,4,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,100,this,3,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,50,this,4,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,50,this,3,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,50,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,50,this,1,2,1));
+        }
+        else if(gameOptions.currentLevel == 12){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,100,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,100,this,3,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,100,this,4,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,50,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,50,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,50,this,3,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,50,this,4,2,1));
+        }
+        else if(gameOptions.currentLevel == 13){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,275,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,100,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,50,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,275,50,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,50,this,2,2,1));
+        }
+        else if(gameOptions.currentLevel == 14){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,275,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,50,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,275,50,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,50,this,2,2,1));
+        }
+        else if(gameOptions.currentLevel == 15){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,50,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,50,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,50,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,50,this,2,2,1));
+        }
+        else if(gameOptions.currentLevel == 16){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,100,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,50,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,50,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,300,50,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,50,this,1,2,1));
+        }
+        else if(gameOptions.currentLevel == 17){
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,250,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,100,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,200,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,450,70,this,0,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,50,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,250,50,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,400,50,this,1,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,200,50,this,2,2,1));
+        this.bubbleArray.push(new platformer.bubble_prefab(this.game,450,50,this,2,2,1));
+        }
+        
         if (gameOptions.currentLevel == 18){
             this.bubbleArray.push(new platformer.bubble_prefab(this.game,284,100,this,0,0,-1));
         }
