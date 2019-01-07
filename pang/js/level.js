@@ -151,7 +151,7 @@ platformer.level ={
             this.load.image('bg','assets/img/BG/BG10.png');    
             this.load.audio('musica', 'assets/audio/music/M10.mp3');
             //CARGA DEL MAPA
-            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapAW.json',null,Phaser.Tilemap.TILED_JSON);
             this.load.image('border','assets/UtilsLevel/border.png');
             this.load.image('stairs','assets/UtilsLevel/stairs.png');
             this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
@@ -421,7 +421,7 @@ platformer.level ={
         this.game.physics.enable(this.escaleras4, Phaser.Physics.ARCADE);
         this.escaleras4.body.immovable = true;
         this.escaleras4.body.allowGravity = false;
-        }else if(gameOptions.currentLevel == 4|| gameOptions.currentLevel == 7){
+        }else if(gameOptions.currentLevel == 4|| gameOptions.currentLevel == 7|| gameOptions.currentLevel == 10){
             
         this.escaleras = this.game.add.sprite(44,156, 'escaleras2', 0);
         this.escaleras.anchor.setTo(.5);

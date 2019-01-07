@@ -193,7 +193,7 @@ platformer.player.prototype.update = function(){
                      this.animations.play('stairsUP');
                 } 
                 }
-            }else if(gameOptions.currentLevel == 4||gameOptions.currentLevel == 7){
+            }else if(gameOptions.currentLevel == 4||gameOptions.currentLevel == 7||gameOptions.currentLevel == 10){
                 if(this.level.checkOverlap(this,this.level.escaleras)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                 if(this.upkey.isDown){
                     this.body.velocity.y=-gameOptions.heroSpeed;
@@ -370,7 +370,7 @@ platformer.player.prototype.update = function(){
                      this.animations.play('stairsUP');
                 } 
                 }
-            }else if(gameOptions.currentLevel ==4||gameOptions.currentLevel == 7){
+            }else if(gameOptions.currentLevel ==4||gameOptions.currentLevel == 7||gameOptions.currentLevel == 10){
                 if(this.level.checkOverlap(this,this.level.escaleras)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                       if(this.upkey.isDown){
                         this.body.velocity.y=-gameOptions.heroSpeed;
