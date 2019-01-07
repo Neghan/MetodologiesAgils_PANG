@@ -111,7 +111,7 @@ platformer.level ={
             this.load.image('bg','assets/img/BG/BG06.png');    
             this.load.audio('musica', 'assets/audio/music/M06.mp3');
             //CARGA DEL MAPA
-            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapNY.json',null,Phaser.Tilemap.TILED_JSON);
             this.load.image('border','assets/UtilsLevel/border.png');
             this.load.image('stairs','assets/UtilsLevel/stairs.png');
             this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
@@ -121,7 +121,7 @@ platformer.level ={
             this.load.image('bg','assets/img/BG/BG07.png');    
             this.load.audio('musica', 'assets/audio/music/M07.mp3');
             //CARGA DEL MAPA
-            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapAW.json',null,Phaser.Tilemap.TILED_JSON);
             this.load.image('border','assets/UtilsLevel/border.png');
             this.load.image('stairs','assets/UtilsLevel/stairs.png');
             this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
@@ -141,7 +141,7 @@ platformer.level ={
             this.load.image('bg','assets/img/BG/BG09.png');    
             this.load.audio('MusicGuilin', 'assets/audio/music/M09.mp3');
             //CARGA DEL MAPA
-            this.load.tilemap('Tilemap','assets/tilemaps/TilemapGUI.json',null,Phaser.Tilemap.TILED_JSON);
+            this.load.tilemap('Tilemap','assets/tilemaps/TilemapAust.json',null,Phaser.Tilemap.TILED_JSON);
             this.load.image('border','assets/UtilsLevel/border.png');
             this.load.image('stairs','assets/UtilsLevel/stairs.png');
             this.load.image('unbreakable_platform','assets/UtilsLevel/unbreakable_platform.png');
@@ -391,13 +391,13 @@ platformer.level ={
         
         
         //STAIRS
-        if(gameOptions.currentLevel == 2){
+        if(gameOptions.currentLevel == 2|| gameOptions.currentLevel == 6){
         this.escaleras = this.game.add.sprite(300,160, 'escaleras', 0);
         this.escaleras.anchor.setTo(.5);
         this.game.physics.enable(this.escaleras, Phaser.Physics.ARCADE);
         this.escaleras.body.immovable = true;
         this.escaleras.body.allowGravity = false;
-        }else if(gameOptions.currentLevel == 3){
+        }else if(gameOptions.currentLevel == 3 || gameOptions.currentLevel == 8){
         this.escaleras1 = this.game.add.sprite(220,160, 'escaleras', 0);
         this.escaleras1.anchor.setTo(.5);
         this.game.physics.enable(this.escaleras1, Phaser.Physics.ARCADE);
@@ -421,7 +421,7 @@ platformer.level ={
         this.game.physics.enable(this.escaleras4, Phaser.Physics.ARCADE);
         this.escaleras4.body.immovable = true;
         this.escaleras4.body.allowGravity = false;
-        }else if(gameOptions.currentLevel == 4){
+        }else if(gameOptions.currentLevel == 4|| gameOptions.currentLevel == 7){
             
         this.escaleras = this.game.add.sprite(44,156, 'escaleras2', 0);
         this.escaleras.anchor.setTo(.5);
@@ -434,7 +434,7 @@ platformer.level ={
         this.game.physics.enable(this.escaleras1, Phaser.Physics.ARCADE);
         this.escaleras1.body.immovable = true;
         this.escaleras1.body.allowGravity = false;
-        }else if(gameOptions.currentLevel == 5){
+        }else if(gameOptions.currentLevel == 5||gameOptions.currentLevel == 9){
             ///////////////////////////////////////////////////
         this.escaleras1 = this.game.add.sprite(292,160, 'escaleras', 0);
         this.escaleras1.anchor.setTo(.5);

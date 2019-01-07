@@ -169,7 +169,7 @@ platformer.player.prototype.update = function(){
                 this.body.velocity.x=0;
             }
             //CHECK OVERLAP
-            if(gameOptions.currentLevel == 2){
+            if(gameOptions.currentLevel == 2|| gameOptions.currentLevel == 6){
             if(this.level.checkOverlap(this,this.level.escaleras)&&!this.dead){
                 if(this.upkey.isDown){
                     this.body.velocity.y=-gameOptions.heroSpeed;
@@ -180,7 +180,7 @@ platformer.player.prototype.update = function(){
                      this.animations.play('stairsUP');
                 }
                 }
-            }else if(gameOptions.currentLevel == 3){
+            }else if(gameOptions.currentLevel == 3||gameOptions.currentLevel == 8){
                if(this.level.checkOverlap(this,this.level.escaleras4)||this.level.checkOverlap(this,this.level.escaleras3)||this.level.checkOverlap(this,this.level.escaleras2)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                 if(this.upkey.isDown){
                     this.velocity.y=-gameOptions.heroSpeed;
@@ -191,7 +191,7 @@ platformer.player.prototype.update = function(){
                      this.animations.play('stairsUP');
                 } 
                 }
-            }else if(gameOptions.currentLevel == 4){
+            }else if(gameOptions.currentLevel == 4||gameOptions.currentLevel == 7){
                 if(this.level.checkOverlap(this,this.level.escaleras)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                 if(this.upkey.isDown){
                     this.body.velocity.y=-gameOptions.heroSpeed;
@@ -202,7 +202,7 @@ platformer.player.prototype.update = function(){
                      this.animations.play('stairsUP');
                 }
                 }
-            }else if(gameOptions.currentLevel == 5){
+            }else if(gameOptions.currentLevel == 5||gameOptions.currentLevel == 9){
                 if(this.level.checkOverlap(this,this.level.escaleras4)||this.level.checkOverlap(this,this.level.escaleras3)||this.level.checkOverlap(this,this.level.escaleras2)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                 if(this.upkey.isDown){
                     this.body.velocity.y=-gameOptions.heroSpeed;
@@ -346,7 +346,7 @@ platformer.player.prototype.update = function(){
                 this.body.velocity.x=0;
             }
             //CHECK OVERLAP
-            if(gameOptions.currentLevel == 2){
+            if(gameOptions.currentLevel == 2|| gameOptions.currentLevel == 6){
             if(this.level.checkOverlap(this,this.level.escaleras)&&!this.dead){
                 if(this.upkey.isDown){
                     this.body.velocity.y=-gameOptions.heroSpeed;
@@ -357,7 +357,7 @@ platformer.player.prototype.update = function(){
                      this.animations.play('stairsUP');
                 }
                 }
-            }else if(gameOptions.currentLevel == 3){
+            }else if(gameOptions.currentLevel == 3||gameOptions.currentLevel == 8){
                if(this.level.checkOverlap(this,this.level.escaleras4)||this.level.checkOverlap(this,this.level.escaleras3)||this.level.checkOverlap(this,this.level.escaleras2)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                 if(this.upkey.isDown){
                     this.body.velocity.y=-gameOptions.heroSpeed;
@@ -368,7 +368,7 @@ platformer.player.prototype.update = function(){
                      this.animations.play('stairsUP');
                 } 
                 }
-            }else if(gameOptions.currentLevel ==4){
+            }else if(gameOptions.currentLevel ==4||gameOptions.currentLevel == 7){
                 if(this.level.checkOverlap(this,this.level.escaleras)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                       if(this.upkey.isDown){
                         this.body.velocity.y=-gameOptions.heroSpeed;
@@ -380,7 +380,7 @@ platformer.player.prototype.update = function(){
                     }       
                     }
             }
-            else if(gameOptions.currentLevel == 5){
+            else if(gameOptions.currentLevel == 5||gameOptions.currentLevel == 9){
                 if(this.level.checkOverlap(this,this.level.escaleras4)||this.level.checkOverlap(this,this.level.escaleras3)||this.level.checkOverlap(this,this.level.escaleras2)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                 if(this.upkey.isDown){
                     this.body.velocity.y=-gameOptions.heroSpeed;

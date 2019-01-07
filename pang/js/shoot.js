@@ -44,7 +44,7 @@ platformer.shoot.prototype.constructor = platformer.shoot;
 
 platformer.shoot.prototype.update = function(){
 
-    this.game.debug.body(this);
+    //this.game.debug.body(this);
     
     if(this.type == 2) {
         if(this.playShootSound == true){
