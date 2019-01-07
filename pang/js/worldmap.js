@@ -26,6 +26,8 @@ platformer.worldmap ={
         this.soundEffect = this.add.audio('SoundEffectButton');
         this.musicWM.play();
         
+        gameOptions.hero1HP = 3;
+        gameOptions.hero2HP = 3;
         
         this.background=this.game.add.tileSprite(0,0,384,308,'worldmap');
         

@@ -496,7 +496,7 @@ platformer.level ={
             this.lifesplayer2 = this.game.add.sprite(334,230,'life2',0);
             this.lifes2player2 = this.game.add.sprite(354,230,'life2',0);
         }else if(gameOptions.hero2HP==1){
-            this.lifesplayer2 = this.game.add.sprite(354,230,'life',0);
+            this.lifesplayer2 = this.game.add.sprite(354,230,'life2',0);
         }
         
         this.timeLeft = 100;
@@ -910,11 +910,9 @@ platformer.level ={
                 }
                 else if(this.bubbleArray[i].color == 2 && !this.bubbleArray[i].exploded){
                     this.player1Won = false;
-                    console.log(this.player1Won);
                 }
             }
             if (this.player1Won || this.player2Won) {
-                console.log('somebody won');
                 this.delayWinCondition -= 0.012;
                 if(this.delayWinCondition <=0){
                     this.loopShield.stop();
