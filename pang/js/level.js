@@ -662,7 +662,8 @@ platformer.level ={
         this.bubbleArray.push(new platformer.bubble_prefab(this.game,450,50,this,2,2,1));
         }
         
-        if (gameOptions.currentLevel == 18){
+        else if (gameOptions.currentLevel == 18){
+            this.bubbleArray.push(new platformer.bubble_prefab(this.game,100,100,this,0,2,1));
             this.bubbleArray.push(new platformer.bubble_prefab(this.game,284,100,this,0,0,-1));
         }
         
