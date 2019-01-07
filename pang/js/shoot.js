@@ -31,6 +31,7 @@ platformer.shoot = function(game,x,y,pointA,pointB,speed,direction,level,type,ow
     if (this.type != 2){
         this.body.immovable = true;
         this.body.allowGravity = false;
+        this.body.setSize(9, 34, 0, 155);
     }
     this.oneTimeShoot = true;
     this.destroyed = false;
@@ -73,6 +74,9 @@ platformer.shoot.prototype.update = function(){
             this.destroyed = true;
             this.destroy();
         }
+        if(!this.destroyed){
+            this.body.setSize(9, 34 + this.frame * 2.3, 0, 155 - this.frame * 2.3);   
+        }
     } else if (this.type == 0){
         if(this.playShootSound == true){
             this.level.ShootSound.play();
@@ -81,6 +85,9 @@ platformer.shoot.prototype.update = function(){
         if(this.frame >= 69){
             this.destroyed = true;
             this.destroy();
+        }
+        if(!this.destroyed){
+            this.body.setSize(9, 34 + this.frame * 2.3, 0, 155 - this.frame * 2.3);   
         }
     }
     if(this.oneTimeShoot){

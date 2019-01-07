@@ -53,6 +53,8 @@ platformer.player = function(game,x,y,level,num){
     this.game.physics.enable(this, Phaser.Physics.ARCADE);
     
     this.level.playerCollisionGroup.add(this);
+    
+    this.body.setSize(26, 32, 8, 0);
 };
 
 
