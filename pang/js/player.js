@@ -171,7 +171,7 @@ platformer.player.prototype.update = function(){
                 this.body.velocity.x=0;
             }
             //CHECK OVERLAP
-            if(gameOptions.currentLevel == 2|| gameOptions.currentLevel == 6){
+            if(gameOptions.currentLevel == 2|| gameOptions.currentLevel == 6||gameOptions.currentLevel == 12||gameOptions.currentLevel == 16){
             if(this.level.checkOverlap(this,this.level.escaleras)&&!this.dead){
                 if(this.upkey.isDown){
                     this.body.velocity.y=-gameOptions.heroSpeed;
@@ -182,7 +182,7 @@ platformer.player.prototype.update = function(){
                      this.animations.play('stairsUP');
                 }
                 }
-            }else if(gameOptions.currentLevel == 3||gameOptions.currentLevel == 8){
+            }else if(gameOptions.currentLevel == 3||gameOptions.currentLevel == 8||gameOptions.currentLevel == 11||gameOptions.currentLevel == 15){
                if(this.level.checkOverlap(this,this.level.escaleras4)||this.level.checkOverlap(this,this.level.escaleras3)||this.level.checkOverlap(this,this.level.escaleras2)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                 if(this.upkey.isDown){
                     this.velocity.y=-gameOptions.heroSpeed;
@@ -193,7 +193,7 @@ platformer.player.prototype.update = function(){
                      this.animations.play('stairsUP');
                 } 
                 }
-            }else if(gameOptions.currentLevel == 4||gameOptions.currentLevel == 7||gameOptions.currentLevel == 10){
+            }else if(gameOptions.currentLevel == 4||gameOptions.currentLevel == 7||gameOptions.currentLevel == 10||gameOptions.currentLevel == 14){
                 if(this.level.checkOverlap(this,this.level.escaleras)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                 if(this.upkey.isDown){
                     this.body.velocity.y=-gameOptions.heroSpeed;
@@ -204,7 +204,7 @@ platformer.player.prototype.update = function(){
                      this.animations.play('stairsUP');
                 }
                 }
-            }else if(gameOptions.currentLevel == 5||gameOptions.currentLevel == 9){
+            }else if(gameOptions.currentLevel == 5||gameOptions.currentLevel == 9||gameOptions.currentLevel == 13){
                 if(this.level.checkOverlap(this,this.level.escaleras4)||this.level.checkOverlap(this,this.level.escaleras3)||this.level.checkOverlap(this,this.level.escaleras2)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                 if(this.upkey.isDown){
                     this.body.velocity.y=-gameOptions.heroSpeed;
@@ -348,7 +348,7 @@ platformer.player.prototype.update = function(){
                 this.body.velocity.x=0;
             }
             //CHECK OVERLAP
-            if(gameOptions.currentLevel == 2|| gameOptions.currentLevel == 6){
+            if(gameOptions.currentLevel == 2|| gameOptions.currentLevel == 6||gameOptions.currentLevel == 12||gameOptions.currentLevel == 16){
             if(this.level.checkOverlap(this,this.level.escaleras)&&!this.dead){
                 if(this.upkey.isDown){
                     this.body.velocity.y=-gameOptions.heroSpeed;
@@ -359,7 +359,7 @@ platformer.player.prototype.update = function(){
                      this.animations.play('stairsUP');
                 }
                 }
-            }else if(gameOptions.currentLevel == 3||gameOptions.currentLevel == 8){
+            }else if(gameOptions.currentLevel == 3||gameOptions.currentLevel == 8||gameOptions.currentLevel == 11||gameOptions.currentLevel == 15){
                if(this.level.checkOverlap(this,this.level.escaleras4)||this.level.checkOverlap(this,this.level.escaleras3)||this.level.checkOverlap(this,this.level.escaleras2)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                 if(this.upkey.isDown){
                     this.body.velocity.y=-gameOptions.heroSpeed;
@@ -370,7 +370,7 @@ platformer.player.prototype.update = function(){
                      this.animations.play('stairsUP');
                 } 
                 }
-            }else if(gameOptions.currentLevel ==4||gameOptions.currentLevel == 7||gameOptions.currentLevel == 10){
+            }else if(gameOptions.currentLevel ==4||gameOptions.currentLevel == 7||gameOptions.currentLevel == 10||gameOptions.currentLevel == 14){
                 if(this.level.checkOverlap(this,this.level.escaleras)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                       if(this.upkey.isDown){
                         this.body.velocity.y=-gameOptions.heroSpeed;
@@ -382,7 +382,7 @@ platformer.player.prototype.update = function(){
                     }       
                     }
             }
-            else if(gameOptions.currentLevel == 5||gameOptions.currentLevel == 9){
+            else if(gameOptions.currentLevel == 5||gameOptions.currentLevel == 9||gameOptions.currentLevel == 13){
                 if(this.level.checkOverlap(this,this.level.escaleras4)||this.level.checkOverlap(this,this.level.escaleras3)||this.level.checkOverlap(this,this.level.escaleras2)||this.level.checkOverlap(this,this.level.escaleras1)&&!this.dead){
                 if(this.upkey.isDown){
                     this.body.velocity.y=-gameOptions.heroSpeed;
