@@ -55,6 +55,7 @@ platformer.player = function(game,x,y,level,num){
     this.level.playerCollisionGroup.add(this);
     
     this.body.setSize(26, 32, 8, 0);
+    this.game.world.moveDown(this.shield);
 };
 
 
@@ -148,6 +149,17 @@ platformer.player.prototype.update = function(){
                 this.animations.play('idleShoot');
                 this.body.velocity.x=0;
                     if(this.shootOneTime){
+                        this.shot = false;
+                        this.doubleShot = false;
+                        for(i = 0; i < this.level.bulletArray.length; i++){
+                            if(this.level.bulletArray[i].owner == this.num && !this.level.bulletArray[i].destroyed){
+                                if(!this.shot){
+                                    this.shot = true;
+                                } else if(!this.doubleShot){
+                                    this.doubleShot = true;
+                                }
+                            }
+                        }
                         if(this.uzi){
                             this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,2,this.num));
 
@@ -155,7 +167,7 @@ platformer.player.prototype.update = function(){
                             this.shootOneTime = false;
                             //ORDEN DE DIBUJO 
                             //this.game.world.swap(this.timer,this.bulletArray);
-                        } else if (this.level.bulletCollisionGroup.length < 1 || (this.level.bulletCollisionGroup.length < 2 && this.doubleHook)){
+                        } else if (!this.shot || (!this.doubleShot && this.doubleHook)){
                             if(this.powerWire){
                                 this.level.bulletArray.push(new platformer.shoot(this.game,this.position.x,this.position.y,240,368,100,1,this.level,1,this.num));
                             } else {

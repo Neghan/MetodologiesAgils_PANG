@@ -28,11 +28,11 @@ platformer.bubble_prefab = function(game,x,y,level,size,color, direction){
     this.level = level
     
     this.speedX = 50;
+    if(this.level.timeSlowed){
+        this.speedX /= 2;
+    }
 //    this.speedY = 30;
     this.acceleration = 100;
-    if(this.level.timeSlowed){
-        this.acceleration /= 2;
-    }
     this.speedY = 0;
 
     this.directionX = direction;
@@ -98,6 +98,9 @@ platformer.bubble_prefab.prototype.update = function(){
     
         this.speedY += this.acceleration*0.017
         this.body.velocity.y = this.speedY * this.directionY;
+        if(this.level.timeSlowed && this.speedY >= 0){
+            this.body.velocity.y /= 2;
+        }
     } else {
         this.body.velocity.x = 0;
         this.body.velocity.y = 0

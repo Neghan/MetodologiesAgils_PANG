@@ -27,7 +27,7 @@ platformer.shoot = function(game,x,y,pointA,pointB,speed,direction,level,type,ow
     this.type = type;
     this.owner = owner;
     this.level = level;
-    this.game.physics.arcade.enable(this);
+    this.game.physics.enable(this, Phaser.Physics.ARCADE);
     if (this.type != 2){
         this.body.immovable = true;
         this.body.allowGravity = false;
@@ -46,7 +46,7 @@ platformer.shoot.prototype.constructor = platformer.shoot;
 platformer.shoot.prototype.update = function(){
 
     //this.game.debug.body(this);
-    
+    //this.game.physics.arcade.overlap(this,this.level.unbreakable_layer,this.hitWall,null,this);
     if(this.type == 2) {
         if(this.playShootSound == true){
             this.level.UZI.play();
@@ -100,5 +100,8 @@ platformer.shoot.prototype.hitWall = function(_shoot, _wall){
         
         if (this.type == 2){
             this.animations.play('burst');
+        } else{
+            this.destroyed = true;
+            this.destroy();
         }
 };
